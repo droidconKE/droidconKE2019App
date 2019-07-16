@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.bartoszlipinski:disable-animations-rule:1.0.0@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7ed4106f3ca5acf3ba4d8a84e3427724/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7ed4106f3ca5acf3ba4d8a84e3427724/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.bartoszlipinski/disable-animations-rule/1.0.0/f5cf91f2cce43532b959e201c7dad84b21ad5317/disable-animations-rule-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
