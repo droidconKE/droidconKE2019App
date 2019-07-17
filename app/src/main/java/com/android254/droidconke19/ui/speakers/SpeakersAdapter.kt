@@ -10,25 +10,29 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.SpeakersModel
-import kotlinx.android.synthetic.main.speaker_details.view.*
+import kotlinx.android.synthetic.main.item_speaker.view.*
 
-class SpeakersAdapter(private val speakersList: List<SpeakersModel>, private val context: Context) : RecyclerView.Adapter<SpeakersAdapter.SpeakersViewHolder>() {
 
-    inner class SpeakersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private var speakerNameText = itemView.speakerNameText
-        private var speakerCompanyText = itemView.speakerCompanyText
-        private var speakerImg = itemView.speakerImg
+class SpeakersAdapter(private val speakersList: List<SpeakersModel>,private val itemClickListener: (SpeakersModel) -> Unit) : RecyclerView.Adapter<SpeakersAdapter.SpeakersViewHolder>() {
+
+    inner class SpeakersViewHolder(itemView: View,private val itemClickListener: (SpeakersModel) -> Unit) : RecyclerView.ViewHolder(itemView) {
+        private var speakerNameText = itemView.speaker_text
+        private var speakerImg = itemView.speaker_image
 
         fun bindSpeakerDetails(speakersModel: SpeakersModel) {
             with(speakersModel) {
                 Glide.with(itemView.context).load(photoUrl)
                         .thumbnail(Glide.with(itemView.context).load(photoUrl))
                         .apply(RequestOptions()
+                                .placeholder(R.drawable.profile)
                                 .diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(speakerImg)
 
                 speakerNameText.text = name
-                speakerCompanyText.text = company
+
+                itemView.setOnClickListener {
+                    itemClickListener(this)
+                }
 
             }
         }
@@ -36,8 +40,8 @@ class SpeakersAdapter(private val speakersList: List<SpeakersModel>, private val
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpeakersViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.speaker_details, parent, false)
-        return SpeakersViewHolder(itemView)
+                .inflate(R.layout.item_speaker, parent, false)
+        return SpeakersViewHolder(itemView,itemClickListener)
     }
 
     override fun onBindViewHolder(holder: SpeakersViewHolder, position: Int) {

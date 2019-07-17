@@ -39,6 +39,22 @@
         android:id="@+id/sessionDetailsFragment"
         android:name="com.android254.droidconke19.ui.sessiondetails.SessionDetailsFragment"
         android:label="@string/session_details_label"
-        tools:layout="@layout/fragment_session_details"/>
+        tools:layout="@layout/fragment_session_details">
+
+
+        <argument
+            android:name="sessionArgs"
+            app:argType="com.android254.droidconke19.models.SessionsModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_sessionDetailsFragment_to_speakerFragment"
+            app:destination="@id/speakerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/speakerFragment"
+        android:name="com.android254.droidconke19.ui.speakers.SpeakerFragment"
+        tools:layout="@layout/fragment_speaker"
+        android:label="SpeakerFragment" />
 
 </navigation>

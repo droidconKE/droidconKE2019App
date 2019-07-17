@@ -75,9 +75,9 @@ dependencies {
     kapt 'com.jakewharton:butterknife-compiler:10.1.0'
 
     //firebase dependencies
-    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.firebase:firebase-core:17.0.1'
     implementation 'com.firebaseui:firebase-ui-auth:3.3.1'
-    implementation 'com.google.firebase:firebase-auth:18.0.0'
+    implementation 'com.google.firebase:firebase-auth:18.1.0'
     implementation 'com.google.firebase:firebase-database:18.0.0'
     implementation 'com.google.firebase:firebase-config:18.0.0'
     implementation 'com.google.firebase:firebase-crash:16.2.1'
@@ -99,13 +99,9 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
-    implementation "androidx.navigation:navigation-fragment-ktx:2.1.0-alpha05"
-    implementation "androidx.navigation:navigation-ui-ktx:2.1.0-alpha05"
-    implementation "androidx.navigation:navigation-fragment-ktx:2.1.0-alpha05"
-
-    //rx java dep
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation "androidx.navigation:navigation-fragment-ktx:2.1.0-alpha06"
+    implementation "androidx.navigation:navigation-ui-ktx:2.1.0-alpha06"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.1.0-alpha06"
 
     //kotlin dependencies
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"

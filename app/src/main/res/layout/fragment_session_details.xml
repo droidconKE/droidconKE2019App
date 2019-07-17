@@ -17,52 +17,13 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         >
 
-
-        <com.android254.droidconke19.ui.widget.CollapsibleToolbar
-            android:id="@+id/content_parent"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/color_background"
-            android:fitsSystemWindows="false"
-            android:minHeight="?attr/actionBarSize"
-            app:layoutDescription="@xml/motion_session_detail"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:progress="0"
-            >
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/session_toolbar"
-                android:layout_width="0dp"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:navigationIcon="@drawable/abc_ic_ab_back_material"
-                tools:ignore="PrivateResource"
-                />
-
-            <androidx.emoji.widget.EmojiAppCompatTextView
-                android:id="@+id/session_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="center_vertical"
-                android:includeFontPadding="false"
-                android:maxLines="1"
-                android:text="@string/session_title"
-                android:minHeight="?attr/actionBarSize"
-                android:textAppearance="@style/TextAppearance.App.Headline5"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/session_toolbar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="@string/session_title"
-                />
-
-        </com.android254.droidconke19.ui.widget.CollapsibleToolbar>
+            android:layout_height="?attr/actionBarSize"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -86,7 +47,6 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
-                android:textAppearance="@style/TextAppearance.Roboto.Subtitle1"
                 android:textSize="16sp"
                 android:text="@string/session_room"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -113,7 +73,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/sessionview_time"
-                android:textAppearance="@style/TextAppearance.App.Body1"
                 app:layout_constraintBottom_toBottomOf="@id/session_time_image"
                 app:layout_constraintStart_toEndOf="@id/session_time_image"
                 app:layout_constraintTop_toTopOf="@id/session_time_image"
@@ -149,7 +108,6 @@
                 android:lineSpacingExtra="4dp"
                 android:paddingBottom="2dp"
                 android:textAlignment="viewStart"
-                android:textAppearance="@style/TextAppearance.App.Body1"
                 android:textIsSelectable="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/session_time_and_room"
@@ -178,7 +136,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/session_detail_intended_audience"
-                android:textAppearance="@style/TextAppearance.Roboto.Subtitle1"
                 app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                 app:layout_constraintTop_toBottomOf="@id/divider_top_intended_audience"
                 />
@@ -223,7 +180,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/session_detail_tag"
-                android:textAppearance="@style/TextAppearance.Roboto.Subtitle1"
                 app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                 app:layout_constraintTop_toBottomOf="@id/divider_top_tags"
                 />
@@ -297,7 +253,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="26dp"
                 android:text="@string/session_feed_back_label"
-                android:textAppearance="@style/TextAppearance.Roboto.Subtitle1"
                 app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                 app:layout_constraintTop_toBottomOf="@id/divider_top_survey"
                 />
@@ -340,7 +295,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/session_detail_speaker"
-                android:textAppearance="@style/TextAppearance.Roboto.Subtitle1"
                 app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                 app:layout_constraintTop_toBottomOf="@id/divider_top_speakers"
                 />
@@ -378,7 +332,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/session_detail_resource"
-                android:textAppearance="@style/TextAppearance.Roboto.Subtitle1"
                 app:layout_constraintStart_toStartOf="@id/session_time_and_room"
                 app:layout_constraintTop_toBottomOf="@id/divider_top_resource"
                 />
@@ -399,7 +352,6 @@
                 android:paddingStart="16dp"
                 android:paddingTop="8dp"
                 android:text="@string/session_detail_resource_video"
-                android:textAppearance="@style/TextAppearance.Roboto.Body1"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -422,7 +374,6 @@
                 android:paddingStart="16dp"
                 android:paddingTop="8dp"
                 android:text="@string/session_detail_resource_slide"
-                android:textAppearance="@style/TextAppearance.Roboto.Body1"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -440,7 +391,6 @@
         android:layout_gravity="bottom"
         app:fabAlignmentMode="end"
         app:hideOnScroll="true"
-        app:layout_behavior="@string/session_bottom_appbar_behavior"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

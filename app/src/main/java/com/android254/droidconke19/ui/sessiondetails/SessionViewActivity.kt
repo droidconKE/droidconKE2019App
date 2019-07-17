@@ -181,11 +181,9 @@ class SessionViewActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        val speakersAdapter = SpeakersAdapter(speakersList, applicationContext)
         val layoutManager = LinearLayoutManager(this)
         speakersRV.layoutManager = layoutManager
         speakersRV.itemAnimator = DefaultItemAnimator()
-        speakersRV.adapter = speakersAdapter
     }
 
     private fun handleFetchSessionData(sessionsModel: SessionsModel) {

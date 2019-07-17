@@ -23,7 +23,7 @@ import org.koin.android.ext.android.inject
 
 class SessionDayFragment : Fragment() {
     private val sessionsAdapter: SessionsAdapter by lazy {
-        SessionsAdapter{ redirectToSessionDetails() }
+        SessionsAdapter{ redirectToSessionDetails(it) }
     }
     private val dayOneViewModel: DayOneViewModel by inject()
 
@@ -42,12 +42,11 @@ class SessionDayFragment : Fragment() {
             applyFilter(filterStore.filter)
         }
 
-
         //observe live data emitted by view model
         observeLiveData()
     }
 
-    private fun redirectToSessionDetails() {
+    private fun redirectToSessionDetails(it: SessionsModel) {
         findNavController().navigate(ScheduleFragmentDirections.actionScheduleFragmentToSessionDetailsFragment())
     }
 
@@ -69,7 +68,7 @@ class SessionDayFragment : Fragment() {
     }
 
     fun onSessionClick(sessionModel : SessionsModel){
-        redirectToSessionDetails()
+
     }
 
     fun applyFilter(filter: Filter) {

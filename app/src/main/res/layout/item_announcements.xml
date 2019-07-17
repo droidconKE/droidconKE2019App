@@ -27,7 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/session_detail_tag"
-                android:textAppearance="@style/TextAppearance.Roboto.Subtitle1"
+                android:textSize="@dimen/text_size_small"
+                android:textColor="@color/colorBlack"
                 />
 
 
@@ -41,7 +42,6 @@
                 android:lineSpacingExtra="4dp"
                 android:paddingBottom="2dp"
                 android:textAlignment="viewStart"
-                android:textAppearance="@style/TextAppearance.App.Body1"
                 tools:text="@string/event_description"
                 android:layout_marginTop="@dimen/fab_margin"
                 />

@@ -5,7 +5,6 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="50dp"
     tools:context=".ui.venuemap.MapFragment" >
 
     <include layout="@layout/content_maps"/>

@@ -2,6 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.android254.droidconke19.ui.sessiondetails.SessionViewActivity">
+   <item
+       android:id="@+id/action_share"
+       android:title="@string/action_share"
+       android:icon="@drawable/ic_share_black_24dp"
+       app:showAsAction="always"/>
+
     <item
         android:id="@+id/action_map"
         android:orderInCategory="100"
@@ -9,9 +15,9 @@
         android:icon="@drawable/ic_location_on_grey_24dp"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_feedback"
+        android:id="@+id/action_calendar"
         android:orderInCategory="100"
         android:title="@string/action_map"
-        android:icon="@drawable/ic_feedback"
+        android:icon="@drawable/ic_date_range_black_24dp"
         app:showAsAction="ifRoom" />
 </menu>

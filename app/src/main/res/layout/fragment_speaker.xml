@@ -26,24 +26,26 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
-                android:text="@{speaker.name}"
+                android:text="@string/speaker_name"
                 android:textAlignment="viewStart"
-                android:textAppearance="@style/TextAppearance.App.Headline5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_goneMarginTop="12dp"
-                tools:text="takahirom"
+                tools:text="John Doe"
+                android:textAppearance="@style/TextAppearance.App.Headline5"
+                android:textColor="@color/colorBlack"
+
                 />
 
             <TextView
                 android:id="@+id/speaker_tag_line"
+                android:textAppearance="@style/TextAppearance.App.Subtitle1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="4dp"
-                android:text="@{speaker.tagLine}"
-                android:textAppearance="@style/TextAppearance.App.Subtitle1"
+                android:text="@string/speaker_company"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/speaker_image"
                 app:layout_constraintHorizontal_bias="0"
@@ -56,12 +58,13 @@
                 android:id="@+id/speaker_image"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                android:layout_margin="16dp"
+                android:layout_margin="@dimen/fab_margin"
                 android:contentDescription="@string/speaker_label"
-                android:transitionName="@{speaker.id}"
+                android:transitionName="speakerImage"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars"
+                android:src="@drawable/profile"
+
                 />
 
             <ImageView
@@ -89,9 +92,8 @@
                 android:ellipsize="end"
                 android:includeFontPadding="false"
                 android:paddingBottom="2dp"
-                android:text="@{speaker.bio}"
+                android:text="@string/event_description"
                 android:textAlignment="viewStart"
-                android:textAppearance="@style/TextAppearance.App.Body1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/speaker_name"
                 app:layout_constraintTop_toBottomOf="@id/divider1"
@@ -120,8 +122,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/session_title"
-                android:textAppearance="@style/TextAppearance.Roboto.Subtitle1"
+                android:text="@string/speaker_session_head"
                 app:layout_constraintStart_toStartOf="@id/speaker_name"
                 app:layout_constraintTop_toBottomOf="@id/divider2"
                 />
@@ -134,13 +135,14 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="12dp"
                 android:paddingTop="12dp"
-                android:textAppearance="@style/TextAppearance.App.Subtitle2"
+                android:text="@string/session_title"
                 android:textSize="16sp"
+                android:textColor="@color/colorBlack"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="@id/speaker_name"
                 app:layout_constraintTop_toBottomOf="@id/speaker_session_head"
-                tools:text="@string/event_description"
+                tools:text="@string/session_title"
                 />
 
 
@@ -151,12 +153,12 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginTop="4dp"
                 android:paddingBottom="12dp"
-                android:text="@{session.summary(lang, timeZoneOffset)}"
+                android:text="@string/speaker_session_summary"
                 android:textAppearance="@style/TextAppearance.App.Caption"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="@id/speaker_name"
                 app:layout_constraintTop_toBottomOf="@id/speaker_session_title"
-                tools:text="2月7日 10:20-10:40 / 30min / Hall"
+                tools:text="8.9 10:00 - 10: 40 30min / Hall"
                 />
 
             <View

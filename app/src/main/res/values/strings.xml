@@ -193,4 +193,6 @@
     <string name="stages">Stages</string>
     <string name="types">Types</string>
     <string name="level">Level</string>
+    <string name="speaker_session_head">Session</string>
+    <string name="speaker_session_summary">8.9 10:00 - 10: 40 30min / Hall</string>
 </resources>
