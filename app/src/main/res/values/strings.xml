@@ -104,7 +104,7 @@
     <string name="star_event">Add to your isStarred events</string>
     <string name="see_event_map">See session venue</string>
     <string name="sign_in_to_customize">Sign in to customize \nyour schedule</string>
-    <string name="sign_in_descrption">Sign in to save events and get notifications. Actions will be synced from your account across app and site</string>
+    <string name="sign_in_descrption">Sign in to save events and build your custom schedule. Saved sessions will be synced from your account across devices</string>
     <string name="not_now">Not now</string>
 
     <!--Remote config Keys-->
@@ -195,4 +195,5 @@
     <string name="level">Level</string>
     <string name="speaker_session_head">Session</string>
     <string name="speaker_session_summary">8.9 10:00 - 10: 40 30min / Hall</string>
+    <string name="sign_in">Sign in</string>
 </resources>

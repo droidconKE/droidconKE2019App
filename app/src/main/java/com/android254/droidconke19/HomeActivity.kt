@@ -93,25 +93,21 @@ class HomeActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_sign_out, menu)
+        menuInflater.inflate(R.menu.menu_home, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_settings -> {
-                unsubscribeNotifications()
-                firebaseAuth.signOut()
-                startActivity(Intent(this, AuthenticateUserActivity::class.java))
-                finish()
-                return true
+        return when (item.itemId) {
+            R.id.action_profile -> {
+                //TODO add subcription logic after sign out
+//                unsubscribeNotifications()
+//                firebaseAuth.signOut()
+
+                true
             }
-            R.id.action_feedback -> {
-                startActivity(Intent(this, EventFeedbackActivity::class.java))
-            }
-            else -> return super.onOptionsItemSelected(item)
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
     }
 
     private fun unsubscribeNotifications() = lifecycleScope.launch {
