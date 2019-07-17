@@ -1,6 +1,5 @@
 package com.android254.droidconke19.ui.sessions
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,38 +7,19 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.SessionsModel
+import com.android254.droidconke19.ui.filters.Filter
 import kotlinx.android.synthetic.main.item_session.view.*
 
-class SessionsAdapter(private var sessionsModelList: List<SessionsModel>, private val itemClickListener: (SessionsModel) -> Unit) : RecyclerView.Adapter<SessionsAdapter.SessionsViewHolder>() {
+class SessionsAdapter(private val itemClickListener: (SessionsModel) -> Unit) : RecyclerView.Adapter<SessionsAdapter.SessionsViewHolder>() {
+    private val rawItems = mutableListOf<SessionsModel>()
 
-    class SessionsViewHolder(itemView: View, val itemClickListener: (SessionsModel) -> Unit) : RecyclerView.ViewHolder(itemView) {
-        private val sessionTitleText = itemView.sessionTitleText
-        private val sessionRoomText = itemView.sessionRoomText
-        private val sessionInAmPmText = itemView.sessionInAmPmText
-        private val sessionAudienceText = itemView.sessionAudienceText
+    private val allItems = mutableListOf<AdapterItem>()
+    private var filteredItems: MutableList<AdapterItem>? = null
 
-        @SuppressLint("Range")
-        fun bindSession(sessionsModel: SessionsModel) {
-            with(sessionsModel) {
-                sessionTitleText.text = title
-                sessionRoomText.text = "$room"
-                sessionInAmPmText.text = "$time_in_am $am_pm_label"
-                sessionAudienceText.text = session_audience
+    val items: List<AdapterItem>
+        get() = filteredItems ?: allItems
 
-                when (session_audience) {
-                    "intermediate" -> sessionAudienceText.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorDeepOrange))
-                    "advanced" -> sessionAudienceText.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.tag_text_red))
-                    "beginner" -> sessionAudienceText.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorGreen))
-                    "general" -> sessionAudienceText.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.colorLightBlue))
-                }
-
-                itemView.setOnClickListener {
-                    itemClickListener(this)
-                }
-            }
-
-        }
-    }
+    class SessionsViewHolder(itemView: View, val itemClickListener: (SessionsModel) -> Unit) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SessionsViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -48,17 +28,79 @@ class SessionsAdapter(private var sessionsModelList: List<SessionsModel>, privat
     }
 
     override fun onBindViewHolder(holder: SessionsViewHolder, position: Int) {
-        holder.bindSession(sessionsModelList[position])
+        items[position].bindSession(holder,itemClickListener)
     }
 
     override fun getItemCount(): Int {
-        return sessionsModelList.size
+        return items.size
     }
 
-    fun setSessionsAdapter(sessionsModelList: List<SessionsModel>) {
-        this.sessionsModelList = sessionsModelList
+    fun update(events: List<SessionsModel>) {
+        rawItems.clear()
+        rawItems += events
+
+        val eventsByTime = events.groupBy { it.id }
+        val newItems = mutableListOf<AdapterItem>()
+
+        for (time in eventsByTime.keys) {
+            val items = eventsByTime[time].orEmpty()
+            newItems += items.mapIndexed { index, event ->
+                AdapterItem(event, isFirst = index == 0)
+            }
+        }
+
+        allItems.clear()
+        allItems += newItems
+
+        notifyDataSetChanged()
+    }
+
+    private fun filterItems(events: List<SessionsModel>, currentFilter: Filter) {
+        val filteredEvents = events.filter { it.isInFilter(currentFilter) }
+        val filteredEventsByTime = filteredEvents.groupBy { it.id }
+        val newFilteredItems = mutableListOf<AdapterItem>()
+
+        for (eventsAtTime in filteredEventsByTime.values) {
+            newFilteredItems += eventsAtTime.mapIndexed { index, event ->
+                AdapterItem(event, isFirst = index == 0)
+            }
+        }
+
+        filteredItems = newFilteredItems
+    }
+
+    fun applyFilter(filter: Filter) {
+        if (filter == Filter.empty()) {
+            filteredItems = null
+        } else {
+            filterItems(rawItems, filter)
+        }
+
         notifyDataSetChanged()
     }
 
 
+}
+class AdapterItem(
+        val sessionsModel: SessionsModel,
+        val isFirst: Boolean = false
+){
+    fun bindSession(viewHolder : SessionsAdapter.SessionsViewHolder, itemClickListener: (SessionsModel) -> Unit) =
+            with(viewHolder.itemView){
+                sessionTitleText.text = sessionsModel.title
+                sessionRoomText.text = sessionsModel.room
+                sessionInAmPmText.text = "${sessionsModel.time_in_am}${sessionsModel.am_pm_label}"
+                sessionAudienceText.text = sessionsModel.session_audience
+
+                when (sessionsModel.session_audience) {
+                    "intermediate" -> sessionAudienceText.setBackgroundColor(ContextCompat.getColor(context, R.color.colorDeepOrange))
+                    "advanced" -> sessionAudienceText.setBackgroundColor(ContextCompat.getColor(context, R.color.tag_text_red))
+                    "beginner" -> sessionAudienceText.setBackgroundColor(ContextCompat.getColor(context, R.color.colorGreen))
+                    "general" -> sessionAudienceText.setBackgroundColor(ContextCompat.getColor(context, R.color.colorLightBlue))
+                }
+
+                setOnClickListener {
+                    itemClickListener(sessionsModel)
+                }
+            }
 }

@@ -1,6 +1,7 @@
 package com.android254.droidconke19.ui.schedule
 
 import android.os.Bundle
+import android.util.ArrayMap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,20 +9,36 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
 import com.android254.droidconke19.R
-import com.android254.droidconke19.ui.agenda.AgendaFragment
+import com.android254.droidconke19.models.EventDay
 import com.android254.droidconke19.ui.filters.Filter
 import com.android254.droidconke19.ui.filters.FilterChip
 import com.android254.droidconke19.ui.filters.FilterFragment
 import com.android254.droidconke19.ui.filters.FilterStore
-import com.android254.droidconke19.ui.sessions.DayOneFragment
-import com.android254.droidconke19.ui.sessions.DayTwoFragment
+import com.android254.droidconke19.ui.sessions.SessionDayFragment
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.view_active_filters.*
-import java.util.*
+import org.threeten.bp.format.DateTimeFormatter
 
 class ScheduleFragment : Fragment() {
+
+
+    private val onTabSelectedListener = object : TabLayout.OnTabSelectedListener {
+        override fun onTabSelected(tab: TabLayout.Tab) {
+            viewpager.setCurrentItem(tab.position, true)
+        }
+        override fun onTabReselected(tab: TabLayout.Tab) {
+            val adapter = viewpager.adapter as SessionsViewPagerAdapter
+            val fragment = adapter.getFragmentAt(viewpager.currentItem)
+            fragment?.scrollToTop()
+        }
+        override fun onTabUnselected(tab: TabLayout.Tab) = Unit
+    }
+
+    private val sessionsViewPagerAdapter: SessionsViewPagerAdapter by lazy {
+        SessionsViewPagerAdapter(childFragmentManager)
+    }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -30,7 +47,10 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupViewPager(viewpager)
+        viewpager.adapter = sessionsViewPagerAdapter
+
+
+        tabLayout.addOnTabSelectedListener(onTabSelectedListener)
         tabLayout.setupWithViewPager(viewpager)
 
         onFilterChanged(FilterStore.instance.filter)
@@ -67,47 +87,39 @@ class ScheduleFragment : Fragment() {
             }
         }
 
-        val adapter = viewpager.adapter as ViewPagerAdapter
+        val adapter = viewpager.adapter as SessionsViewPagerAdapter
         for (index in 0 until adapter.count) {
             val fragment = adapter.getFragmentAt(index)
-            //fragment.applyFilter(filter)
+            fragment?.applyFilter(filter)
         }
     }
 
-    private fun setupViewPager(viewPager: ViewPager) {
-        val adapter = ViewPagerAdapter(childFragmentManager)
-        adapter.addFragment(DayOneFragment(), getString(R.string.day_one_label))
-        adapter.addFragment(DayTwoFragment(), getString(R.string.day_two_label))
-        adapter.addFragment(AgendaFragment(), "Agenda")
-        viewPager.adapter = adapter
-    }
 
-    inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
-        private val mFragmentList = ArrayList<Fragment>()
-        private val mFragmentTitleList = ArrayList<String>()
+    class SessionsViewPagerAdapter( fm: FragmentManager
+    ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+        private val cache = ArrayMap<Int, SessionDayFragment>()
 
         override fun getItem(position: Int): Fragment {
-            return mFragmentList[position]
+            val eventDay = EventDay.values()[position]
+            return SessionDayFragment.newInstance(eventDay).also {
+                cache[position] = it
+            }
+        }
+
+        fun getFragmentAt(index: Int): SessionDayFragment? {
+            return cache[index]
         }
 
         override fun getCount(): Int {
-            return mFragmentList.size
+            return EventDay.values().size
         }
-
-        fun addFragment(fragment: Fragment, title: String) {
-            mFragmentList.add(fragment)
-            mFragmentTitleList.add(title)
-        }
-
-        fun getFragmentAt(index: Int): Fragment? {
-            return mFragmentList[index]
-        }
-
 
         override fun getPageTitle(position: Int): CharSequence? {
-            return mFragmentTitleList[position]
+            val formatter = DateTimeFormatter.ofPattern("EEE, MMMM d")
+            return EventDay.values()[position].toDate().format(formatter)
         }
-    }
 
+    }
 
 }

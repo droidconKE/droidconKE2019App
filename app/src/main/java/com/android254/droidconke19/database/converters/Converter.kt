@@ -40,7 +40,7 @@ class Converter {
     }
 
     @TypeConverter
-    fun typeEnumtoInt(type : Type) = type.enumToInt()
+    fun typeEnumToInt(type : Type) = type.enumToInt()
 
     @TypeConverter
     fun intEnumToType(value : Int) = value.toEnum<Type>()

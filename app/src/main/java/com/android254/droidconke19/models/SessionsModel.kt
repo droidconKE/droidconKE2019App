@@ -19,7 +19,7 @@ data class SessionsModel(
         @PrimaryKey
         var id: Int = 0,
         var speaker_id: ArrayList<Int> = ArrayList(),
-        val stage: Stage,
+        val stage: Stage = Stage.None,
         var room_id: Int = 0,
         var main_tag: String = "",
         var room: String = "",
@@ -34,14 +34,14 @@ data class SessionsModel(
         var session_color: String = "",
         var topic_id: Int = 0,
         var type_id: Int = 0,
-        var type: Type,
+        var type: Type = Type.None,
         var documentId: String = "",
         var timestamp: String = "",
         var day_number: String = "",
         var time_in_am: String = "",
         var am_pm_label: String = "",
         var session_audience: String = "",
-        val level :Level
+        val level :Level = Level.None
 
 ) : Parcelable, Filterable {
     override fun isInFilter(filter: Filter): Boolean {
@@ -86,8 +86,9 @@ enum class Stage {
 enum class Type(val value: String, val resId: Int) {
     Session("Session", R.drawable.ic_outline_video_label),
     LightningTalk("Lightning talk", R.drawable.ic_outline_flash_on),
-    Workshop("Workshop", R.drawable.ic_outline_build),
+    Codelab("Codelab", R.drawable.ic_outline_build),
     PanelDiscussion("Panel discussion", R.drawable.ic_outline_question_answer),
+    Keynote("Keynote",R.drawable.ic_outline_video_label),
     None("None", 0)
 }
 

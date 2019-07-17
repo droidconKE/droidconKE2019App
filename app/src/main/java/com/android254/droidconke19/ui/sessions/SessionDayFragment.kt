@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.android254.droidconke19.R
-import com.android254.droidconke19.models.SessionTimeModel
+import com.android254.droidconke19.models.EventDay
 import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.ui.filters.Filter
 import com.android254.droidconke19.ui.filters.FilterStore
@@ -19,10 +20,8 @@ import com.android254.droidconke19.viewmodels.DayOneViewModel
 import kotlinx.android.synthetic.main.fragment_day_one.*
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
-import java.util.*
 
-class DayOneFragment : Fragment() {
-
+class SessionDayFragment : Fragment() {
     private val sessionsAdapter: SessionsAdapter by lazy {
         SessionsAdapter{ redirectToSessionDetails() }
     }
@@ -65,6 +64,10 @@ class DayOneFragment : Fragment() {
 
     }
 
+    fun scrollToTop() {
+        sessionsRv.smoothScrollToPosition(0)
+    }
+
     fun onSessionClick(sessionModel : SessionsModel){
         redirectToSessionDetails()
     }
@@ -79,6 +82,21 @@ class DayOneFragment : Fragment() {
 
     private fun initView(sessionsRv: RecyclerView) {
         sessionsRv.adapter = sessionsAdapter
+    }
+
+
+
+
+    companion object {
+        private const val KEY_EVENT_DAY = "KEY_EVENT_DAY"
+        private const val KEY_EVENT = "KEY_EVENT"
+
+        fun newInstance(
+                day: EventDay
+        ) = SessionDayFragment().apply {
+            arguments = bundleOf(KEY_EVENT_DAY to day)
+        }
+
     }
 
 }
