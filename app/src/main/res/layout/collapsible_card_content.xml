@@ -48,7 +48,7 @@
 
         </RelativeLayout>
 
-        <droiddevelopers254.droidconke.utils.HtmlTextView
+        <com.android254.droidconke19.utils.HtmlTextView
             android:id="@+id/card_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

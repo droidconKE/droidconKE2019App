@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="droiddevelopers254.droidconke">
+    package="com.android254.droidconke19">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".utils.DroidCon"
+        android:name="com.android254.droidconke19.utils.DroidCon"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme.NoActionBar">
 
         <activity
-            android:name=".HomeActivity"
+            android:name="com.android254.droidconke19.HomeActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -29,9 +29,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.sessiondetails.SessionViewActivity"
+            android:name="com.android254.droidconke19.ui.sessiondetails.SessionViewActivity"
             android:label="@string/title_activity_session_view"
-            android:parentActivityName=".HomeActivity"
+            android:parentActivityName="com.android254.droidconke19.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -46,13 +46,13 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.authentication.AuthenticateUserActivity"
+            android:name="com.android254.droidconke19.ui.authentication.AuthenticateUserActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Launch">
         </activity>
 
         <service
-            android:name=".firebase.InstanceIdService"
+            android:name="com.android254.droidconke19.firebase.InstanceIdService"
             android:enabled="true"
             android:exported="true"
             android:permission="">
@@ -62,19 +62,19 @@
         </service>
 
         <activity
-            android:name=".ui.about.AboutDetailsActivity"
+            android:name="com.android254.droidconke19.ui.about.AboutDetailsActivity"
             android:label="@string/title_activity_about_details"
-            android:parentActivityName=".HomeActivity"
+            android:parentActivityName="com.android254.droidconke19.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.feedback.SessionFeedBackActivity"
+            android:name="com.android254.droidconke19.ui.feedback.SessionFeedBackActivity"
             android:label="@string/title_activity_feed_back"
-            android:parentActivityName=".ui.sessiondetails.SessionViewActivity"
+            android:parentActivityName="com.android254.droidconke19.ui.sessiondetails.SessionViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.feedback.EventFeedbackActivity"
+            android:name="com.android254.droidconke19.ui.feedback.EventFeedbackActivity"
             android:label="@string/title_activity_event_feedback"
-            android:parentActivityName=".HomeActivity"
+            android:parentActivityName="com.android254.droidconke19.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

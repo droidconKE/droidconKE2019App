@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/scheduleFragment"
-        android:name="droiddevelopers254.droidconke.ui.schedule.ScheduleFragment"
+        android:name="com.android254.droidconke19.ui.schedule.ScheduleFragment"
         android:label="@string/schedule_label"
         tools:layout="@layout/fragment_schedule">
         <action
@@ -16,28 +16,28 @@
     </fragment>
     <fragment
         android:id="@+id/agendaFragment"
-        android:name="droiddevelopers254.droidconke.ui.agenda.AgendaFragment"
+        android:name="com.android254.droidconke19.ui.agenda.AgendaFragment"
         android:label="@string/agenda_label"
         tools:layout="@layout/fragment_agenda"/>
     <fragment
         android:id="@+id/infoFragment"
-        android:name="droiddevelopers254.droidconke.ui.info.InfoFragment"
+        android:name="com.android254.droidconke19.ui.info.InfoFragment"
         android:label="@string/info_label"
         tools:layout="@layout/fragment_info"/>
     <fragment
         android:id="@+id/mapFragment"
-        android:name="droiddevelopers254.droidconke.ui.venuemap.MapFragment"
+        android:name="com.android254.droidconke19.ui.venuemap.MapFragment"
         android:label="@string/map_label"
         tools:layout="@layout/fragment_map" />
     <fragment
         android:id="@+id/announcementFragment"
-        android:name="droiddevelopers254.droidconke.ui.announcements.AnnouncementFragment"
+        android:name="com.android254.droidconke19.ui.announcements.AnnouncementFragment"
         android:label="@string/announcements_label"
         tools:layout="@layout/fragment_announcements"/>
 
     <fragment
         android:id="@+id/sessionDetailsFragment"
-        android:name="droiddevelopers254.droidconke.ui.sessiondetails.SessionDetailsFragment"
+        android:name="com.android254.droidconke19.ui.sessiondetails.SessionDetailsFragment"
         android:label="@string/session_details_label"
         tools:layout="@layout/fragment_session_details"/>
 
