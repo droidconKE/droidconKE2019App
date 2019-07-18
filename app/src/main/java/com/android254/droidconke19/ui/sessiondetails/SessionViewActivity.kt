@@ -9,19 +9,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.RoomModel
 import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.models.SpeakersModel
-import com.android254.droidconke19.ui.feedback.SessionFeedBackActivity
-import com.android254.droidconke19.ui.speakers.SpeakersAdapter
 import com.android254.droidconke19.utils.SharedPref.PREF_NAME
 import com.android254.droidconke19.utils.nonNull
 import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.viewmodels.SessionDataViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_session_view.*
 import kotlinx.android.synthetic.main.content_session_view.*
 import kotlinx.android.synthetic.main.room_bottom_sheet.*
@@ -98,12 +96,12 @@ class SessionViewActivity : AppCompatActivity() {
         bottomAppBar.setOnMenuItemClickListener { item ->
             val id = item.itemId
             when (id) {
-                R.id.action_feedback -> {
-                    val sessionFeedbackIntent = Intent(this, SessionFeedBackActivity::class.java)
-                    sessionFeedbackIntent.putExtra("sessionId", sessionId)
-                    sessionFeedbackIntent.putExtra("dayNumber", dayNumber)
-                    startActivity(sessionFeedbackIntent)
-                }
+//                R.id.action_feedback -> {
+//                    val sessionFeedbackIntent = Intent(this, SessionFeedBackActivity::class.java)
+//                    sessionFeedbackIntent.putExtra("sessionId", sessionId)
+//                    sessionFeedbackIntent.putExtra("dayNumber", dayNumber)
+//                    startActivity(sessionFeedbackIntent)
+//                }
             }
             when (id) {
                 R.id.action_map -> when {

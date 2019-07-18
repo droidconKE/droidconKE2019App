@@ -1,7 +1,6 @@
 package com.android254.droidconke19
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
@@ -16,15 +15,13 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.android254.droidconke19.utils.SharedPref.PREF_NAME
+import com.android254.droidconke19.utils.SharedPref.TOKEN_SENT
+import com.android254.droidconke19.viewmodels.HomeViewModel
 import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.android254.droidconke19.ui.authentication.AuthenticateUserActivity
-import com.android254.droidconke19.ui.feedback.EventFeedbackActivity
-import com.android254.droidconke19.utils.SharedPref.PREF_NAME
-import com.android254.droidconke19.utils.SharedPref.TOKEN_SENT
-import com.android254.droidconke19.viewmodels.HomeViewModel
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -40,6 +37,7 @@ class HomeActivity : AppCompatActivity() {
     private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)

@@ -28,7 +28,7 @@ class SessionDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        displaySessionSpealers()
+        displaySessionSpeakers()
 
         bottom_app_bar.replaceMenu(R.menu.menu_bottom_appbar)
         handleBottomBarMenuClick()
@@ -67,7 +67,7 @@ class SessionDetailsFragment : Fragment() {
         }
     }
 
-    private fun displaySessionSpealers() {
+    private fun displaySessionSpeakers() {
         val speakersList = ArrayList<SpeakersModel>()
         speakersList.add(SpeakersModel(1,"John Doe","This is bio","Company","url"))
         session_speakers.adapter = SpeakersAdapter(speakersList){

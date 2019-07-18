@@ -57,8 +57,8 @@
         tools:layout="@layout/fragment_speaker"
         android:label="SpeakerFragment" />
 
-    <dialog
-        android:id="@+id/signInDialogFragment"
+    <!--<dialog-->
+    <!--android:id="@+id/signInDialogFragment"-->
 
 
 </navigation>
