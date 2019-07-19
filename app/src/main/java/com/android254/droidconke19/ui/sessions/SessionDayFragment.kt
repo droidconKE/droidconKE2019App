@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.android254.droidconke19.R
@@ -14,6 +15,7 @@ import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.ui.filters.Filter
 import com.android254.droidconke19.ui.filters.FilterStore
 import com.android254.droidconke19.ui.schedule.ScheduleFragmentDirections
+import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
 import com.android254.droidconke19.utils.nonNull
 import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.viewmodels.DayOneViewModel
@@ -26,6 +28,7 @@ class SessionDayFragment : Fragment() {
         SessionsAdapter{ redirectToSessionDetails(it) }
     }
     private val dayOneViewModel: DayOneViewModel by inject()
+    private val sessionDetailsViewModel : SessionDetailsViewModel by activityViewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_day_one, container, false)
@@ -47,6 +50,7 @@ class SessionDayFragment : Fragment() {
     }
 
     private fun redirectToSessionDetails(it: SessionsModel) {
+        sessionDetailsViewModel.loadSessionDetails(it)
         findNavController().navigate(ScheduleFragmentDirections.actionScheduleFragmentToSessionDetailsFragment())
     }
 

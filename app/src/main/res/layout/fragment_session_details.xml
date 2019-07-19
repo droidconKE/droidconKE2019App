@@ -41,18 +41,18 @@
             >
 
             <TextView
-                android:id="@+id/session_time_and_room"
+                android:id="@+id/sessionTimeRoomText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
-                android:textSize="16sp"
-                android:text="@string/session_room"
+                android:textSize="@dimen/text_size_small"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="20min / Hall"
+                tools:text="40min / Main Hall"
+                android:textColor="@color/colorBlack"
                 />
 
 
@@ -62,16 +62,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:contentDescription="@string/session_description_time_image"
-                app:layout_constraintStart_toStartOf="@id/session_time_and_room"
-                app:layout_constraintTop_toBottomOf="@id/session_time_and_room"
+                app:layout_constraintStart_toStartOf="@id/sessionTimeRoomText"
+                app:layout_constraintTop_toBottomOf="@id/sessionTimeRoomText"
                 app:srcCompat="@drawable/ic_access_time_black_24dp"
                 />
 
             <TextView
-                android:id="@+id/session_start_end_time"
+                android:id="@+id/sessionStartTimeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/appbar_padding_top"
                 android:text="@string/sessionview_time"
                 app:layout_constraintBottom_toBottomOf="@id/session_time_image"
                 app:layout_constraintStart_toEndOf="@id/session_time_image"
@@ -96,8 +96,8 @@
                 app:layout_goneMarginTop="32dp"
                 />
 
-            <androidx.emoji.widget.EmojiAppCompatTextView
-                android:id="@+id/session_description"
+            <TextView
+                android:id="@+id/sessionDescriptionText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -110,7 +110,7 @@
                 android:textAlignment="viewStart"
                 android:textIsSelectable="true"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/session_time_and_room"
+                app:layout_constraintStart_toStartOf="@id/sessionTimeRoomText"
                 app:layout_constraintTop_toBottomOf="@id/divider_top_description"
                 tools:text="@string/event_description"
                 />
@@ -127,25 +127,27 @@
                 android:src="@drawable/shape_dashed_line"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/session_description"
+                app:layout_constraintTop_toBottomOf="@id/sessionDescriptionText"
                 />
 
             <TextView
-                android:id="@+id/session_intended_audience_title"
+                android:id="@+id/intendedAudienceLabelText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/fab_margin"
                 android:text="@string/session_detail_intended_audience"
-                app:layout_constraintStart_toStartOf="@id/session_time_and_room"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size_small"
+                app:layout_constraintStart_toStartOf="@id/sessionTimeRoomText"
                 app:layout_constraintTop_toBottomOf="@id/divider_top_intended_audience"
                 />
 
-            <androidx.emoji.widget.EmojiAppCompatTextView
-                android:id="@+id/session_intended_audience_description"
+            <TextView
+                android:id="@+id/intendedAudienceText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginEnd="@dimen/fab_margin"
+                android:layout_marginTop="@dimen/fab_margin"
                 android:text="@string/session_audience"
                 android:includeFontPadding="false"
                 android:lineSpacingExtra="4dp"
@@ -154,8 +156,8 @@
                 android:textAppearance="@style/TextAppearance.App.Body1"
                 android:textIsSelectable="true"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/session_time_and_room"
-                app:layout_constraintTop_toBottomOf="@id/session_intended_audience_title"
+                app:layout_constraintStart_toStartOf="@id/sessionTimeRoomText"
+                app:layout_constraintTop_toBottomOf="@id/intendedAudienceLabelText"
                 tools:text="@string/session_audience"
                 />
 
@@ -171,16 +173,17 @@
                 android:src="@drawable/shape_dashed_line"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/session_intended_audience_description"
+                app:layout_constraintTop_toBottomOf="@id/intendedAudienceText"
                 />
 
             <TextView
                 android:id="@+id/session_tag_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/fab_margin"
                 android:text="@string/session_detail_tag"
-                app:layout_constraintStart_toStartOf="@id/session_time_and_room"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintStart_toStartOf="@id/sessionTimeRoomText"
                 app:layout_constraintTop_toBottomOf="@id/divider_top_tags"
                 />
 
@@ -193,7 +196,7 @@
                 android:layout_marginTop="12dp"
                 app:chipSpacing="4dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/session_time_and_room"
+                app:layout_constraintStart_toStartOf="@id/sessionTimeRoomText"
                 app:layout_constraintTop_toBottomOf="@id/session_tag_title"
                 >
 
@@ -252,8 +255,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="26dp"
+                android:textColor="@color/colorBlack"
                 android:text="@string/session_feed_back_label"
-                app:layout_constraintStart_toStartOf="@id/session_time_and_room"
+                app:layout_constraintStart_toStartOf="@id/sessionTimeRoomText"
                 app:layout_constraintTop_toBottomOf="@id/divider_top_survey"
                 />
 
@@ -261,12 +265,12 @@
                 android:id="@+id/session_go_to_survey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="@dimen/appbar_padding_top"
                 android:background="?selectableItemBackground"
-                android:paddingBottom="8dp"
-                android:paddingEnd="8dp"
-                android:paddingStart="8dp"
-                android:paddingTop="8dp"
+                android:paddingBottom="@dimen/appbar_padding_top"
+                android:paddingEnd="@dimen/appbar_padding_top"
+                android:paddingStart="@dimen/appbar_padding_top"
+                android:paddingTop="@dimen/appbar_padding_top"
                 android:text="@string/session_go_to_feedback"
                 android:textAppearance="@style/TextAppearance.Roboto.Body1"
                 android:textColor="@color/colorPrimary"
@@ -293,9 +297,11 @@
                 android:id="@+id/session_speaker_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/fab_margin"
                 android:text="@string/session_detail_speaker"
-                app:layout_constraintStart_toStartOf="@id/session_time_and_room"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_size_small"
+                app:layout_constraintStart_toStartOf="@id/sessionTimeRoomText"
                 app:layout_constraintTop_toBottomOf="@id/divider_top_speakers"
                 />
 
@@ -315,8 +321,8 @@
                 android:id="@+id/divider_top_resource"
                 android:layout_width="0dp"
                 android:layout_height="4dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginEnd="@dimen/fab_margin"
+                android:layout_marginStart="@dimen/fab_margin"
                 android:layout_marginTop="24dp"
                 android:contentDescription="@null"
                 android:layerType="software"
@@ -330,27 +336,29 @@
                 android:id="@+id/session_resource_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/fab_margin"
                 android:text="@string/session_detail_resource"
-                app:layout_constraintStart_toStartOf="@id/session_time_and_room"
+                android:textSize="@dimen/text_size_small"
+                android:textColor="@color/colorBlack"
+                app:layout_constraintStart_toStartOf="@id/sessionTimeRoomText"
                 app:layout_constraintTop_toBottomOf="@id/divider_top_resource"
                 />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/session_video_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/appbar_padding_top"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:drawablePadding="8dp"
+                android:drawablePadding="@dimen/appbar_padding_top"
                 android:drawableStart="@drawable/ic_local_movies_outline_gray2_24dp"
                 android:focusable="true"
                 android:gravity="center_vertical"
-                android:paddingBottom="8dp"
-                android:paddingEnd="16dp"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
+                android:paddingBottom="@dimen/appbar_padding_top"
+                android:paddingEnd="@dimen/fab_margin"
+                android:paddingStart="@dimen/fab_margin"
+                android:paddingTop="@dimen/appbar_padding_top"
                 android:text="@string/session_detail_resource_video"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -358,27 +366,27 @@
                 app:layout_constraintTop_toBottomOf="@id/session_resource_title"
                 />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/session_slide_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:drawablePadding="8dp"
+                android:drawablePadding="@dimen/appbar_padding_top"
                 android:drawableStart="@drawable/ic_file_copy_outline_gray2_24dp"
                 android:focusable="true"
                 android:gravity="center_vertical"
-                android:paddingBottom="8dp"
-                android:paddingEnd="16dp"
-                android:paddingStart="16dp"
-                android:paddingTop="8dp"
+                android:paddingBottom="@dimen/appbar_padding_top"
+                android:paddingEnd="@dimen/fab_margin"
+                android:paddingStart="@dimen/fab_margin"
+                android:paddingTop="@dimen/appbar_padding_top"
                 android:text="@string/session_detail_resource_slide"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/session_video_button"
-                app:layout_goneMarginTop="8dp"
+                app:layout_goneMarginTop="@dimen/appbar_padding_top"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

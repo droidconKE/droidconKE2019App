@@ -98,14 +98,6 @@ class SessionViewActivity : AppCompatActivity() {
         bottomAppBar.setOnMenuItemClickListener { item ->
             val id = item.itemId
             when (id) {
-                R.id.action_feedback -> {
-                    val sessionFeedbackIntent = Intent(this, SessionFeedBackActivity::class.java)
-                    sessionFeedbackIntent.putExtra("sessionId", sessionId)
-                    sessionFeedbackIntent.putExtra("dayNumber", dayNumber)
-                    startActivity(sessionFeedbackIntent)
-                }
-            }
-            when (id) {
                 R.id.action_map -> when {
                     bottomSheetBehavior!!.state != BottomSheetBehavior.STATE_EXPANDED -> bottomSheetBehavior!!.setState(BottomSheetBehavior.STATE_EXPANDED)
                     else -> bottomSheetBehavior!!.setState(BottomSheetBehavior.STATE_COLLAPSED)

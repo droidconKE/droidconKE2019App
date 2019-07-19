@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_marginTop="6dp"
             android:id="@+id/txtSessionRoom"
-            tools:text="@string/session_room"
+            tools:text="@string/session_room_and_session_duration"
             android:textSize="14sp"
             android:textColor="@color/colorBlack"
             android:layout_height="wrap_content" />
