@@ -41,6 +41,7 @@ data class SessionsModel(
         var time_in_am: String = "",
         var am_pm_label: String = "",
         var session_audience: String = "",
+        var notification_slug: String = "",
         val level :Level = Level.None
 
 ) : Parcelable, Filterable {

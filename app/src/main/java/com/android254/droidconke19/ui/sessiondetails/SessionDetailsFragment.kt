@@ -32,7 +32,12 @@ class SessionDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        toolbar.title = "Session Details"
+        val title = sessionDetailsViewModel.getSessionDetails().value?.title ?: "Session Details"
+        toolbar.title = title
+        toolbar.setNavigationIcon(R.drawable.ic_back)
+        toolbar.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
         //TODO add logic to fetch speaker details from firebase
         displaySessionSpeakers()
 
