@@ -7,16 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.android254.droidconke19.R
+import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.models.SpeakersModel
 import com.android254.droidconke19.ui.speakers.SpeakersAdapter
+import com.android254.droidconke19.utils.nonNull
+import com.android254.droidconke19.utils.observe
+import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_session_details.*
 import kotlinx.android.synthetic.main.fragment_speaker.*
 
 class SessionDetailsFragment : Fragment() {
-
+    private val sessionDetailsViewModel: SessionDetailsViewModel by activityViewModels()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -27,11 +32,29 @@ class SessionDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        toolbar.title = "Session Details"
+        //TODO add logic to fetch speaker details from firebase
         displaySessionSpeakers()
 
         bottom_app_bar.replaceMenu(R.menu.menu_bottom_appbar)
         handleBottomBarMenuClick()
+
+        //observer live data
+        observeLiveData()
+    }
+
+    private fun observeLiveData() {
+        sessionDetailsViewModel.getSessionDetails().nonNull().observe(this) { sessionModel ->
+            setupViews(sessionModel)
+        }
+    }
+
+    private fun setupViews(sessionModel: SessionsModel) {
+        sessionTimeRoomText.text = getString(R.string.session_room_and_session_duration, sessionModel.duration, sessionModel.room)
+        sessionStartTimeText.text = sessionModel.time
+        sessionDescriptionText.text = sessionModel.description
+        intendedAudienceText.text = sessionModel.session_audience
+
     }
 
     private fun handleBottomBarMenuClick() {
