@@ -11,6 +11,6 @@ class ModulesTest : KoinTest {
 
     @Test
     fun `check dependencies`() {
-        koinApplication { modules(listOf(testContext, appModule, dataModule, testFirebase)) }.checkModules()
+        koinApplication { modules(listOf(testContext, appModule, dataModule, testApp)) }.checkModules()
     }
 }

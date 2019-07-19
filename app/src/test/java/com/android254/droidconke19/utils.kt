@@ -1,15 +1,16 @@
 package com.android254.droidconke19
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.*
+import com.android254.droidconke19.di.appModule
+import com.android254.droidconke19.di.dataModule
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.nhaarman.mockitokotlin2.mock
-import com.android254.droidconke19.di.appModule
-import com.android254.droidconke19.di.dataModule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
@@ -27,12 +28,13 @@ val testContext = module {
     single { mock<Context>() }
 }
 
-val testFirebase = module {
+val testApp = module {
     single(override = true) { mock<FirebaseFirestore>() }
     single(override = true) { mock<FirebaseAuth>() }
     single(override = true) { mock<FirebaseRemoteConfig>() }
     single(override = true) { mock<FirebaseDatabase>() }
     single(override = true) { mock<FirebaseMessaging>() }
+    single(override = true) { mock<SharedPreferences>() }
 }
 
 @ExperimentalCoroutinesApi
@@ -44,7 +46,7 @@ class CoroutinesRule : TestRule {
 
             override fun evaluate() {
                 Dispatchers.setMain(mainThreadSurrogate)
-                startKoin { modules(listOf(testContext, appModule, dataModule, testFirebase)) }
+                startKoin { modules(listOf(testContext, appModule, dataModule, testApp)) }
                 base?.evaluate()
                 Dispatchers.resetMain() // reset main dispatcher to the original Main dispatcher
                 mainThreadSurrogate.close()
