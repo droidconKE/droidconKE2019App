@@ -1,6 +1,5 @@
 package com.android254.droidconke19.ui.sessiondetails
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -13,7 +12,6 @@ import com.android254.droidconke19.R
 import com.android254.droidconke19.models.RoomModel
 import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.models.SpeakersModel
-import com.android254.droidconke19.utils.SharedPref.PREF_NAME
 import com.android254.droidconke19.utils.nonNull
 import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.viewmodels.SessionDataViewModel
@@ -25,10 +23,12 @@ import kotlinx.android.synthetic.main.content_session_view.*
 import kotlinx.android.synthetic.main.room_bottom_sheet.*
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 import java.util.*
 
 class SessionViewActivity : AppCompatActivity() {
     private val db: FirebaseDatabase by inject()
+    val sharedPreferences: SharedPreferences by inject { parametersOf(this) }
     private var sessionId: Int = 0
     private var roomId: Int = 0
 
@@ -44,7 +44,6 @@ class SessionViewActivity : AppCompatActivity() {
     private var speakersList: List<SpeakersModel> = ArrayList()
     private var speakerId: List<Int> = ArrayList()
     internal var starred = false
-    lateinit var sharedPreferences: SharedPreferences
     lateinit var isStarred: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +51,6 @@ class SessionViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_session_view)
 
         databaseReference = db.reference
-        sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
         //get extras
         val extraIntent = intent

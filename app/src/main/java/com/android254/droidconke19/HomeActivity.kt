@@ -1,6 +1,5 @@
 package com.android254.droidconke19
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
@@ -15,9 +14,9 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.android254.droidconke19.utils.SharedPref.PREF_NAME
 import com.android254.droidconke19.utils.SharedPref.TOKEN_SENT
 import com.android254.droidconke19.viewmodels.HomeViewModel
+import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
 import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
@@ -27,14 +26,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class HomeActivity : AppCompatActivity() {
-    private val sharedPreferences: SharedPreferences by lazy { getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE) }
+    val sharedPreferences: SharedPreferences by inject { parametersOf(this) }
     private val firebaseRemoteConfig: FirebaseRemoteConfig by inject()
     private val firebaseMessaging: FirebaseMessaging by inject()
     private val firebaseAuth: FirebaseAuth by inject()
     private lateinit var params: AppBarLayout.LayoutParams
     private val homeViewModel: HomeViewModel by viewModel()
+    private val sessionDetailsViewModel: SessionDetailsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)

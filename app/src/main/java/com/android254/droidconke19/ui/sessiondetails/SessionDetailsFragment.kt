@@ -1,13 +1,13 @@
 package com.android254.droidconke19.ui.sessiondetails
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.android254.droidconke19.R
@@ -16,12 +16,18 @@ import com.android254.droidconke19.models.SpeakersModel
 import com.android254.droidconke19.ui.speakers.SpeakersAdapter
 import com.android254.droidconke19.utils.nonNull
 import com.android254.droidconke19.utils.observe
+import com.android254.droidconke19.utils.toast
 import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_session_details.*
 import kotlinx.android.synthetic.main.fragment_speaker.*
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.core.parameter.parametersOf
 
 class SessionDetailsFragment : Fragment() {
-    private val sessionDetailsViewModel: SessionDetailsViewModel by activityViewModels()
+    private val sessionDetailsViewModel: SessionDetailsViewModel by sharedViewModel()
+
+    val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -34,9 +40,16 @@ class SessionDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val title = sessionDetailsViewModel.getSessionDetails().value?.title ?: "Session Details"
         toolbar.title = title
-        toolbar.setNavigationIcon(R.drawable.ic_back)
         toolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
+        }
+
+        session_favorite.setOnClickListener {
+            if (sessionDetailsViewModel.addToFavourites(sharedPreferences)) {
+                activity?.toast("Session added to favourites")
+            } else {
+                activity?.toast("Session removed from favourites")
+            }
         }
         //TODO add logic to fetch speaker details from firebase
         displaySessionSpeakers()

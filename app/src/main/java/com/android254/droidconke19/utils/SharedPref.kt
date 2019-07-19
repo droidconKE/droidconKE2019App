@@ -8,5 +8,6 @@ object SharedPref {
     const val PREF_USER_FIRST_TIME = "user_first_time"
     const val SESSION_STARRED = "sessionStarred"
     const val SESSION_STARRED_ID = "sessionStarredId"
+    const val FAVOURITE_SESSIONS = "favouriteSessions"
 
 }

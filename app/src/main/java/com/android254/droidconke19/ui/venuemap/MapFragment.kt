@@ -3,7 +3,6 @@ package com.android254.droidconke19.ui.venuemap
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.IntentSender
 import android.content.SharedPreferences
@@ -23,6 +22,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.android254.droidconke19.R
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -35,9 +35,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.android254.droidconke19.R
-import com.android254.droidconke19.utils.SharedPref.PREF_NAME
 import kotlinx.android.synthetic.main.map_bottom_sheet.view.*
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class MapFragment : Fragment(), OnMapReadyCallback {
     private val senteuPlaza = LatLng(-1.289256, 36.783180)
@@ -51,7 +51,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null
     private var permissionsRequired = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
     private var sentToSettings = false
-    lateinit var sharedPreferences: SharedPreferences
+    val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
@@ -102,7 +102,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         val view = inflater.inflate(R.layout.fragment_map, container, false)
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
-        sharedPreferences = activity!!.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
         //show toolbar if its hidden
         (activity as AppCompatActivity).supportActionBar?.show()

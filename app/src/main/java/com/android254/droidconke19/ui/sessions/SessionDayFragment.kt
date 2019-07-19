@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.android254.droidconke19.R
@@ -22,13 +21,14 @@ import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_day_one.*
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SessionDayFragment : Fragment() {
     private val sessionsAdapter: SessionsAdapter by lazy {
         SessionsAdapter{ redirectToSessionDetails(it) }
     }
     private val dayOneViewModel: DayOneViewModel by inject()
-    private val sessionDetailsViewModel: SessionDetailsViewModel by activityViewModels()
+    private val sessionDetailsViewModel: SessionDetailsViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_day_one, container, false)
