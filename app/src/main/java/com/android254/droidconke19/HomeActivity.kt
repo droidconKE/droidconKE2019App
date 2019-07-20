@@ -13,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.android254.droidconke19.utils.SharedPref.TOKEN_SENT
 import com.android254.droidconke19.viewmodels.HomeViewModel
 import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
@@ -45,7 +44,7 @@ class HomeActivity : AppCompatActivity() {
 
 
         setupNavigation()
-        setupActionBarWithNavController(findNavController(R.id.navHostFragment), drawer_layout)
+//        setupActionBarWithNavController(findNavController(R.id.navHostFragment), drawer_layout)
 
         setupNotifications()
 
@@ -128,8 +127,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-    override fun onSupportNavigateUp() =
-            Navigation.findNavController(this, R.id.navHostFragment).navigateUp()
+    override fun onSupportNavigateUp() = NavigationUI.navigateUp(findNavController(R.id.navHostFragment), drawer_layout)
 
     companion object {
         var navItemIndex = 1 //controls toolbar titles and icons
