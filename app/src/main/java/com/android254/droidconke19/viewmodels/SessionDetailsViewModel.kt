@@ -34,5 +34,11 @@ class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging) 
         }
     }
 
+    fun isFavourite(sharedPreferences: SharedPreferences): Boolean {
+        val slug = sessionDetailsMediatorLiveData.value!!.notification_slug
+        val favourites = sharedPreferences.getStringSet(SharedPref.FAVOURITE_SESSIONS, mutableSetOf())!!
+        return favourites.contains(slug)
+    }
+
 
 }

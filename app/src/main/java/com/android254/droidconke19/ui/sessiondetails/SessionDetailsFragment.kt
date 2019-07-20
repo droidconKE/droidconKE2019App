@@ -2,11 +2,13 @@ package com.android254.droidconke19.ui.sessiondetails
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -50,7 +52,9 @@ class SessionDetailsFragment : Fragment() {
             } else {
                 activity?.toast("Session removed from favourites")
             }
+            styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences))
         }
+        styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences))
         //TODO add logic to fetch speaker details from firebase
         displaySessionSpeakers()
 
@@ -73,6 +77,16 @@ class SessionDetailsFragment : Fragment() {
         sessionDescriptionText.text = sessionModel.description
         intendedAudienceText.text = sessionModel.session_audience
 
+    }
+
+    private fun styleFavouritesButton(isFavourites: Boolean) {
+        if (isFavourites) {
+            session_favorite.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.white))
+            session_favorite.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.colorPrimary))
+        } else {
+            session_favorite.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.colorPrimary))
+            session_favorite.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.white))
+        }
     }
 
     private fun handleBottomBarMenuClick() {
