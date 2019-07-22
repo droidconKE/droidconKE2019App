@@ -26,7 +26,7 @@ class DayTwoRepo(db: AppDatabase, private val firestore: FirebaseFirestore) {
     }
 
     suspend fun saveSession(sessionsModelList: List<SessionsModel>) {
-        sessionsDao.saveSession(sessionsModelList)
+//        sessionsDao.saveSession(sessionsModelList)
 
     }
 }

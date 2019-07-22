@@ -42,7 +42,8 @@ data class SessionsModel(
         var am_pm_label: String = "",
         var session_audience: String = "",
         var notification_slug: String = "",
-        val level :Level = Level.None
+        val level :Level = Level.None,
+        val photoUrl : String = ""
 
 ) : Parcelable, Filterable {
     override fun isInFilter(filter: Filter): Boolean {

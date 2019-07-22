@@ -21,6 +21,6 @@
 #-renamesourcefileattribute SourceFile
 -keep class com.ontbee.legacyforks.cn.pedant.SweetAlert.** {*;}
 -keepclassmembers class com.ontbee.legacyforks.cn.pedant.SweetAlert.** {*;}
--keep class droiddevelopers254.droidconke.models.** { *; }
+-keep class com.android254.droidconke19.models.** { *; }
 -keep class android.support.v7.widget.RecyclerView { *; }
 -dontwarn okhttp3.internal.platform.*

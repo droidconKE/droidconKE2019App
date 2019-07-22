@@ -28,8 +28,7 @@ import org.koin.core.parameter.parametersOf
 
 class SessionDetailsFragment : Fragment() {
     private val sessionDetailsViewModel: SessionDetailsViewModel by sharedViewModel()
-
-    val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
+    private val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,

@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             >
 
-            <androidx.emoji.widget.EmojiAppCompatTextView
+            <TextView
                 android:id="@+id/speaker_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                 app:layout_constraintTop_toBottomOf="@id/speaker_tag_line"
                 />
 
-            <androidx.emoji.widget.EmojiAppCompatTextView
+            <TextView
                 android:id="@+id/speaker_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

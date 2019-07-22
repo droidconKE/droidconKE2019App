@@ -44,11 +44,6 @@
         <action
             android:id="@+id/action_sessionDetailsFragment_to_speakerFragment"
             app:destination="@id/speakerFragment" />
-        <argument
-            android:name="sessionArgs"
-            app:argType="com.android254.droidconke19.models.SessionsModel"
-            app:nullable="true"
-            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/speakerFragment"

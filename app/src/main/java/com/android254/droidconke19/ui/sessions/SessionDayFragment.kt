@@ -38,13 +38,13 @@ class SessionDayFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initView(sessionsRv)
+        showProgressBar()
         dayOneViewModel.getDayOneSessions()
 
         val filterStore = FilterStore.instance
         if (filterStore.filter != Filter.empty()) {
             applyFilter(filterStore.filter)
         }
-
         //observe live data emitted by view model
         observeLiveData()
     }
@@ -62,17 +62,13 @@ class SessionDayFragment : Fragment() {
     }
 
     private fun updateAdapterWithList(sessionList: List<SessionsModel>) {
+        hideProgressBar()
         sessionsAdapter.update(sessionList)
-        loginProgressBar.visibility = View.GONE
 
     }
 
     fun scrollToTop() {
         sessionsRv.smoothScrollToPosition(0)
-    }
-
-    fun onSessionClick(sessionModel : SessionsModel){
-
     }
 
     fun applyFilter(filter: Filter) {
@@ -87,7 +83,16 @@ class SessionDayFragment : Fragment() {
         sessionsRv.adapter = sessionsAdapter
     }
 
+    private fun showProgressBar(){
+        progressBar.visibility = View.VISIBLE
+        sessionsRv.visibility = View.GONE
 
+    }
+
+    private fun hideProgressBar(){
+        progressBar.visibility = View.GONE
+        sessionsRv.visibility = View.VISIBLE
+    }
 
 
     companion object {

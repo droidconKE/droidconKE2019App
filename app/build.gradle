@@ -7,19 +7,29 @@ apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 
 android {
-    compileSdkVersion 28
+    signingConfigs {
+        release {
+            storeFile file('/home/harun/keystores/droidconKE.jks')
+            storePassword 'droidconKE'
+            keyAlias = 'droidconKE'
+            keyPassword 'droidconKE'
+        }
+    }
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.android254.droidconke19"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 9
-        versionName "1.0.6"
+        targetSdkVersion 29
+        versionCode 1
+        versionName '1.0.1'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        signingConfig signingConfigs.release
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

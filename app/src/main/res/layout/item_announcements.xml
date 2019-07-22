@@ -32,7 +32,7 @@
                 />
 
 
-            <androidx.emoji.widget.EmojiAppCompatTextView
+            <TextView
                 android:id="@+id/announcementDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

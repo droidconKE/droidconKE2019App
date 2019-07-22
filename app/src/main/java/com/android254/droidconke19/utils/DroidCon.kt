@@ -16,33 +16,10 @@ import org.koin.core.logger.EmptyLogger
 class DroidCon : Application() {
     override fun onCreate() {
         super.onCreate()
-
-        setupEmojiCompat()
-
         startKoin {
             if (BuildConfig.DEBUG) androidLogger() else EmptyLogger()
             androidContext(this@DroidCon)
             modules(listOf(appModule, dataModule))
         }
-    }
-
-    private fun setupEmojiCompat() {
-        val fontRequest = FontRequest(
-                "com.google.android.gms.fonts",
-                "com.google.android.gms",
-                "Noto Color Emoji Compat",
-                R.array.com_google_android_gms_fonts_certs
-        )
-        val config = FontRequestEmojiCompatConfig(applicationContext, fontRequest)
-                .setReplaceAll(true)
-                .registerInitCallback(object : EmojiCompat.InitCallback() {
-                    override fun onInitialized() {
-                    }
-
-                    override fun onFailed(throwable: Throwable?) {
-                    }
-                })
-        EmojiCompat.init(config)
-
     }
 }
