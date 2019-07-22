@@ -53,8 +53,14 @@
     <fragment
         android:id="@+id/speakerFragment"
         android:name="com.android254.droidconke19.ui.speakers.SpeakerFragment"
-        tools:layout="@layout/fragment_speaker"
-        android:label="SpeakerFragment" />
+        android:label="Speaker Details"
+        tools:layout="@layout/fragment_speaker">
+        <action
+            android:id="@+id/action_speakerFragment_to_sessionDetailsFragment"
+            app:destination="@id/sessionDetailsFragment"
+            app:popUpTo="@+id/sessionDetailsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <dialog android:id="@+id/signInDialogFragment" />
 

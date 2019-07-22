@@ -42,6 +42,7 @@ data class SessionsModel(
         var am_pm_label: String = "",
         var session_audience: String = "",
         var notification_slug: String = "",
+        var photoUrl: String = "",
         val level :Level = Level.None
 
 ) : Parcelable, Filterable {
