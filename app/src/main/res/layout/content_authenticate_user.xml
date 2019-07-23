@@ -22,7 +22,7 @@
             android:id="@+id/welcomeImg"
             android:layout_margin="@dimen/fab_margin"
             android:contentDescription="TODO"
-            android:src="@drawable/main_logo"
+
             android:layout_height="100dp" />
         <TextView
             android:layout_width="match_parent"
