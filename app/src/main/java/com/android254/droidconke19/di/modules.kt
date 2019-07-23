@@ -37,7 +37,7 @@ val appModule = module {
     viewModel { FeedBackViewModel(get()) }
     viewModel { HomeViewModel(get()) }
     viewModel { AnnouncementViewModel(get()) }
-    viewModel { SessionDetailsViewModel(get()) }
+    viewModel { SessionDetailsViewModel(get(), get()) }
 
     factory { (context: Context) -> context.getSharedPreferences(SharedPref.PREF_NAME, Context.MODE_PRIVATE) }
 }

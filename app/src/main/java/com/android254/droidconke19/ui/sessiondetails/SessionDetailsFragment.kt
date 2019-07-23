@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -55,8 +56,9 @@ class SessionDetailsFragment : Fragment() {
                 findNavController().navigate(R.id.signInDialogFragment)
                 return@setOnClickListener
             }
+            val userId = firebaseAuth.currentUser!!.uid
             lifecycleScope.launch {
-                if (sessionDetailsViewModel.addToFavourites(sharedPreferences)) {
+                if (sessionDetailsViewModel.addToFavourites(sharedPreferences, userId)) {
                     activity?.toast("Session added to favourites")
                 } else {
                     activity?.toast("Session removed from favourites")
@@ -80,6 +82,9 @@ class SessionDetailsFragment : Fragment() {
         sessionDetailsViewModel.getSessionDetails().nonNull().observe(this) { sessionModel ->
             setupViews(sessionModel)
         }
+        sessionDetailsViewModel.message.observe(this, Observer {
+            activity?.toast(it)
+        })
     }
 
     private fun setupViews(sessionModel: SessionsModel) {
