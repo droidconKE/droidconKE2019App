@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -14,6 +15,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.android254.droidconke19.utils.SharedPref.TOKEN_SENT
+import com.android254.droidconke19.utils.isSignedIn
+import com.android254.droidconke19.utils.toast
 import com.android254.droidconke19.viewmodels.HomeViewModel
 import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
 import com.google.android.material.appbar.AppBarLayout
@@ -98,10 +101,18 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_profile -> {
-                //TODO add subcription logic after sign out
-//                unsubscribeNotifications()
-//                firebaseAuth.signOut()
-
+                if (!firebaseAuth.isSignedIn()) {
+                    findNavController(R.id.navHostFragment).navigate(R.id.signInDialogFragment)
+                } else {
+                    AlertDialog.Builder(this@HomeActivity)
+                            .setMessage("Do you want to logout?")
+                            .setPositiveButton("Yes") { _, _ ->
+                                unsubscribeNotifications()
+                                firebaseAuth.signOut()
+                                toast("Success")
+                            }.setNegativeButton("No", null)
+                            .show()
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -113,8 +124,7 @@ class HomeActivity : AppCompatActivity() {
         if (BuildConfig.DEBUG) {
             firebaseMessaging.unsubscribeFromTopic("debug").await()
         }
-
-        // TODO Add unsubscription from favourites
+        sessionDetailsViewModel.removeAllFavourites(sharedPreferences)
     }
 
     override fun onBackPressed() {

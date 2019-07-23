@@ -57,7 +57,10 @@
             app:popUpToInclusive="true" />
     </fragment>
 
-    <dialog android:id="@+id/signInDialogFragment" />
+    <dialog
+        android:id="@+id/signInDialogFragment"
+        android:name="com.android254.droidconke19.ui.authentication.SignInDialogFragment"
+        tools:layout="@layout/sign_in_dialog" />
 
 
 </navigation>

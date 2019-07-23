@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="@dimen/fab_margin"
     android:background="@drawable/rounded_dialog"
     android:layout_height="match_parent">
@@ -25,7 +24,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="@dimen/fab_margin"
             android:text="@string/sign_in_descrption"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_height="wrap_content" />
 
         <RelativeLayout
@@ -40,19 +39,21 @@
                 android:layout_marginEnd="@dimen/fab_margin"
                 android:id="@+id/cancelText"
                 android:text="@string/not_now"
-                android:textSize="18sp"
+                android:layout_height="wrap_content"
                 android:textColor="@color/colorFavourite"
-                android:layout_height="wrap_content" />
+                android:clickable="true"
+                android:focusable="true"
+                android:textSize="16sp" />
             <Button
                 android:layout_width="100dp"
                 android:id="@+id/signInBtn"
                 android:layout_marginStart="@dimen/fab_margin"
                 android:layout_marginEnd="@dimen/fab_margin"
                 android:layout_toEndOf="@id/cancelText"
-                android:text="Sign in"
+                android:text="@string/sign_in"
                 android:textColor="@color/colorWhite"
                 android:textAllCaps="false"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:background="@drawable/round_button"
                 android:layout_height="wrap_content" />
         </RelativeLayout>

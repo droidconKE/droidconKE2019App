@@ -10,18 +10,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.models.SpeakersModel
 import com.android254.droidconke19.ui.speakers.SpeakersAdapter
+import com.android254.droidconke19.utils.isSignedIn
 import com.android254.droidconke19.utils.nonNull
 import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.utils.toast
 import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_session_details.*
 import kotlinx.android.synthetic.main.fragment_speaker.*
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
@@ -29,6 +33,7 @@ import org.koin.core.parameter.parametersOf
 class SessionDetailsFragment : Fragment() {
     private val sessionDetailsViewModel: SessionDetailsViewModel by sharedViewModel()
     private val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
+    private val firebaseAuth: FirebaseAuth by inject()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -46,12 +51,19 @@ class SessionDetailsFragment : Fragment() {
         }
 
         session_favorite.setOnClickListener {
-            if (sessionDetailsViewModel.addToFavourites(sharedPreferences)) {
-                activity?.toast("Session added to favourites")
-            } else {
-                activity?.toast("Session removed from favourites")
+            if (!firebaseAuth.isSignedIn()) {
+                findNavController().navigate(R.id.signInDialogFragment)
+                return@setOnClickListener
             }
-            styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences))
+            lifecycleScope.launch {
+                if (sessionDetailsViewModel.addToFavourites(sharedPreferences)) {
+                    activity?.toast("Session added to favourites")
+                } else {
+                    activity?.toast("Session removed from favourites")
+                }
+                styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences))
+            }
+
         }
         styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences))
         //TODO add logic to fetch speaker details from firebase
