@@ -9,7 +9,7 @@ apply plugin: 'androidx.navigation.safeargs.kotlin'
 android {
     signingConfigs {
         release {
-            storeFile file('droidconKE.jks')
+            storeFile file('droidconKE.jks') // Put in app folder
             storePassword 'droidconKE'
             keyAlias = 'droidconKE'
             keyPassword 'droidconKE'
