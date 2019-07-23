@@ -43,14 +43,15 @@ class SessionDataRepo(db: AppDatabase, private val firestore: FirebaseFirestore)
         }
     }
 
-    suspend fun starrSession(dayNumber: String, sessionId: Int, userId: String): Result<String> {
+    suspend fun starrSession(dayNumber: String, sessionId: Int, userId: String, slug: String): Result<String> {
         if (!isSessionStarred(dayNumber, sessionId, userId)) {
             return try {
                 val data = hashMapOf(
                         "day" to dayNumber,
                         "session_id" to sessionId,
                         "user_id" to userId,
-                        "starred" to true
+                        "starred" to true,
+                        "slug" to slug
                 )
 
                 val starredSessionRef = firestore.collection(starredSessionCollection).document()

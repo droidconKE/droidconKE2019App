@@ -105,12 +105,12 @@ class HomeActivity : AppCompatActivity() {
                     findNavController(R.id.navHostFragment).navigate(R.id.signInDialogFragment)
                 } else {
                     AlertDialog.Builder(this@HomeActivity)
-                            .setMessage("Do you want to logout?")
-                            .setPositiveButton("Yes") { _, _ ->
+                            .setMessage(R.string.logout_question)
+                            .setPositiveButton(R.string.yes) { _, _ ->
                                 unsubscribeNotifications()
                                 firebaseAuth.signOut()
-                                toast("Success")
-                            }.setNegativeButton("No", null)
+                                toast(getString(R.string.success))
+                            }.setNegativeButton(getString(R.string.no), null)
                             .show()
                 }
                 true

@@ -58,12 +58,14 @@ class SessionDetailsFragment : Fragment() {
             }
             val userId = firebaseAuth.currentUser!!.uid
             lifecycleScope.launch {
+                progress_bar.visibility = View.VISIBLE
                 if (sessionDetailsViewModel.addToFavourites(sharedPreferences, userId)) {
-                    activity?.toast("Session added to favourites")
+                    activity?.toast(getString(R.string.session_added))
                 } else {
-                    activity?.toast("Session removed from favourites")
+                    activity?.toast(getString(R.string.session_removed))
                 }
                 styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences))
+                progress_bar.visibility = View.GONE
             }
 
         }

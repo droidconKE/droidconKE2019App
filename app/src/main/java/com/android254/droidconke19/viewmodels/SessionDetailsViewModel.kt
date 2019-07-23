@@ -43,7 +43,7 @@ class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging,
         } else {
             favourites.add(slug)
             firebaseMessaging.subscribeToTopic(slug).await()
-            when (val value = sessionDataRepo.starrSession(dayNumber, sessionId, userId)) {
+            when (val value = sessionDataRepo.starrSession(dayNumber, sessionId, userId, slug)) {
                 is Result.Success -> message.postValue(value.data)
                 is Result.Error -> message.postValue(value.exception)
             }

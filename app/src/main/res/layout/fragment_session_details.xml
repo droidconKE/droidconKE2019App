@@ -11,7 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="invisible"
+        android:elevation="4dp"
+        android:indeterminate="true"
+        android:visibility="gone"
         />
 
     <com.google.android.material.appbar.AppBarLayout
