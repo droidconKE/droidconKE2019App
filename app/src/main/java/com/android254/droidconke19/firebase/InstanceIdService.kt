@@ -9,7 +9,8 @@ import org.koin.core.parameter.parametersOf
 
 class InstanceIdService : FirebaseMessagingService() {
 
-    val sharedPreferences: SharedPreferences by inject { parametersOf(this) }
+    private val sharedPreferences: SharedPreferences by inject { parametersOf(this) }
+
     override fun onNewToken(token: String?) {
         super.onNewToken(token)
         saveToken(token)

@@ -25,7 +25,6 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -45,9 +44,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         setSupportActionBar(toolbar)
 
-
         setupNavigation()
-//        setupActionBarWithNavController(findNavController(R.id.navHostFragment), drawer_layout)
 
         setupNotifications()
 
@@ -120,10 +117,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun unsubscribeNotifications() = lifecycleScope.launch {
-        firebaseMessaging.unsubscribeFromTopic("all").await()
-        if (BuildConfig.DEBUG) {
-            firebaseMessaging.unsubscribeFromTopic("debug").await()
-        }
         sessionDetailsViewModel.removeAllFavourites(sharedPreferences)
     }
 
