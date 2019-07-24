@@ -94,6 +94,14 @@ class SessionDetailsFragment : Fragment() {
         sessionStartTimeText.text = sessionModel.time
         sessionDescriptionText.text = sessionModel.description
         intendedAudienceText.text = sessionModel.session_audience
+        sessionSpeakersRv.adapter = SpeakersAdapter(sessionModel.speakerList){speakerModel ->
+            val extras = FragmentNavigatorExtras(
+                    speaker_image to "speakerImage"
+            )
+            val sessionDetailsFragment = SessionDetailsFragmentDirections.actionSessionDetailsFragmentToSpeakerFragment(speakerModel)
+
+            findNavController().navigate(R.id.action_sessionDetailsFragment_to_speakerFragment,null,null,extras)
+        }
 
     }
 
@@ -143,11 +151,8 @@ class SessionDetailsFragment : Fragment() {
     private fun displaySessionSpeakers() {
         val speakersList = ArrayList<SpeakersModel>()
         speakersList.add(SpeakersModel(1,"John Doe","This is bio","Company","url"))
-        session_speakers.adapter = SpeakersAdapter(speakersList){
-            val extras = FragmentNavigatorExtras(
-                    speaker_image to "speakerImage"
-            )
-            findNavController().navigate(R.id.action_sessionDetailsFragment_to_speakerFragment,null,null,extras)
+        sessionSpeakersRv.adapter = SpeakersAdapter(speakersList){
+
         }
     }
 }

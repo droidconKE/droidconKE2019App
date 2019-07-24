@@ -54,7 +54,7 @@
                 tools:text="droidconKE"
                 />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/speaker_image"
                 android:layout_width="64dp"
                 android:layout_height="64dp"

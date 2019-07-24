@@ -10,6 +10,7 @@ import com.android254.droidconke19.utils.toEnum
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.*
+import kotlin.collections.ArrayList
 
 class Converter {
     @TypeConverter

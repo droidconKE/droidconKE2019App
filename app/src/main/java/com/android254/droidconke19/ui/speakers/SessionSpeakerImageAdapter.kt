@@ -9,14 +9,14 @@ import com.android254.droidconke19.models.SpeakersModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.synthetic.main.item_session_speaker.view.*
+import kotlinx.android.synthetic.main.item_session_speaker_image.view.*
 
-class SessionSpeakerAdapter(private val speakerList : List<SpeakersModel>): RecyclerView.Adapter<SessionSpeakerAdapter.SessionSpeakerViewHolder>() {
+class SessionSpeakerImageAdapter(private val speakerList : List<SpeakersModel>): RecyclerView.Adapter<SessionSpeakerImageAdapter.SessionSpeakerViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SessionSpeakerViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_session_speaker, parent, false)
+                .inflate(R.layout.item_session_speaker_image, parent, false)
         return SessionSpeakerViewHolder(itemView)
 
     }
@@ -29,8 +29,6 @@ class SessionSpeakerAdapter(private val speakerList : List<SpeakersModel>): Recy
 
     class SessionSpeakerViewHolder(itemView : View): RecyclerView.ViewHolder(itemView) {
         private val sessionSpeakerImg = itemView.sessionSpeakerImg
-        private val sessionSpeakerText = itemView.sessionSpeakerText
-
 
         fun bindSpeakerSession(speakersModel: SpeakersModel){
             with(speakersModel){
@@ -40,8 +38,6 @@ class SessionSpeakerAdapter(private val speakerList : List<SpeakersModel>): Recy
                                 .placeholder(R.drawable.profile)
                                 .diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(sessionSpeakerImg)
-
-                sessionSpeakerText.text  = name
 
             }
 

@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.ui.filters.Filter
-import com.android254.droidconke19.ui.speakers.SessionSpeakerAdapter
+import com.android254.droidconke19.ui.speakers.SessionSpeakerImageAdapter
+import com.android254.droidconke19.ui.speakers.SessionSpeakerTextAdapter
 import kotlinx.android.synthetic.main.item_session.view.*
 
 class SessionsAdapter(private val itemClickListener: (SessionsModel) -> Unit) : RecyclerView.Adapter<SessionsAdapter.SessionsViewHolder>() {
@@ -29,7 +31,7 @@ class SessionsAdapter(private val itemClickListener: (SessionsModel) -> Unit) : 
     }
 
     override fun onBindViewHolder(holder: SessionsViewHolder, position: Int) {
-        items[position].bindSession(holder,itemClickListener)
+        items[position].bindSession(holder, itemClickListener)
     }
 
     override fun getItemCount(): Int {
@@ -82,16 +84,20 @@ class SessionsAdapter(private val itemClickListener: (SessionsModel) -> Unit) : 
 
 
 }
+
 class AdapterItem(
         private val sessionsModel: SessionsModel
-){
-    fun bindSession(viewHolder : SessionsAdapter.SessionsViewHolder, itemClickListener: (SessionsModel) -> Unit) =
-            with(viewHolder.itemView){
+) {
+    fun bindSession(viewHolder: SessionsAdapter.SessionsViewHolder, itemClickListener: (SessionsModel) -> Unit) =
+            with(viewHolder.itemView) {
                 sessionTitleText.text = sessionsModel.title
                 sessionRoomText.text = sessionsModel.room
                 sessionInAmPmText.text = "${sessionsModel.time_in_am}${sessionsModel.am_pm_label}"
                 sessionAudienceText.text = sessionsModel.session_audience
-                sessionSpeakerRv.adapter = SessionSpeakerAdapter(sessionsModel.speakerList)
+                sessionSpeakerImageRv.adapter = SessionSpeakerImageAdapter(sessionsModel.speakerList)
+                sessionSpeakerImageRv.layoutManager = LinearLayoutManager(viewHolder.itemView.context, LinearLayoutManager.HORIZONTAL, false)
+                sessionSpeakerNameRv.adapter = SessionSpeakerTextAdapter(sessionsModel.speakerList)
+                sessionSpeakerNameRv.layoutManager = LinearLayoutManager(viewHolder.itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
                 when (sessionsModel.session_audience) {
                     "intermediate" -> sessionAudienceText.setBackgroundColor(ContextCompat.getColor(context, R.color.colorDeepOrange))

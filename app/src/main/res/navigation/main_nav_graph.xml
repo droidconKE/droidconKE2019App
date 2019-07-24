@@ -59,6 +59,9 @@
             app:destination="@id/sessionDetailsFragment"
             app:popUpTo="@+id/sessionDetailsFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="speakerModel"
+            app:argType="com.android254.droidconke19.models.SpeakersModel" />
     </fragment>
 
     <dialog
