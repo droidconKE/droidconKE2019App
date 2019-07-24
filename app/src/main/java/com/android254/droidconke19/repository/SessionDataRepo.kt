@@ -82,4 +82,16 @@ class SessionDataRepo(db: AppDatabase, private val firestore: FirebaseFirestore)
         }
 
     }
+
+    suspend fun clearStarredSessions(userId: String) {
+        val snapshot = firestore.collection(starredSessionCollection)
+                .whereEqualTo("user_id", userId)
+                .get()
+                .await()
+        val batch = firestore.batch()
+        snapshot.forEach {
+            batch.delete(it.reference)
+        }
+        batch.commit().await()
+    }
 }

@@ -117,7 +117,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun unsubscribeNotifications() = lifecycleScope.launch {
-        sessionDetailsViewModel.removeAllFavourites(sharedPreferences)
+        firebaseAuth.currentUser?.let {
+            sessionDetailsViewModel.removeAllFavourites(sharedPreferences, it.uid)
+        }
     }
 
     override fun onBackPressed() {
