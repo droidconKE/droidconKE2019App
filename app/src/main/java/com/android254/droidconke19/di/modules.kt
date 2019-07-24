@@ -29,8 +29,7 @@ val appModule = module {
 
     // ViewModels
     viewModel { AboutDetailsViewModel(get()) }
-    viewModel { DayOneViewModel(get()) }
-    viewModel { DayTwoViewModel(get()) }
+    viewModel { SessionsViewModel(get()) }
     viewModel { SessionDataViewModel(get(), get(), get(), get()) }
     viewModel { AgendaViewModel(get()) }
     viewModel { EventTypeViewModel(get()) }
@@ -45,8 +44,7 @@ val appModule = module {
 val dataModule = module {
     // Repos
     single { AboutDetailsRepo(get()) }
-    single { DayOneRepo(get(), get()) }
-    single { DayTwoRepo(get(), get()) }
+    single { SessionsRepo(get(), get()) }
     single { SessionDataRepo(get(), get()) }
     single { SpeakersRepo(get()) }
     single { RoomRepo(get()) }

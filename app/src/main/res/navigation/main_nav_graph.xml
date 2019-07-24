@@ -23,7 +23,11 @@
         android:id="@+id/infoFragment"
         android:name="com.android254.droidconke19.ui.info.InfoFragment"
         android:label="@string/info_label"
-        tools:layout="@layout/fragment_info"/>
+        tools:layout="@layout/fragment_info">
+        <action
+            android:id="@+id/action_infoFragment_to_aboutDetailsFragment"
+            app:destination="@id/aboutDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.android254.droidconke19.ui.venuemap.MapFragment"
@@ -61,6 +65,31 @@
         android:id="@+id/signInDialogFragment"
         android:name="com.android254.droidconke19.ui.authentication.SignInDialogFragment"
         tools:layout="@layout/sign_in_dialog" />
+    <fragment
+        android:id="@+id/aboutDetailsFragment"
+        android:name="com.android254.droidconke19.ui.about.AboutDetailsFragment"
+        android:label="@string/about_details_label"
+        tools:layout="@layout/fragment_about_details">
+        <argument
+            android:name="aboutType"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/sessionFeedbackFragment"
+        android:name="com.android254.droidconke19.ui.feedback.SessionFeedbackFragment"
+        android:label="@string/session_feed_back_label"
+        tools:layout="@layout/fragment_session_feedback">
+        <argument
+            android:name="sessionId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="dayNumber"
+            app:argType="string" />
+    </fragment>
 
 
 </navigation>

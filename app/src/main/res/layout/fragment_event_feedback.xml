@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/fab_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+
+    <ProgressBar
+        android:id="@+id/progressBarEventFeedBack"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/text_size_small"
+            android:textAlignment="center"
+            android:text="@string/event_feedback"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/fab_margin"
+            android:paddingEnd="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"/>
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:id="@+id/txtEventFeedback"
+            android:hint="@string/hintEventFeedback"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/submitSessionFeedBackBtn"
+            style="@style/Widget.MaterialComponents.Button.Icon"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fab_margin"
+            app:icon="@drawable/ic_send_white"
+            android:text="@string/submit_feedback"
+            android:background="@drawable/round_button"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/fab_margin"
+            android:layout_gravity="center_horizontal"
+            />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

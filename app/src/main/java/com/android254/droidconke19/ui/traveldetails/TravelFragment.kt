@@ -10,7 +10,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.android254.droidconke19.BuildConfig
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.TravelInfoModel
-import com.android254.droidconke19.utils.CollapsibleCard
+import com.android254.droidconke19.ui.widget.CollapsibleCard
 import kotlinx.android.synthetic.main.fragment_travel.*
 import org.koin.android.ext.android.inject
 

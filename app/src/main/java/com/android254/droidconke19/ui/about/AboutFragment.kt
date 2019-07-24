@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.android254.droidconke19.R
+import com.android254.droidconke19.ui.info.InfoFragmentDirections
 import kotlinx.android.synthetic.main.fragment_about.*
 
 class AboutFragment : Fragment() {
@@ -21,19 +23,16 @@ class AboutFragment : Fragment() {
         //load about details
         //about type is used to fetch for the specific clicked one
         aboutDroidconText.setOnClickListener {
-            val aboutDetailsIntent = Intent(activity, AboutDetailsActivity::class.java)
-            aboutDetailsIntent.putExtra("aboutType", "about_droidconKE")
-            startActivity(aboutDetailsIntent)
+            val aboutAction = InfoFragmentDirections.actionInfoFragmentToAboutDetailsFragment("about_droidconKE")
+            findNavController().navigate(aboutAction)
         }
         organizersText.setOnClickListener {
-            val aboutDetailsIntent = Intent(activity, AboutDetailsActivity::class.java)
-            aboutDetailsIntent.putExtra("aboutType", "organizers")
-            startActivity(aboutDetailsIntent)
+            val aboutAction = InfoFragmentDirections.actionInfoFragmentToAboutDetailsFragment("organizers")
+            findNavController().navigate(aboutAction)
         }
         sponsorsText.setOnClickListener {
-            val aboutDetailsIntent = Intent(activity, AboutDetailsActivity::class.java)
-            aboutDetailsIntent.putExtra("aboutType", "sponsors")
-            startActivity(aboutDetailsIntent)
+            val aboutAction = InfoFragmentDirections.actionInfoFragmentToAboutDetailsFragment("sponsors")
+            findNavController().navigate(aboutAction)
         }
     }
 }

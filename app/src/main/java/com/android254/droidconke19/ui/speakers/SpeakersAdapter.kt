@@ -16,8 +16,8 @@ import kotlinx.android.synthetic.main.item_speaker.view.*
 class SpeakersAdapter(private val speakersList: List<SpeakersModel>,private val itemClickListener: (SpeakersModel) -> Unit) : RecyclerView.Adapter<SpeakersAdapter.SpeakersViewHolder>() {
 
     inner class SpeakersViewHolder(itemView: View,private val itemClickListener: (SpeakersModel) -> Unit) : RecyclerView.ViewHolder(itemView) {
-        private var speakerNameText = itemView.speaker_text
-        private var speakerImg = itemView.speaker_image
+        private val speakerNameText = itemView.speaker_text
+        private val speakerImg = itemView.speaker_image
 
         fun bindSpeakerDetails(speakersModel: SpeakersModel) {
             with(speakersModel) {

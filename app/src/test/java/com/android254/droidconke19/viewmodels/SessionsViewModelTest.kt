@@ -2,7 +2,7 @@ package com.android254.droidconke19.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.android254.droidconke19.CoroutinesRule
-import com.android254.droidconke19.repository.DayOneRepo
+import com.android254.droidconke19.repository.SessionsRepo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -15,10 +15,10 @@ import org.koin.test.mock.declareMock
 
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
-class DayOneViewModelTest : KoinTest {
+class SessionsViewModelTest : KoinTest {
 
-    private val dayOneRepo: DayOneRepo by inject()
-    private val dayOneViewModel: DayOneViewModel by inject()
+    private val sessionsRepo: SessionsRepo by inject()
+    private val sessionsViewModel: SessionsViewModel by inject()
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -28,17 +28,17 @@ class DayOneViewModelTest : KoinTest {
 
     @Before
     fun setup() {
-        declareMock<DayOneRepo>()
+        declareMock<SessionsRepo>()
     }
 
     @Test
     fun `test getDayOneSessions`() = runBlocking {
 //        val state = SessionsState(emptyList())
-//        `when`(dayOneRepo.getSessions()).thenReturn(MutableLiveData<SessionsState>().apply { value = state })
+//        `when`(sessionsRepo.getSessions()).thenReturn(MutableLiveData<SessionsState>().apply { value = state })
 //
-//        dayOneViewModel.getDayOneSessions()
+//        sessionsViewModel.getSessions()
 //
-//        dayOneViewModel.sessions.observeOnce {
+//        sessionsViewModel.sessions.observeOnce {
 //            Assert.assertTrue(it.sessionsModelList?.isEmpty() ?: false)
 //        }
 

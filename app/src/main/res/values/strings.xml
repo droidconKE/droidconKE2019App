@@ -202,4 +202,6 @@
     <string name="no">No</string>
     <string name="session_added">Session added to favourites</string>
     <string name="session_removed">Session removed from favourites</string>
+    <string name="about_details_label">About</string>
+    <string name="submit_feedback">Submit</string>
 </resources>

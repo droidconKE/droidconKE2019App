@@ -10,7 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.EventTypeModel
-import kotlinx.android.synthetic.main.event_type_details.view.*
+import kotlinx.android.synthetic.main.item_event_type.view.*
 
 class EventTypeAdapter(private val eventTypesList: List<EventTypeModel>, private val context: Context) : RecyclerView.Adapter<EventTypeAdapter.EventViewHolder>() {
 
@@ -33,7 +33,7 @@ class EventTypeAdapter(private val eventTypesList: List<EventTypeModel>, private
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.event_type_details, parent, false)
+                .inflate(R.layout.item_event_type, parent, false)
         return EventViewHolder(itemView)
     }
 

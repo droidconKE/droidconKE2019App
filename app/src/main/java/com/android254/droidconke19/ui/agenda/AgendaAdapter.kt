@@ -11,7 +11,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.AgendaModel
-import kotlinx.android.synthetic.main.agenda_details.view.*
+import kotlinx.android.synthetic.main.item_agenda.view.*
+
 
 class AgendaAdapter(private val agendaModelList: List<AgendaModel>, private val context: Context) : RecyclerView.Adapter<AgendaAdapter.AgendaViewHolder>() {
     inner class AgendaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

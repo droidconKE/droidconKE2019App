@@ -34,10 +34,10 @@
             android:layout_marginBottom="@dimen/fab_margin"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/cancelText"
                 android:layout_width="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/fab_margin"
-                android:id="@+id/cancelText"
                 android:text="@string/not_now"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorFavourite"
@@ -45,8 +45,8 @@
                 android:focusable="true"
                 android:textSize="16sp" />
             <Button
-                android:layout_width="100dp"
                 android:id="@+id/signInBtn"
+                android:layout_width="100dp"
                 android:layout_marginStart="@dimen/fab_margin"
                 android:layout_marginEnd="@dimen/fab_margin"
                 android:layout_toEndOf="@id/cancelText"
