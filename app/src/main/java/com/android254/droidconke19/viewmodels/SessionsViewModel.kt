@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android254.droidconke19.datastates.Result
 import com.android254.droidconke19.models.SessionsModel
-import com.android254.droidconke19.repository.DayOneRepo
+import com.android254.droidconke19.repository.SessionsRepo
 import com.android254.droidconke19.utils.NonNullMediatorLiveData
 import kotlinx.coroutines.launch
 
-class DayOneViewModel(private val dayOneRepo: DayOneRepo) : ViewModel() {
+class SessionsViewModel(private val sessionsRepo: SessionsRepo) : ViewModel() {
     private val sessionsStateMediatorLiveData = NonNullMediatorLiveData<List<SessionsModel>>()
     private val sessionError = NonNullMediatorLiveData<String>()
 
@@ -18,9 +18,9 @@ class DayOneViewModel(private val dayOneRepo: DayOneRepo) : ViewModel() {
 
     fun getSessionsError(): LiveData<String> = sessionError
 
-    fun getDayOneSessions() {
+    fun getSessions(sessionDay : String) {
         viewModelScope.launch {
-            when (val value = dayOneRepo.getDayOneSessions()) {
+            when (val value = sessionsRepo.getSessions(sessionDay)) {
                 is Result.Success -> sessionsStateMediatorLiveData.postValue(value.data)
                 is Result.Error -> sessionError.postValue(value.exception)
             }

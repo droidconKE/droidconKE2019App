@@ -1,4 +1,4 @@
-package com.android254.droidconke19.utils
+package com.android254.droidconke19.ui.widget
 
 import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout

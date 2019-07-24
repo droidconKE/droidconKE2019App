@@ -16,7 +16,7 @@ import com.android254.droidconke19.ui.filters.FilterStore
 import com.android254.droidconke19.ui.schedule.ScheduleFragmentDirections
 import com.android254.droidconke19.utils.nonNull
 import com.android254.droidconke19.utils.observe
-import com.android254.droidconke19.viewmodels.DayOneViewModel
+import com.android254.droidconke19.viewmodels.SessionsViewModel
 import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_day_one.*
 import org.jetbrains.anko.toast
@@ -27,7 +27,10 @@ class SessionDayFragment : Fragment() {
     private val sessionsAdapter: SessionsAdapter by lazy {
         SessionsAdapter{ redirectToSessionDetails(it) }
     }
-    private val dayOneViewModel: DayOneViewModel by inject()
+    val day: EventDay by lazy {
+        checkNotNull(arguments?.getSerializable(KEY_EVENT_DAY) as EventDay)
+    }
+    private val sessionsViewModel: SessionsViewModel by inject()
     private val sessionDetailsViewModel: SessionDetailsViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -39,7 +42,9 @@ class SessionDayFragment : Fragment() {
 
         initView(sessionsRv)
         showProgressBar()
-        dayOneViewModel.getDayOneSessions()
+        //fetch sessions according to day
+        fetchDaySessions()
+
 
         val filterStore = FilterStore.instance
         if (filterStore.filter != Filter.empty()) {
@@ -49,13 +54,20 @@ class SessionDayFragment : Fragment() {
         observeLiveData()
     }
 
+    private fun fetchDaySessions() {
+        when(day){
+            EventDay.Thursday -> sessionsViewModel.getSessions("day_one")
+            EventDay.Friday -> sessionsViewModel.getSessions("day_two")
+        }
+    }
+
     private fun redirectToSessionDetails(it: SessionsModel) {
         sessionDetailsViewModel.loadSessionDetails(it)
         findNavController().navigate(ScheduleFragmentDirections.actionScheduleFragmentToSessionDetailsFragment())
     }
 
     private fun observeLiveData() {
-        dayOneViewModel.getSessionsResponse().nonNull().observe(this) {sessionList ->
+        sessionsViewModel.getSessionsResponse().nonNull().observe(this) { sessionList ->
             updateAdapterWithList(sessionList)
         }
 

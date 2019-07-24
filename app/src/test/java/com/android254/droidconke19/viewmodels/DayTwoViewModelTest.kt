@@ -2,7 +2,6 @@ package com.android254.droidconke19.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.android254.droidconke19.CoroutinesRule
-import com.android254.droidconke19.repository.DayTwoRepo
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.runBlocking

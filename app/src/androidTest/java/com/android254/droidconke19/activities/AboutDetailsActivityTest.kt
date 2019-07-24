@@ -14,7 +14,6 @@ import com.bartoszlipinski.disableanimationsrule.DisableAnimationsRule
 import com.android254.droidconke19.R
 import com.android254.droidconke19.ui.about.AboutDetailsAdapter
 import com.android254.droidconke19.utils.EspressoIdlingResource
-import com.android254.droidconke19.ui.about.AboutDetailsActivity
 import org.hamcrest.CoreMatchers.*
 import org.junit.*
 import org.junit.runner.RunWith

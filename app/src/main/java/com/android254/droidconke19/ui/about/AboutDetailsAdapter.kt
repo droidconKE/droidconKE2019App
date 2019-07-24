@@ -1,6 +1,5 @@
 package com.android254.droidconke19.ui.about
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.AboutDetailsModel
-import kotlinx.android.synthetic.main.about_details.view.*
+import kotlinx.android.synthetic.main.item_about.view.*
 
 
-class AboutDetailsAdapter(private val aboutDetailsModelList: List<AboutDetailsModel>, private val context: Context, private val itemClick: (AboutDetailsModel) -> Unit) : RecyclerView.Adapter<AboutDetailsAdapter.AboutDetailsViewHolder>() {
+class AboutDetailsAdapter(private val aboutDetailsModelList: List<AboutDetailsModel>, private val itemClick: (AboutDetailsModel) -> Unit) : RecyclerView.Adapter<AboutDetailsAdapter.AboutDetailsViewHolder>() {
 
     class AboutDetailsViewHolder(itemView: View, private val itemClick: (AboutDetailsModel) -> Unit) : RecyclerView.ViewHolder(itemView) {
         private val aboutDetailsDescText = itemView.aboutDetailsDescText
@@ -55,7 +54,7 @@ class AboutDetailsAdapter(private val aboutDetailsModelList: List<AboutDetailsMo
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AboutDetailsViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.about_details, parent, false)
+                .inflate(R.layout.item_about, parent, false)
         return AboutDetailsViewHolder(itemView, itemClick)
     }
 
