@@ -58,11 +58,12 @@ class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging,
         return favourites.contains(slug)
     }
 
-    suspend fun removeAllFavourites(sharedPreferences: SharedPreferences) {
+    suspend fun removeAllFavourites(sharedPreferences: SharedPreferences, userId: String) {
         val favourites = sharedPreferences.getStringSet(SharedPref.FAVOURITE_SESSIONS, mutableSetOf())!!
         for (favourite in favourites) {
             firebaseMessaging.unsubscribeFromTopic(favourite).await()
         }
+        sessionDataRepo.clearStarredSessions(userId)
         sharedPreferences.edit().putStringSet(SharedPref.FAVOURITE_SESSIONS, mutableSetOf()).apply()
     }
 

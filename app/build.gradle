@@ -9,7 +9,7 @@ apply plugin: 'androidx.navigation.safeargs.kotlin'
 android {
     signingConfigs {
         release {
-            storeFile file('/home/harun/keystores/droidconKE.jks')
+            storeFile file('droidconKE.jks') // Put in app folder
             storePassword 'droidconKE'
             keyAlias = 'droidconKE'
             keyPassword 'droidconKE'
@@ -23,6 +23,7 @@ android {
         versionCode 1
         versionName '1.0.1'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        setProperty("archivesBaseName", "DroidconKe-$versionName")
         vectorDrawables.useSupportLibrary = true
         signingConfig signingConfigs.release
     }

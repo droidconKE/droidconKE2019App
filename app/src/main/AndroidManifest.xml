@@ -50,15 +50,16 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name="com.android254.droidconke19.ui.feedback.SessionFeedBackActivity"
-            android:label="@string/title_activity_feed_back"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="com.android254.droidconke19.ui.feedback.EventFeedbackActivity"
-            android:label="@string/title_activity_event_feedback"
-            android:parentActivityName="com.android254.droidconke19.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/notification" />
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary" />
     </application>
 
 </manifest>
