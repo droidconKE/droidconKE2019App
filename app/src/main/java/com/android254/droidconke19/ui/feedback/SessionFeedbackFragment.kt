@@ -59,7 +59,7 @@ class SessionFeedbackFragment : Fragment() {
 
     private fun handleFetchSessionData(sessionsModel: SessionsModel) {
         //set the data on the view
-        txtSessionFeedbackTitle.text = sessionsModel.title
+//        txtSessionFeedbackTitle.text = sessionsModel.title
 
 
     }

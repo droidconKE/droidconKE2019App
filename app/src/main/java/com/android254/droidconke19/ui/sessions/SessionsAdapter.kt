@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.ui.filters.Filter
+import com.android254.droidconke19.ui.speakers.SessionSpeakerAdapter
 import kotlinx.android.synthetic.main.item_session.view.*
 
 class SessionsAdapter(private val itemClickListener: (SessionsModel) -> Unit) : RecyclerView.Adapter<SessionsAdapter.SessionsViewHolder>() {
@@ -16,7 +17,7 @@ class SessionsAdapter(private val itemClickListener: (SessionsModel) -> Unit) : 
     private val allItems = mutableListOf<AdapterItem>()
     private var filteredItems: MutableList<AdapterItem>? = null
 
-    val items: List<AdapterItem>
+    private val items: List<AdapterItem>
         get() = filteredItems ?: allItems
 
     class SessionsViewHolder(itemView: View, val itemClickListener: (SessionsModel) -> Unit) : RecyclerView.ViewHolder(itemView)
@@ -45,7 +46,7 @@ class SessionsAdapter(private val itemClickListener: (SessionsModel) -> Unit) : 
         for (time in eventsByTime.keys) {
             val items = eventsByTime[time].orEmpty()
             newItems += items.mapIndexed { index, event ->
-                AdapterItem(event, isFirst = index == 0)
+                AdapterItem(event)
             }
         }
 
@@ -62,7 +63,7 @@ class SessionsAdapter(private val itemClickListener: (SessionsModel) -> Unit) : 
 
         for (eventsAtTime in filteredEventsByTime.values) {
             newFilteredItems += eventsAtTime.mapIndexed { index, event ->
-                AdapterItem(event, isFirst = index == 0)
+                AdapterItem(event)
             }
         }
 
@@ -82,8 +83,7 @@ class SessionsAdapter(private val itemClickListener: (SessionsModel) -> Unit) : 
 
 }
 class AdapterItem(
-        val sessionsModel: SessionsModel,
-        val isFirst: Boolean = false
+        private val sessionsModel: SessionsModel
 ){
     fun bindSession(viewHolder : SessionsAdapter.SessionsViewHolder, itemClickListener: (SessionsModel) -> Unit) =
             with(viewHolder.itemView){
@@ -91,6 +91,7 @@ class AdapterItem(
                 sessionRoomText.text = sessionsModel.room
                 sessionInAmPmText.text = "${sessionsModel.time_in_am}${sessionsModel.am_pm_label}"
                 sessionAudienceText.text = sessionsModel.session_audience
+                sessionSpeakerRv.adapter = SessionSpeakerAdapter(sessionsModel.speakerList)
 
                 when (sessionsModel.session_audience) {
                     "intermediate" -> sessionAudienceText.setBackgroundColor(ContextCompat.getColor(context, R.color.colorDeepOrange))

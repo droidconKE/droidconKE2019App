@@ -2,6 +2,7 @@ package com.android254.droidconke19.database.converters
 
 import androidx.room.TypeConverter
 import com.android254.droidconke19.models.Level
+import com.android254.droidconke19.models.SpeakersModel
 import com.android254.droidconke19.models.Stage
 import com.android254.droidconke19.models.Type
 import com.android254.droidconke19.utils.enumToInt
@@ -56,6 +57,21 @@ class Converter {
 
     @TypeConverter
     fun intEnumToStage(value : Int) = value.toEnum<Stage>()
+
+    @TypeConverter
+    fun speakerFromString(value: String): ArrayList<SpeakersModel>? {
+        val listType = object : TypeToken<ArrayList<SpeakersModel>>() {
+
+        }.type
+        return Gson().fromJson<ArrayList<SpeakersModel>>(value, listType)
+    }
+
+    @TypeConverter
+    fun speakerFromArrayList(list: ArrayList<SpeakersModel>): String {
+        val gson = Gson()
+        return gson.toJson(list)
+    }
+
 
 
 }

@@ -23,25 +23,14 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <LinearLayout
-                    android:id="@+id/speakerLinear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/profile"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/speaker_name"
-                        android:textSize="@dimen/text_size_extra_small"
-                        android:layout_marginTop="@dimen/small_margin"
-                       />
-
-                </LinearLayout>
+               <androidx.recyclerview.widget.RecyclerView
+                   android:id="@+id/sessionSpeakerRv"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   tools:listitem="@layout/item_session_speaker"
+                   app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                   />
                 <TextView
                     android:id="@+id/sessionAudienceText"
                     android:layout_width="wrap_content"
