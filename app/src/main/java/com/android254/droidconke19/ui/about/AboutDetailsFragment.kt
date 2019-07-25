@@ -17,7 +17,7 @@ import org.koin.android.ext.android.inject
 
 class AboutDetailsFragment : Fragment() {
     private val aboutDetailsViewModel: AboutDetailsViewModel by inject()
-    private val aboutArgs : AboutDetailsFragmentArgs by navArgs()
+    private val aboutArgs: AboutDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_about_details, container, false)
@@ -33,10 +33,10 @@ class AboutDetailsFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        aboutDetailsViewModel.getAboutDetailsResponse().nonNull().observe(this) {aboutDetailsList ->
+        aboutDetailsViewModel.getAboutDetailsResponse().nonNull().observe(this) { aboutDetailsList ->
             handleFetchAboutDetails(aboutDetailsList)
         }
-        aboutDetailsViewModel.getAboutDetailsError().nonNull().observe(this) {databaseError ->
+        aboutDetailsViewModel.getAboutDetailsError().nonNull().observe(this) { databaseError ->
             handleDatabaseError(databaseError)
         }
     }
@@ -55,6 +55,6 @@ class AboutDetailsFragment : Fragment() {
     }
 
     private fun fetchAboutDetails(aboutType: String?) {
-        aboutType?.let { aboutType ->  aboutDetailsViewModel.fetchAboutDetails(aboutType) }
+        aboutType?.let { aboutType -> aboutDetailsViewModel.fetchAboutDetails(aboutType) }
     }
 }

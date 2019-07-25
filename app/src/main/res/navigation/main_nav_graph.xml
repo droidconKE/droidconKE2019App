@@ -62,6 +62,9 @@
         <argument
             android:name="speakerModel"
             app:argType="com.android254.droidconke19.models.SpeakersModel" />
+        <argument
+            android:name="sessionModel"
+            app:argType="com.android254.droidconke19.models.SessionsModel" />
     </fragment>
 
     <dialog

@@ -20,7 +20,7 @@
             >
 
             <TextView
-                android:id="@+id/speaker_name"
+                android:id="@+id/speakerNameText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -39,7 +39,7 @@
                 />
 
             <TextView
-                android:id="@+id/speaker_tag_line"
+                android:id="@+id/speakerCompanyText"
                 android:textAppearance="@style/TextAppearance.App.Subtitle1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -49,8 +49,8 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/speaker_image"
                 app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="@id/speaker_name"
-                app:layout_constraintTop_toBottomOf="@id/speaker_name"
+                app:layout_constraintStart_toStartOf="@id/speakerNameText"
+                app:layout_constraintTop_toBottomOf="@id/speakerNameText"
                 tools:text="droidconKE"
                 />
 
@@ -79,11 +79,11 @@
                 android:src="@drawable/shape_dashed_line"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/speaker_tag_line"
+                app:layout_constraintTop_toBottomOf="@id/speakerCompanyText"
                 />
 
             <TextView
-                android:id="@+id/speaker_description"
+                android:id="@+id/speakerDescriptionText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -95,7 +95,7 @@
                 android:text="@string/event_description"
                 android:textAlignment="viewStart"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/speaker_name"
+                app:layout_constraintStart_toStartOf="@id/speakerNameText"
                 app:layout_constraintTop_toBottomOf="@id/divider1"
                 tools:text="Material is the metaphor A material metaphor is the unifying theory of a rationalized space and a system of motion. The material is grounded in tactile reality, inspired by the study of paper and ink, yet technologically advanced and open to imagination and magic."
                 />
@@ -113,7 +113,7 @@
                 android:src="@drawable/shape_dashed_line"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/speaker_description"
+                app:layout_constraintTop_toBottomOf="@id/speakerDescriptionText"
                 />
 
 
@@ -123,13 +123,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/speaker_session_head"
-                app:layout_constraintStart_toStartOf="@id/speaker_name"
+                app:layout_constraintStart_toStartOf="@id/speakerNameText"
                 app:layout_constraintTop_toBottomOf="@id/divider2"
                 />
 
 
             <TextView
-                android:id="@+id/speaker_session_title"
+                android:id="@+id/speakerSessionTitleText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -140,14 +140,14 @@
                 android:textColor="@color/colorBlack"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="@id/speaker_name"
+                app:layout_constraintStart_toStartOf="@id/speakerNameText"
                 app:layout_constraintTop_toBottomOf="@id/speaker_session_head"
                 tools:text="@string/session_title"
                 />
 
 
             <TextView
-                android:id="@+id/speaker_session_summary"
+                android:id="@+id/speakerSessionSummaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -156,8 +156,8 @@
                 android:text="@string/speaker_session_summary"
                 android:textAppearance="@style/TextAppearance.App.Caption"
                 app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="@id/speaker_name"
-                app:layout_constraintTop_toBottomOf="@id/speaker_session_title"
+                app:layout_constraintStart_toStartOf="@id/speakerNameText"
+                app:layout_constraintTop_toBottomOf="@id/speakerSessionTitleText"
                 tools:text="8.9 10:00 - 10: 40 30min / Hall"
                 />
 
@@ -166,10 +166,10 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="?selectableItemBackground"
-                app:layout_constraintBottom_toBottomOf="@id/speaker_session_summary"
+                app:layout_constraintBottom_toBottomOf="@id/speakerSessionSummaryText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/speaker_session_title"
+                app:layout_constraintTop_toTopOf="@id/speakerSessionTitleText"
                 android:clickable="true"
                 android:focusable="true"
                 />

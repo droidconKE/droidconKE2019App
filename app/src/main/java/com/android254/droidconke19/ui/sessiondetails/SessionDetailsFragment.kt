@@ -94,13 +94,12 @@ class SessionDetailsFragment : Fragment() {
         sessionStartTimeText.text = sessionModel.time
         sessionDescriptionText.text = sessionModel.description
         intendedAudienceText.text = sessionModel.session_audience
-        sessionSpeakersRv.adapter = SpeakersAdapter(sessionModel.speakerList){speakerModel ->
+        sessionSpeakersRv.adapter = SpeakersAdapter(sessionModel.speakerList) { speakerModel ->
             val extras = FragmentNavigatorExtras(
                     speaker_image to "speakerImage"
             )
-            val sessionDetailsFragment = SessionDetailsFragmentDirections.actionSessionDetailsFragmentToSpeakerFragment(speakerModel)
-
-            findNavController().navigate(R.id.action_sessionDetailsFragment_to_speakerFragment,null,null,extras)
+            val sessionDetailsFragment = SessionDetailsFragmentDirections.actionSessionDetailsFragmentToSpeakerFragment(speakerModel, sessionModel)
+            findNavController().navigate(sessionDetailsFragment, extras)
         }
 
     }
@@ -118,22 +117,22 @@ class SessionDetailsFragment : Fragment() {
     private fun handleBottomBarMenuClick() {
         bottom_app_bar.setOnMenuItemClickListener { item ->
             val id = item.itemId
-            when(id){
-                 R.id.action_share ->{
-                     val shareSession = Intent()
-                     shareSession.action = Intent.ACTION_SEND
-                     shareSession.putExtra(Intent.EXTRA_TEXT, "Check out " + "'" + "This session" + "' at " + getString(R.string.droidcoke_hashtag) + "\n" + getString(R.string.droidconke_site))
-                     shareSession.type = "text/plain"
-                     startActivity(shareSession)
+            when (id) {
+                R.id.action_share -> {
+                    val shareSession = Intent()
+                    shareSession.action = Intent.ACTION_SEND
+                    shareSession.putExtra(Intent.EXTRA_TEXT, "Check out " + "'" + "This session" + "' at " + getString(R.string.droidcoke_hashtag) + "\n" + getString(R.string.droidconke_site))
+                    shareSession.type = "text/plain"
+                    startActivity(shareSession)
                 }
             }
-            when(id){
-                R.id.action_map ->{
+            when (id) {
+                R.id.action_map -> {
 
                 }
             }
-            when(id){
-                R.id.action_calendar ->{
+            when (id) {
+                R.id.action_calendar -> {
                     val intent = Intent(Intent.ACTION_INSERT)
                             .setData(CalendarContract.Events.CONTENT_URI)
                             .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, "8:00")
@@ -150,8 +149,8 @@ class SessionDetailsFragment : Fragment() {
 
     private fun displaySessionSpeakers() {
         val speakersList = ArrayList<SpeakersModel>()
-        speakersList.add(SpeakersModel(1,"John Doe","This is bio","Company","url"))
-        sessionSpeakersRv.adapter = SpeakersAdapter(speakersList){
+        speakersList.add(SpeakersModel(1, "John Doe", "This is bio", "Company", "url"))
+        sessionSpeakersRv.adapter = SpeakersAdapter(speakersList) {
 
         }
     }
