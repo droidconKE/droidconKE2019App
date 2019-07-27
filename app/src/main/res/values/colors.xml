@@ -45,6 +45,10 @@
     <color name="colorGreen">#aed581</color>
     <color name="colorOnBackground">@color/gray1</color>
     <color name="colorActiveFiltersCard">@android:color/white</color>
+    <color name="chipUnselected">@color/gray2</color>
+    <color name="chipSelected">@color/colorAquaMarine</color>
+    <color name="levelActive">@color/colorBlack</color>
+    <color name="levelInactive">@color/gray3</color>
 
     <!--Theme Colors -->
     <color name="color_primary_variant">#000000</color>

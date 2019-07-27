@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <droiddevelopers254.droidconke.ui.filters.FilterChip
+    <com.android254.droidconke19.ui.filters.FilterChip
         android:id="@+id/favoritesChip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

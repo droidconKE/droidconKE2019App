@@ -7,7 +7,7 @@
     <string name="session_title">Firebase Remote config</string>
     <string name="session_separator">/</string>
     <string name="session_time">1 hour</string>
-    <string name="session_room">6th Floor,Senteu Plaza</string>
+    <string name="session_room_and_session_duration">%s / %s</string>
     <string name="session_category">Firebase</string>
     <string name="agenda_label">Agenda</string>
     <string name="agenda_time">7:00 AM - 9:30 AM</string>
@@ -104,7 +104,7 @@
     <string name="star_event">Add to your isStarred events</string>
     <string name="see_event_map">See session venue</string>
     <string name="sign_in_to_customize">Sign in to customize \nyour schedule</string>
-    <string name="sign_in_descrption">Sign in to save events and get notifications. Actions will be synced from your account across app and site</string>
+    <string name="sign_in_descrption">Sign in to save events and build your custom schedule. Saved sessions will be synced from your account across devices</string>
     <string name="not_now">Not now</string>
 
     <!--Remote config Keys-->
@@ -193,4 +193,15 @@
     <string name="stages">Stages</string>
     <string name="types">Types</string>
     <string name="level">Level</string>
+    <string name="speaker_session_head">Session</string>
+    <string name="speaker_session_summary">8.9 10:00 - 10: 40 30min / Hall</string>
+    <string name="sign_in">Sign in</string>
+    <string name="logout_question">Do you want to logout?</string>
+    <string name="yes">Yes</string>
+    <string name="success">Success</string>
+    <string name="no">No</string>
+    <string name="session_added">Session added to favourites</string>
+    <string name="session_removed">Session removed from favourites</string>
+    <string name="about_details_label">About</string>
+    <string name="submit_feedback">Submit</string>
 </resources>

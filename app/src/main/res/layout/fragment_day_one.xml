@@ -7,18 +7,18 @@
     android:background="@color/gray3">
 
     <ProgressBar
-        android:id="@+id/loginProgressBar"
+        android:id="@+id/progressBar"
         android:layout_marginTop="10dp"
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
         android:id="@+id/sessionsRv"
+        android:layout_width="match_parent"
         android:scrollbars="none"
-        android:layout_below="@+id/loginProgressBar"
         android:layout_height="wrap_content"
         tools:listitem="@layout/item_session"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

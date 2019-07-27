@@ -96,7 +96,7 @@
             android:scrollbars="none"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tool:listitem="@layout/event_type_details">
+            tool:listitem="@layout/item_event_type">
 
         </androidx.recyclerview.widget.RecyclerView>
 
