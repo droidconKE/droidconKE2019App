@@ -15,6 +15,7 @@ import android.os.Looper
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -96,6 +97,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -260,6 +266,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
             }// The user was asked to change settings, but chose not to
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.findItem(R.id.action_profile)?.setVisible(false)
     }
 
     companion object {

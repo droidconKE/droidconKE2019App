@@ -2,6 +2,7 @@ package com.android254.droidconke19.ui.announcements
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -24,6 +25,11 @@ class AnnouncementFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_announcements, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,5 +67,10 @@ class AnnouncementFragment : Fragment() {
 
     private fun handleError(databaseError: String?) {
         activity?.toast(databaseError.toString())
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.findItem(R.id.action_profile)?.setVisible(false)
     }
 }

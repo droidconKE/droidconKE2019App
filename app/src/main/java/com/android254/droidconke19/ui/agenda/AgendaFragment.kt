@@ -2,6 +2,7 @@ package com.android254.droidconke19.ui.agenda
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -22,6 +23,11 @@ class AgendaFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_agenda, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,6 +64,11 @@ class AgendaFragment : Fragment() {
     private fun initView(agendaRv: RecyclerView) {
         val agendaAdapter = AgendaAdapter(agendaModelList, context!!)
         agendaRv.adapter = agendaAdapter
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.findItem(R.id.action_profile)?.isVisible = false
     }
 
 }

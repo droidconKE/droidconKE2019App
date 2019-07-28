@@ -25,9 +25,7 @@ import org.koin.android.ext.android.inject
 
 class SignInDialogFragment : DialogFragment() {
     private val firebaseAuth: FirebaseAuth by inject()
-
     private val RC_SIGN_IN = 1
-
     lateinit var gClient: GoogleSignInClient
 
     override fun onCreate(savedInstanceState: Bundle?) {

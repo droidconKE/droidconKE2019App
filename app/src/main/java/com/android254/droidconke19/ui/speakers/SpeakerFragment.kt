@@ -26,7 +26,7 @@ class SpeakerFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(R.transition.speaker_shared_enter)
-        setHasOptionsMenu(false)
+        setHasOptionsMenu(true)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,4 +53,8 @@ class SpeakerFragment : Fragment() {
 
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+        menu.findItem(R.id.action_profile)?.setVisible(false)
+    }
 }
