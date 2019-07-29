@@ -70,7 +70,6 @@ class SessionDetailsFragment : Fragment() {
 
         }
         styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences))
-        //TODO add logic to fetch speaker details from firebase
         displaySessionSpeakers()
 
         bottom_app_bar.replaceMenu(R.menu.menu_bottom_appbar)

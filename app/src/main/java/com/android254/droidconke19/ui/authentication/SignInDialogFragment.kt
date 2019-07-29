@@ -1,11 +1,14 @@
 package com.android254.droidconke19.ui.authentication
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.android254.droidconke19.R
@@ -39,10 +42,13 @@ class SignInDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.sign_in_dialog, container)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         signInBtn.setOnClickListener {
             val signInIntent = gClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)

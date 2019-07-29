@@ -71,6 +71,11 @@
         android:id="@+id/signInDialogFragment"
         android:name="com.android254.droidconke19.ui.authentication.SignInDialogFragment"
         tools:layout="@layout/sign_in_dialog" />
+
+    <dialog
+        android:id="@+id/signOutDialogFragment"
+        android:name="com.android254.droidconke19.ui.authentication.SignOutDialogFragment"
+        tools:layout="@layout/sign_out_dialog"/>
     <fragment
         android:id="@+id/aboutDetailsFragment"
         android:name="com.android254.droidconke19.ui.about.AboutDetailsFragment"

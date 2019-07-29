@@ -21,5 +21,6 @@
     <dimen name="card_radius">10dp</dimen>
     <dimen name="extra_large_margin">24dp</dimen>
     <dimen name="dialog_margin">32dp</dimen>
+    <dimen name="text_size_extra_large">24sp</dimen>
 
 </resources>

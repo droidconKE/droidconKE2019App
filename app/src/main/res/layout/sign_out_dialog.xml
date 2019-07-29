@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_marginBottom="@dimen/fab_margin"
-            android:text="@string/sign_in_to_customize"
+            android:text="@string/sign_out_label"
             android:textSize="@dimen/text_size_extra_large"
             android:textColor="@color/colorBlack"
             android:layout_height="wrap_content" />
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_marginTop="@dimen/fab_margin"
             android:layout_marginBottom="@dimen/fab_margin"
-            android:text="@string/sign_in_descrption"
+            android:text="@string/sign_out_description"
             android:textSize="@dimen/text_size_small"
             android:layout_height="wrap_content" />
 
@@ -44,12 +44,12 @@
                 android:focusable="true"
                 android:textSize="16sp" />
             <Button
-                android:id="@+id/signInBtn"
+                android:id="@+id/signOutBtn"
                 android:layout_width="100dp"
                 android:layout_marginStart="@dimen/fab_margin"
                 android:layout_marginEnd="@dimen/fab_margin"
                 android:layout_toEndOf="@id/cancelText"
-                android:text="@string/sign_in"
+                android:text="@string/action_sign_out"
                 android:textColor="@color/colorWhite"
                 android:textAllCaps="false"
                 android:textSize="@dimen/text_size_small"

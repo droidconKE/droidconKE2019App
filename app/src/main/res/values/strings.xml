@@ -121,7 +121,7 @@
     <string name="terms_of_service_link_key" translatable="false">terms_of_service_link</string>
     <string name="privacy_policy_link_key" translatable="false">privacy_policy_link</string>
     <string name="copyright">© 2019 droidconKE</string>
-    <string name="action_sign_out">Sign Out</string>
+    <string name="action_sign_out">Sign out</string>
     <string name="event_description">
         In Person attendees can star sessions. A material metaphor is the unifying theory of a rationalized space
         and a system of motion.The material is grounded in tactile reality, inspired by the study of paper and ink, yet</string>
@@ -204,4 +204,6 @@
     <string name="session_removed">Session removed from favourites</string>
     <string name="about_details_label">About</string>
     <string name="submit_feedback">Submit</string>
+    <string name="sign_out_description">All saved sessions remain synced to your account</string>
+    <string name="sign_out_label">Sign out?</string>
 </resources>

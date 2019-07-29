@@ -19,11 +19,15 @@ import com.android254.droidconke19.utils.isSignedIn
 import com.android254.droidconke19.utils.toast
 import com.android254.droidconke19.viewmodels.HomeViewModel
 import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.home_menu_layout.*
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -48,8 +52,23 @@ class HomeActivity : AppCompatActivity() {
 
         setupNotifications()
 
+        showAccountImage()
+
         //observe live data emitted by view model
         observeLiveData()
+
+    }
+
+    private fun showAccountImage() {
+        firebaseAuth.currentUser?.let { currentUser ->
+            {
+                Glide.with(applicationContext).load(currentUser.photoUrl)
+                        .thumbnail(Glide.with(applicationContext).load(currentUser.photoUrl))
+                        .apply(RequestOptions()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .into(toolbarAccountProfileImg)
+            }
+        }
 
     }
 
@@ -101,14 +120,7 @@ class HomeActivity : AppCompatActivity() {
                 if (!firebaseAuth.isSignedIn()) {
                     findNavController(R.id.navHostFragment).navigate(R.id.signInDialogFragment)
                 } else {
-                    AlertDialog.Builder(this@HomeActivity)
-                            .setMessage(R.string.logout_question)
-                            .setPositiveButton(R.string.yes) { _, _ ->
-                                unsubscribeNotifications()
-                                firebaseAuth.signOut()
-                                toast(getString(R.string.success))
-                            }.setNegativeButton(getString(R.string.no), null)
-                            .show()
+                    findNavController(R.id.navHostFragment).navigate(R.id.signOutDialogFragment)
                 }
                 true
             }
