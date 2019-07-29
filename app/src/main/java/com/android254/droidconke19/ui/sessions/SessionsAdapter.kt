@@ -100,10 +100,10 @@ class AdapterItem(
                 sessionSpeakerNameRv.layoutManager = LinearLayoutManager(viewHolder.itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
                 when (sessionsModel.session_audience) {
-                    "intermediate" -> sessionAudienceText.setBackgroundColor(ContextCompat.getColor(context, R.color.colorDeepOrange))
-                    "advanced" -> sessionAudienceText.setBackgroundColor(ContextCompat.getColor(context, R.color.tag_text_red))
-                    "beginner" -> sessionAudienceText.setBackgroundColor(ContextCompat.getColor(context, R.color.colorGreen))
-                    "general" -> sessionAudienceText.setBackgroundColor(ContextCompat.getColor(context, R.color.colorLightBlue))
+                    "intermediate" -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_intermediate_textview_bg)
+                    "advanced" -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_advanced_level_textvieww_bg)
+                    "beginner" -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_beginner_level_textview_bg)
+                    "general" -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_general_level_textview_bg)
                 }
 
                 setOnClickListener {

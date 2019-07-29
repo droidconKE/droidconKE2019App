@@ -54,7 +54,7 @@
                     android:textSize="@dimen/text_size_extra_small"
                     android:layout_alignParentEnd="true"
                     android:textColor="@color/colorWhite"
-                    android:background="@color/colorDroidBug"
+                    android:background="@drawable/rounded_intermediate_textview_bg"
                     android:paddingStart="@dimen/medium_margin"
                     android:paddingEnd="@dimen/medium_margin"/>
             </RelativeLayout>
