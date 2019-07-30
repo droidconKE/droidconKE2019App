@@ -7,12 +7,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
    >
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/aboutDetailsRv"
-        android:layout_width="match_parent"
-        android:scrollbars="none"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_about"/>
+
 
 </RelativeLayout>

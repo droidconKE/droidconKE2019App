@@ -58,7 +58,7 @@ class AboutDetailsActivityTest {
         }
         activityTestRule.launchActivity(intent)
 
-        onView(withId(R.id.aboutDetailsRv))
+        onView(withId(R.id.organizersRv))
                 .perform(RecyclerViewActions.actionOnItemAtPosition<AboutDetailsAdapter.AboutDetailsViewHolder>(0, click()))
 
         onView(allOf(withId(R.id.aboutDetailsDescText),

@@ -61,7 +61,7 @@
     <string name="settings_east_african_time">Events in East African Zone</string>
     <string name="settings_enable_notifications">Enable notifications</string>
     <string name="settings_send_statistics">Send anonymous usage statistics</string>
-    <string name="about">About .droidconKE</string>
+    <string name="about_label">What is DroidconKE?</string>
     <string name="organizers">Organisers</string>
     <string name="sponsors">Sponsors</string>
     <string name="open_source_licences">Open source licenses</string>
@@ -170,7 +170,7 @@
     <string name="menu_share">Share</string>
     <string name="menu_info">Send</string>
     <string name="announcements_label">Announcements</string>
-    <string name="event_types">Event types</string>
+    <string name="event_types">Event Types</string>
     <string name="session_detail_speaker" translatable="false">Speaker</string>
     <string name="session_description_favorite_image" translatable="false">favorite image</string>
     <string name="session_go_to_feedback">Go to Feedback</string>
@@ -206,4 +206,7 @@
     <string name="submit_feedback">Submit</string>
     <string name="sign_out_description">All saved sessions remain synced to your account</string>
     <string name="sign_out_label">Sign out?</string>
+    <string name="wifi_label">Wifi</string>
+    <string name="wifi_name_label">Wifi network:</string>
+    <string name="password_label">Password:</string>
 </resources>

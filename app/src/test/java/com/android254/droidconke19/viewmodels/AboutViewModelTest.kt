@@ -17,10 +17,10 @@ import org.koin.test.mock.declareMock
 
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
-class AboutDetailsViewModelTest : KoinTest {
+class AboutViewModelTest : KoinTest {
 
     private val aboutDetailsRepo: AboutDetailsRepo by inject()
-    private val aboutDetailsViewModel: AboutDetailsViewModel by inject()
+    private val aboutViewModel: AboutViewModel by inject()
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -38,9 +38,9 @@ class AboutDetailsViewModelTest : KoinTest {
 
 //        `when`(aboutDetailsRepo.getAboutDetails(any())).thenReturn(Result<List<AboutDetailsModel>>())
 
-        aboutDetailsViewModel.fetchAboutDetails("value")
+        aboutViewModel.fetchAboutDetails("value")
 
-        aboutDetailsViewModel.getAboutDetailsResponse().observeOnce {
+        aboutViewModel.getAboutDetailsResponse().observeOnce {
             Assert.assertTrue(it.isEmpty() ?: false)
         }
 

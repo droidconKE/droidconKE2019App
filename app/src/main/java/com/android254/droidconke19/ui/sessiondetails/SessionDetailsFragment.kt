@@ -93,6 +93,8 @@ class SessionDetailsFragment : Fragment() {
         sessionStartTimeText.text = sessionModel.time
         sessionDescriptionText.text = sessionModel.description
         intendedAudienceText.text = sessionModel.session_audience
+        topicChip.text = sessionModel.topic
+        typeChip.text = sessionModel.type.value
         sessionSpeakersRv.adapter = SpeakersAdapter(sessionModel.speakerList) { speakerModel ->
             val extras = FragmentNavigatorExtras(
                     speaker_image to "speakerImage"

@@ -43,8 +43,8 @@ data class SessionsModel(
         var session_audience: String = "",
         var notification_slug: String = "",
         var photoUrl: String = "",
-        val level :Level = Level.None,
-        var speakerList : ArrayList<SpeakersModel> = ArrayList()
+        val level: Level = Level.None,
+        var speakerList: ArrayList<SpeakersModel> = ArrayList()
 
 ) : Parcelable, Filterable {
     override fun isInFilter(filter: Filter): Boolean {
@@ -83,7 +83,7 @@ data class SessionsModel(
 }
 
 enum class Stage {
-    MainHall, Room1, Room2, Room3,None
+    MainHall, Room1, Room2, Room3, None
 }
 
 enum class Type(val value: String, val resId: Int) {
@@ -91,7 +91,7 @@ enum class Type(val value: String, val resId: Int) {
     LightningTalk("Lightning talk", R.drawable.ic_outline_flash_on),
     Codelab("Codelab", R.drawable.ic_outline_build),
     PanelDiscussion("Panel discussion", R.drawable.ic_outline_question_answer),
-    Keynote("Keynote",R.drawable.ic_outline_video_label),
+    Keynote("Keynote", R.drawable.ic_outline_video_label),
     None("None", 0)
 }
 

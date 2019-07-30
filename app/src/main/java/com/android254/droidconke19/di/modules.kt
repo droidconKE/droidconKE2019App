@@ -28,7 +28,7 @@ val appModule = module {
     }
 
     // ViewModels
-    viewModel { AboutDetailsViewModel(get()) }
+    viewModel { AboutViewModel(get()) }
     viewModel { SessionsViewModel(get()) }
     viewModel { SessionDataViewModel(get(), get(), get(), get()) }
     viewModel { AgendaViewModel(get()) }

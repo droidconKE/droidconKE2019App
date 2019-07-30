@@ -15,11 +15,8 @@ import kotlinx.android.synthetic.main.item_about.view.*
 class AboutDetailsAdapter(private val aboutDetailsModelList: List<AboutDetailsModel>, private val itemClick: (AboutDetailsModel) -> Unit) : RecyclerView.Adapter<AboutDetailsAdapter.AboutDetailsViewHolder>() {
 
     class AboutDetailsViewHolder(itemView: View, private val itemClick: (AboutDetailsModel) -> Unit) : RecyclerView.ViewHolder(itemView) {
-        private val aboutDetailsDescText = itemView.aboutDetailsDescText
         private val aboutDetailsTitleText = itemView.aboutDetailsTitleText
         private val aboutDetailsImg = itemView.aboutDetailsImg
-        private val detailsLinear = itemView.detailsLinear
-        private val expandImg = itemView.expandImg
 
         fun bindAboutDetails(aboutDetailsModel: AboutDetailsModel) {
             with(aboutDetailsModel) {
@@ -28,25 +25,10 @@ class AboutDetailsAdapter(private val aboutDetailsModelList: List<AboutDetailsMo
                         .apply(RequestOptions()
                                 .diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(aboutDetailsImg)
-
-                aboutDetailsDescText.text = bio
                 aboutDetailsTitleText.text = name
-
-
                 itemView.setOnClickListener {
 
                 }
-                // Get the state
-                val expanded = aboutDetailsModel.expanded
-                // Set the visibility based on state
-                detailsLinear.visibility = when {
-                    expanded -> View.VISIBLE
-                    else -> View.GONE
-                }
-                expandImg.setImageResource(when {
-                    expanded -> R.drawable.ic_expand_less_black_24dp
-                    else -> R.drawable.ic_expand_more_blak_24dp
-                })
 
             }
         }

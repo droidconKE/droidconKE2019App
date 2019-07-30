@@ -207,7 +207,7 @@
                 >
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/language_chip"
+                    android:id="@+id/typeChip"
                     style="@style/Widget.MaterialComponents.Chip.Action"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -223,7 +223,7 @@
 
 
                 <com.google.android.material.chip.Chip
-                    android:id="@+id/for_beginners_chip"
+                    android:id="@+id/topicChip"
                     style="@style/Widget.MaterialComponents.Chip.Action"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

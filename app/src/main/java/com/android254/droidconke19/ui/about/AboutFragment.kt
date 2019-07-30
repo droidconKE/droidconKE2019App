@@ -1,17 +1,25 @@
 package com.android254.droidconke19.ui.about
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.android254.droidconke19.R
-import com.android254.droidconke19.ui.info.InfoFragmentDirections
+import com.android254.droidconke19.models.AboutDetailsModel
+import com.android254.droidconke19.utils.nonNull
+import com.android254.droidconke19.utils.observe
+import com.android254.droidconke19.viewmodels.AboutViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.fragment_about.*
+import org.jetbrains.anko.toast
+import org.koin.android.ext.android.inject
 
 class AboutFragment : Fragment() {
+    private val aboutViewModel: AboutViewModel by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_about, container, false)
@@ -20,19 +28,76 @@ class AboutFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //load about details
-        //about type is used to fetch for the specific clicked one
-        aboutDroidconText.setOnClickListener {
-            val aboutAction = InfoFragmentDirections.actionInfoFragmentToAboutDetailsFragment("about_droidconKE")
-            findNavController().navigate(aboutAction)
+        //get about details
+        fetchAboutDetails("about_droidconKE")
+
+        //get organizers details
+        fetchOrganizersDetails("organizers")
+
+        //get sponsors details
+        fetchSponsorsDetails("sponsors")
+        //observe live data
+        observeLiveData()
+
+    }
+
+    private fun fetchSponsorsDetails(aboutType: String) {
+        aboutViewModel.getSponsors(aboutType)
+    }
+
+    private fun fetchOrganizersDetails(aboutType: String) {
+        aboutViewModel.getOrganizers(aboutType)
+    }
+
+    private fun observeLiveData() {
+        aboutViewModel.getAboutDetailsResponse().nonNull().observe(this) { aboutDetailsList ->
+            handleFetchAboutDetails(aboutDetailsList)
         }
-        organizersText.setOnClickListener {
-            val aboutAction = InfoFragmentDirections.actionInfoFragmentToAboutDetailsFragment("organizers")
-            findNavController().navigate(aboutAction)
+        aboutViewModel.getAboutDetailsError().nonNull().observe(this) { databaseError ->
+            handleDatabaseError(databaseError)
         }
-        sponsorsText.setOnClickListener {
-            val aboutAction = InfoFragmentDirections.actionInfoFragmentToAboutDetailsFragment("sponsors")
-            findNavController().navigate(aboutAction)
+        aboutViewModel.getOrganizersResponse().nonNull().observe(this) {
+            handleGetOrganizersResponse(it)
+        }
+        aboutViewModel.getSponsorsResponse().nonNull().observe(this) {
+            handleSponsorsResponse(it)
         }
     }
+
+    private fun handleSponsorsResponse(it: List<AboutDetailsModel>) {
+        sponsorsRv.adapter = AboutDetailsAdapter(it) {}
+        sponsorsRv.layoutManager = GridLayoutManager(context, 2)
+
+    }
+
+    private fun handleGetOrganizersResponse(it: List<AboutDetailsModel>) {
+        initView(it)
+    }
+
+    private fun handleDatabaseError(databaseError: String) {
+        activity?.toast(databaseError)
+    }
+
+    private fun handleFetchAboutDetails(aboutDetailsList: List<AboutDetailsModel>) {
+        aboutDetailsList.forEach {
+            droidconDescText.text = it.bio
+            Glide.with(context!!).load(it.logoUrl)
+                    .thumbnail(Glide.with(context!!).load(it.logoUrl))
+                    .apply(RequestOptions()
+                            .placeholder(R.drawable.profile)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL))
+                    .into(eventImg)
+        }
+    }
+
+    private fun initView(aboutDetailsList: List<AboutDetailsModel>) {
+        val aboutDetailsAdapter = AboutDetailsAdapter(aboutDetailsList) {}
+        organizersRv.layoutManager = GridLayoutManager(context, 2)
+        organizersRv.adapter = aboutDetailsAdapter
+    }
+
+    private fun fetchAboutDetails(aboutType: String?) {
+        aboutType?.let { aboutType -> aboutViewModel.fetchAboutDetails(aboutType) }
+    }
+
 }
