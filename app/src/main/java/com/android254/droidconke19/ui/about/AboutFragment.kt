@@ -36,6 +36,7 @@ class AboutFragment : Fragment() {
 
         //get sponsors details
         fetchSponsorsDetails("sponsors")
+        showProgressBar()
         //observe live data
         observeLiveData()
 
@@ -65,20 +66,24 @@ class AboutFragment : Fragment() {
     }
 
     private fun handleSponsorsResponse(it: List<AboutDetailsModel>) {
+        hideProgressBar()
         sponsorsRv.adapter = AboutDetailsAdapter(it) {}
         sponsorsRv.layoutManager = GridLayoutManager(context, 2)
 
     }
 
     private fun handleGetOrganizersResponse(it: List<AboutDetailsModel>) {
+        hideProgressBar()
         initView(it)
     }
 
     private fun handleDatabaseError(databaseError: String) {
+        hideProgressBar()
         activity?.toast(databaseError)
     }
 
     private fun handleFetchAboutDetails(aboutDetailsList: List<AboutDetailsModel>) {
+        hideProgressBar()
         aboutDetailsList.forEach {
             droidconDescText.text = it.bio
             Glide.with(context!!).load(it.logoUrl)
@@ -98,6 +103,17 @@ class AboutFragment : Fragment() {
 
     private fun fetchAboutDetails(aboutType: String?) {
         aboutType?.let { aboutType -> aboutViewModel.fetchAboutDetails(aboutType) }
+    }
+
+    private fun showProgressBar(){
+        progressBar.visibility = View.VISIBLE
+        aboutLinear.visibility = View.GONE
+
+    }
+
+    private fun hideProgressBar(){
+        progressBar.visibility = View.GONE
+        aboutLinear.visibility = View.VISIBLE
     }
 
 }

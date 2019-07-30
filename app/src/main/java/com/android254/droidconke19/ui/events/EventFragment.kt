@@ -44,6 +44,7 @@ class EventFragment : Fragment() {
         observeLiveData()
         //fetch data from firebase
         eventTypeViewModel.fetchSessions()
+        showProgressBar()
 
         //get remote config values
         getRemoteConfigValues(wifiSsidText, wifiPasswordText)
@@ -87,12 +88,14 @@ class EventFragment : Fragment() {
     }
 
     private fun handleFetchEventsResponse(eventTypeModelList: List<EventTypeModel>?, eventTypesRv: RecyclerView) {
+        hideProgressBar()
         when {
             eventTypeModelList != null -> initView(eventTypeModelList, eventTypesRv)
         }
     }
 
     private fun handleDatabaseError(databaseError: String?) {
+        hideProgressBar()
         activity?.toast(databaseError.toString())
     }
 
@@ -100,6 +103,17 @@ class EventFragment : Fragment() {
         eventTypesRv.isNestedScrollingEnabled = false
         eventTypesRv.adapter = EventTypeAdapter(eventTypeModelList, activity!!)
 
+    }
+
+    private fun showProgressBar(){
+        progressBar.visibility = View.VISIBLE
+        eventTypeLinear.visibility = View.GONE
+
+    }
+
+    private fun hideProgressBar(){
+        progressBar.visibility = View.GONE
+        eventTypeLinear.visibility = View.VISIBLE
     }
 
 }

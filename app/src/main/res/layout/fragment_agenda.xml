@@ -13,7 +13,7 @@
         android:scrollbars="none"
         android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/agenda_details"
+        tools:listitem="@layout/item_agenda"
         android:layout_marginTop="@dimen/medium_margin"
       >
 

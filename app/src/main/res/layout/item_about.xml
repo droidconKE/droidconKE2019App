@@ -24,7 +24,6 @@
                     android:contentDescription="TODO"
                     android:scaleType="centerInside"
                     android:id="@+id/aboutDetailsImg"
-                    android:src="@drawable/event_image"
                     android:layout_height="150dp" />
 
                     <TextView

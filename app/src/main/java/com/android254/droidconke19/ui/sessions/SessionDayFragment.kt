@@ -18,7 +18,7 @@ import com.android254.droidconke19.utils.nonNull
 import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.viewmodels.SessionsViewModel
 import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
-import kotlinx.android.synthetic.main.fragment_day_one.*
+import kotlinx.android.synthetic.main.fragment_day_session.*
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -34,7 +34,7 @@ class SessionDayFragment : Fragment() {
     private val sessionDetailsViewModel: SessionDetailsViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_day_one, container, false)
+        return inflater.inflate(R.layout.fragment_day_session, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

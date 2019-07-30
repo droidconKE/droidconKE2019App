@@ -1,116 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
-    android:background="@color/gray3"
+    android:background="@color/gray4"
     android:layout_height="match_parent"
-    android:scrollbarStyle="insideOverlay"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:scrollbars="none">
-    <LinearLayout
+   >
+    <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.card.MaterialCardView
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:indeterminate="true"/>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarStyle="insideOverlay"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:scrollbars="none">
+        <LinearLayout
+            android:id="@+id/eventTypeLinear"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:contentPadding="@dimen/fab_margin"
-            android:layout_marginTop="@dimen/appbar_padding_top"
-            android:layout_marginEnd="@dimen/appbar_padding_top"
-            android:layout_marginStart="@dimen/appbar_padding_top">
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="match_parent"
-                    style="@style/CollapsibleCardTitle"
-                    android:text="@string/wifi_label"
-                    android:textSize="@dimen/text_size_small"
-                    android:layout_height="wrap_content"
-                    android:textAllCaps="true"/>
+                android:layout_height="wrap_content"
+                app:contentPadding="@dimen/fab_margin"
+                android:layout_marginTop="@dimen/appbar_padding_top"
+                android:layout_marginEnd="@dimen/appbar_padding_top"
+                android:layout_marginStart="@dimen/appbar_padding_top">
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal"
-                    android:weightSum="4"
+                    android:orientation="vertical"
                     android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        style="@style/CollapsibleCardTitle"
+                        android:text="@string/wifi_label"
+                        android:textSize="@dimen/text_size_small"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="true"/>
                     <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="2"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/fab_margin"
+                        android:layout_width="match_parent"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:weightSum="4"
                         android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:id="@+id/wifiLabelText"
-                            style="@style/CollapsibleCardTitle"
-                            android:text="@string/wifi_name_label"
-                            android:textSize="@dimen/text_size_small"
-                            android:layout_height="wrap_content" />
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:orientation="vertical"
                             android:layout_marginTop="@dimen/fab_margin"
-                            android:id="@+id/wifiPaswordText"
-                            style="@style/CollapsibleCardTitle"
-                            android:text="@string/password_label"
-                            android:textSize="@dimen/text_size_small"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:id="@+id/wifiLabelText"
+                                style="@style/CollapsibleCardTitle"
+                                android:text="@string/wifi_name_label"
+                                android:textSize="@dimen/text_size_small"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="@dimen/fab_margin"
+                                android:id="@+id/wifiPaswordText"
+                                style="@style/CollapsibleCardTitle"
+                                android:text="@string/password_label"
+                                android:textSize="@dimen/text_size_small"
+                                android:layout_height="wrap_content" />
 
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="2"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/fab_margin"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:id="@+id/wifiSsidText"
-                            style="@style/CollapsibleCardTitle"
-                            tool:text="@string/wifi_ssid"
-                            android:textSize="16sp"
-                            android:layout_height="wrap_content" />
-                        <TextView
-                            android:layout_width="wrap_content"
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:orientation="vertical"
                             android:layout_marginTop="@dimen/fab_margin"
-                            android:id="@+id/wifiPasswordText"
-                            android:textColor="@color/colorFavourite"
-                            style="@style/CollapsibleCardTitle"
-                            tool:text="@string/wifi_password"
-                            android:textSize="14sp"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:id="@+id/wifiSsidText"
+                                style="@style/CollapsibleCardTitle"
+                                tool:text="@string/wifi_ssid"
+                                android:textSize="16sp"
+                                android:layout_height="wrap_content" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="@dimen/fab_margin"
+                                android:id="@+id/wifiPasswordText"
+                                android:textColor="@color/colorFavourite"
+                                style="@style/CollapsibleCardTitle"
+                                tool:text="@string/wifi_password"
+                                android:textSize="14sp"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-        </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:layout_width="match_parent"
+                style="@style/CollapsibleCardTitle"
+                android:layout_margin="@dimen/medium_margin"
+                android:padding="@dimen/appbar_padding_top"
+                android:text="@string/event_types"
+                android:textSize="@dimen/text_size_small"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorBlack"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            style="@style/CollapsibleCardTitle"
-            android:layout_margin="@dimen/medium_margin"
-            android:padding="@dimen/appbar_padding_top"
-            android:text="@string/event_types"
-            android:textSize="@dimen/text_size_small"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorBlack"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/eventTypesRv"
+                android:scrollbars="none"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tool:listitem="@layout/item_event_type">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:id="@+id/eventTypesRv"
-            android:scrollbars="none"
-            android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tool:listitem="@layout/item_event_type">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
 
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

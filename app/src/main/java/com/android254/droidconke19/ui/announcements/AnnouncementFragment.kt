@@ -39,6 +39,7 @@ class AnnouncementFragment : Fragment() {
 
         //get announcements
         getAnnouncements()
+        showProgressBar()
         //show announcement list
         initView()
 
@@ -56,6 +57,7 @@ class AnnouncementFragment : Fragment() {
 
     private fun observeLiveData() {
         announcementViewModel.getAnnouncementsResponse().nonNull().observe(this) {
+            hideProgressBar()
             announcementAdapter.setAnnouncements(it)
         }
         announcementViewModel.getAnnouncementError().nonNull().observe(this) {
@@ -66,6 +68,7 @@ class AnnouncementFragment : Fragment() {
     }
 
     private fun handleError(databaseError: String?) {
+        hideProgressBar()
         activity?.toast(databaseError.toString())
     }
 
@@ -73,4 +76,16 @@ class AnnouncementFragment : Fragment() {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.action_profile)?.setVisible(false)
     }
+
+    private fun showProgressBar(){
+        progressBar.visibility = View.VISIBLE
+        announcementsRv.visibility = View.GONE
+
+    }
+
+    private fun hideProgressBar(){
+        progressBar.visibility = View.GONE
+        announcementsRv.visibility = View.VISIBLE
+    }
+
 }
