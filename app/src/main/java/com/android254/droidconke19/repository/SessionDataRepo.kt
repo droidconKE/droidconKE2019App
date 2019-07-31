@@ -56,7 +56,7 @@ class SessionDataRepo(db: AppDatabase, private val firestore: FirebaseFirestore)
 
                 val starredSessionRef = firestore.collection(starredSessionCollection).document()
                 starredSessionRef.set(data).await()
-                Result.Success("Success")
+                Result.Success("Session added to favourites")
             } catch (e: FirebaseFirestoreException) {
                 Result.Error(e.message)
             }
@@ -76,7 +76,7 @@ class SessionDataRepo(db: AppDatabase, private val firestore: FirebaseFirestore)
             if (!snapshot.isEmpty) {
                 snapshot.documents.first().reference.delete().await()
             }
-            Result.Success("Success")
+            Result.Success("Session removed from favourites")
         } catch (e: FirebaseFirestoreException) {
             Result.Error(e.message)
         }

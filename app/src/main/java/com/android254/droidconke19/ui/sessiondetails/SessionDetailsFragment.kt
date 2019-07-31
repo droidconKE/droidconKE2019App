@@ -60,11 +60,11 @@ class SessionDetailsFragment : Fragment() {
             val userId = firebaseAuth.currentUser!!.uid
             lifecycleScope.launch {
                 progress_bar.visibility = View.VISIBLE
-                if (sessionDetailsViewModel.addToFavourites(sharedPreferences, userId)) {
-                    activity?.toast(getString(R.string.session_added))
-                } else {
-                    activity?.toast(getString(R.string.session_removed))
-                }
+//                if (sessionDetailsViewModel.addToFavourites(sharedPreferences, userId)) {
+//                    activity?.toast(getString(R.string.session_added))
+//                } else {
+//                    activity?.toast(getString(R.string.session_removed))
+//                }
                 styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences))
                 progress_bar.visibility = View.GONE
             }
@@ -108,9 +108,11 @@ class SessionDetailsFragment : Fragment() {
 
     private fun styleFavouritesButton(isFavourites: Boolean) {
         if (isFavourites) {
-            session_favorite.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.white))
+            session_favorite.setImageResource(R.drawable.ic_bookmark_black_24dp)
+            session_favorite.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.colorWhite))
             session_favorite.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.colorPrimary))
         } else {
+            session_favorite.setBackgroundResource(R.drawable.ic_bookmark_border_black_24dp)
             session_favorite.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.colorPrimary))
             session_favorite.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context!!, R.color.white))
         }
