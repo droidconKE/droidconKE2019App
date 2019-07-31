@@ -38,9 +38,9 @@ class InfoFragment : Fragment() {
 
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(childFragmentManager)
-        adapter.addFragment(EventFragment(), "Event")
-        adapter.addFragment(TravelFragment(), "Travel")
-        adapter.addFragment(AboutFragment(), "About")
+        adapter.addFragment(EventFragment(), getString(R.string.event))
+        adapter.addFragment(TravelFragment(), getString(R.string.travel))
+        adapter.addFragment(AboutFragment(), getString(R.string.about))
         viewPager.adapter = adapter
 
     }

@@ -84,16 +84,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     allgranted -> mFusedLocationProviderClient!!.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
                     ActivityCompat.shouldShowRequestPermissionRationale(activity!!, permissionsRequired[0]) -> {
                         val builder = AlertDialog.Builder(activity!!)
-                        builder.setTitle("Need Multiple Permissions")
-                        builder.setMessage("This app needs Location and Storage permissions.")
-                        builder.setPositiveButton("Grant") { dialog, _ ->
+                        builder.setTitle(getString(R.string.need_multiple_permissions))
+                        builder.setMessage(getString(R.string.need_location_storage))
+                        builder.setPositiveButton(getString(R.string.cancel)) { dialog, _ ->
                             dialog.cancel()
                             ActivityCompat.requestPermissions(activity!!, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
                         }
-                        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+                        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
                         builder.show()
                     }
-                    else -> Toast.makeText(activity, "Unable to get Permission", Toast.LENGTH_LONG).show()
+                    else -> Toast.makeText(activity, getString(R.string.unable_go_get_permission), Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -130,7 +130,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     val intent = Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri))
                     startActivity(Intent.createChooser(intent, "Open with"))
                 }
-                else -> Toast.makeText(activity, "A problem occured in getting your location", Toast.LENGTH_SHORT).show()
+                else -> Toast.makeText(activity, getString(R.string.problem_getting_location), Toast.LENGTH_SHORT).show()
             }
 
 
@@ -214,31 +214,31 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     ActivityCompat.shouldShowRequestPermissionRationale(activity!!, permissionsRequired[0]) -> {
                         //Show Information about why you need the permission
                         val builder = AlertDialog.Builder(activity!!)
-                        builder.setTitle("Need Multiple permissions")
-                        builder.setMessage("This apps needs the Location and Storage permissions")
-                        builder.setPositiveButton("Grant") { dialog, _ ->
+                        builder.setTitle(getString(R.string.need_multiple_permissions))
+                        builder.setMessage(getString(R.string.need_location_storage))
+                        builder.setPositiveButton(getString(R.string.grant)) { dialog, _ ->
                             dialog.cancel()
                             ActivityCompat.requestPermissions(activity!!, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
                         }
-                        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+                        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
                         builder.show()
                     }
                     sharedPreferences.getBoolean(permissionsRequired[0], false) -> {
                         //Previously Permission Request was cancelled with 'Dont Ask Again',
                         // Redirect to Settings after showing Information about why you need the permission
                         val builder = AlertDialog.Builder(activity!!)
-                        builder.setTitle("Need Multiple Permissions")
-                        builder.setMessage("This app needs Location and Storage permissions.")
-                        builder.setPositiveButton("Grant") { dialog, _ ->
+                        builder.setTitle(getString(R.string.need_multiple_permissions))
+                        builder.setMessage(getString(R.string.need_location_storage))
+                        builder.setPositiveButton(getString(R.string.grant)) { dialog, _ ->
                             dialog.cancel()
                             sentToSettings = true
                             val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                             val uri = Uri.fromParts("package", activity!!.packageName, null)
                             intent.data = uri
                             startActivityForResult(intent, REQUEST_PERMISSION_SETTING)
-                            Toast.makeText(activity, "Go to Permissions to Grant  Storage and Location", Toast.LENGTH_LONG).show()
+                            Toast.makeText(activity, getString(R.string.grant_storage_location), Toast.LENGTH_LONG).show()
                         }
-                        builder.setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+                        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
                     }
                     else -> //just request the permission
                         ActivityCompat.requestPermissions(activity!!, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
@@ -270,7 +270,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        menu.findItem(R.id.action_profile)?.setVisible(false)
+        menu.findItem(R.id.action_profile)?.isVisible = false
     }
 
     companion object {

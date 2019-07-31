@@ -68,7 +68,7 @@ class SignInDialogFragment : DialogFragment() {
                 signIn(account!!)
             } catch (e: ApiException) {
                 Log.e(javaClass.name, "Google auth error", e)
-                activity?.toast("Google sign in failed")
+                activity?.toast(getString(R.string.google_login_failed))
             }
         }
     }
@@ -77,7 +77,7 @@ class SignInDialogFragment : DialogFragment() {
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         try {
             firebaseAuth.signInWithCredential(credential).await()
-            activity?.toast("Success")
+            activity?.toast(getString(R.string.success))
             dismiss()
         } catch (e: FirebaseException) {
             Log.e(javaClass.name, "Firebase error", e)

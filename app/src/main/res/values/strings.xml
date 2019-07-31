@@ -198,7 +198,6 @@
     <string name="sign_in">Sign in</string>
     <string name="logout_question">Do you want to logout?</string>
     <string name="yes">Yes</string>
-    <string name="success">Success</string>
     <string name="no">No</string>
     <string name="session_added">Session added to favourites</string>
     <string name="session_removed">Session removed from favourites</string>
@@ -210,4 +209,17 @@
     <string name="wifi_name_label">Wifi network:</string>
     <string name="password_label">Password:</string>
     <string name="speaker_details">Speaker Details</string>
+    <string name="google_login_failed">Google sign in failed</string>
+    <string name="success">Success</string>
+    <string name="cancel">Cancel</string>
+    <string name="grant_storage_location">Go to Permissions to Grant  Storage and Location</string>
+    <string name="grant">Grant</string>
+    <string name="need_location_storage">This app needs Location and Storage permissions.</string>
+    <string name="need_multiple_permissions">Need Multiple Permissions</string>
+    <string name="problem_getting_location">A problem occurred in getting your location</string>
+    <string name="unable_go_get_permission">Unable to get Permission</string>
+    <string name="event">Event</string>
+    <string name="travel">Travel</string>
+    <string name="about">About</string>
+    <string name="feedback_thank_you">Thank you for your feedback</string>
 </resources>

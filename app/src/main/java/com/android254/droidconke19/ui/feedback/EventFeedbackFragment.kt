@@ -43,7 +43,7 @@ class EventFeedbackFragment :Fragment() {
     private fun handleFeedbackResponse(@Suppress("UNUSED_PARAMETER") feedback: String) {
         progressBarEventFeedBack.visibility = View.GONE
         txtEventFeedback.setText("")
-        activity?.toast("Thank you for your feedback")
+        activity?.toast(getString(R.string.feedback_thank_you))
 
     }
 }

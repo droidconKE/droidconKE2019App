@@ -50,7 +50,7 @@ class SessionFeedbackFragment : Fragment() {
     private fun handleFeedbackResponse(feedback: String) {
         progressBar.visibility = View.GONE
         txtSessionUserFeedback.setText("")
-        activity?.toast("Thank you for your feedback")
+        activity?.toast(getString(R.string.feedback_thank_you))
     }
 
     private fun getSessionData(dayNumber: String, sessionId: Int) {
