@@ -3,14 +3,14 @@
     android:opacity="opaque">
 
     <!-- The background color, preferably the same as your normal theme -->
-    <item android:drawable="@color/colorWhite" />
+    <item android:drawable="@color/colorDroidBug" />
 
     <!-- Your product logo - 144dp color version of your app icon -->
     <item>
 
         <bitmap
             android:gravity="center"
-            android:src="@drawable/splash" />
+            android:src="@drawable/splash_new" />
 
     </item>
 
