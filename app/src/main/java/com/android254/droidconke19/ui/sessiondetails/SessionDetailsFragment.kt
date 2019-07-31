@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -32,11 +31,14 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SessionDetailsFragment : Fragment() {
     private val sessionDetailsViewModel: SessionDetailsViewModel by sharedViewModel()
     private val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
     private val firebaseAuth: FirebaseAuth by inject()
+    lateinit var session: SessionsModel
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -82,6 +84,7 @@ class SessionDetailsFragment : Fragment() {
 
     private fun observeLiveData() {
         sessionDetailsViewModel.getSessionDetails().nonNull().observe(this) { sessionModel ->
+            session = sessionModel
             setupViews(sessionModel)
         }
         sessionDetailsViewModel.message.observe(this, Observer {
@@ -131,17 +134,35 @@ class SessionDetailsFragment : Fragment() {
                 }
             }
             when (id) {
-                R.id.action_map -> {
-
-                }
+                R.id.action_map -> {}
             }
             when (id) {
                 R.id.action_calendar -> {
+                    val day = when (session.day_number) {
+                        "day_one" -> 8
+                        "day_two" -> 9
+                        else -> 8
+                    }
+
+                    val stringDelimitter = ":"
+                    val startTimeParts = session.time_in_am.split(stringDelimitter)
+                    val endTimeParts = session.end_time_in_am.split(stringDelimitter)
+
+                    val startMillis: Long = Calendar.getInstance().run {
+                        set(2019, 8, day, startTimeParts[0].toInt(), startTimeParts[1].toInt())
+                        timeInMillis
+                    }
+
+                    val endMillis: Long = Calendar.getInstance().run {
+                        set(2019, 8, day, endTimeParts[0].toInt(), endTimeParts[1].toInt())
+                        timeInMillis
+                    }
+
                     val intent = Intent(Intent.ACTION_INSERT)
                             .setData(CalendarContract.Events.CONTENT_URI)
-                            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, "8:00")
-                            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, "8:00")
-                            .putExtra(CalendarContract.Events.TITLE, "droidconKE: Session Title")
+                            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startMillis)
+                            .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endMillis)
+                            .putExtra(CalendarContract.Events.TITLE, session.title)
                             .putExtra(CalendarContract.Events.EVENT_LOCATION, "Ihub,Senteu Plaza")
                     activity?.startActivity(intent)
                 }

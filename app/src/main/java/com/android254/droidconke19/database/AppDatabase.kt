@@ -12,7 +12,7 @@ import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.models.StarredSessionModel
 
 
-@Database(entities = [StarredSessionModel::class, SessionsModel::class], version = 9, exportSchema = false)
+@Database(entities = [StarredSessionModel::class, SessionsModel::class], version = 10, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
 

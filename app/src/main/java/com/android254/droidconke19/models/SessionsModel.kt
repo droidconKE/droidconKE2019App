@@ -44,7 +44,8 @@ data class SessionsModel(
         var notification_slug: String = "",
         var photoUrl: String = "",
         val level: Level = Level.None,
-        var speakerList: ArrayList<SpeakersModel> = ArrayList()
+        var speakerList: ArrayList<SpeakersModel> = ArrayList(),
+        val end_time_in_am: String =""
 
 ) : Parcelable, Filterable {
     override fun isInFilter(filter: Filter): Boolean {
