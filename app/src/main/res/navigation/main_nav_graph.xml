@@ -38,17 +38,21 @@
     <fragment
         android:id="@+id/sessionDetailsFragment"
         android:name="com.android254.droidconke19.ui.sessiondetails.SessionDetailsFragment"
-        android:label="@string/session_details_label"
+        android:label="{sessionTitle}"
         tools:layout="@layout/fragment_session_details">
 
         <action
             android:id="@+id/action_sessionDetailsFragment_to_speakerFragment"
             app:destination="@id/speakerFragment" />
+        <argument
+            android:name="sessionTitle"
+            app:argType="string" />
+
     </fragment>
     <fragment
         android:id="@+id/speakerFragment"
         android:name="com.android254.droidconke19.ui.speakers.SpeakerFragment"
-        android:label="Speaker Details"
+        android:label="@string/speaker_details"
         tools:layout="@layout/fragment_speaker">
         <action
             android:id="@+id/action_speakerFragment_to_sessionDetailsFragment"

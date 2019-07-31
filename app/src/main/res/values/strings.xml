@@ -209,4 +209,5 @@
     <string name="wifi_label">Wifi</string>
     <string name="wifi_name_label">Wifi network:</string>
     <string name="password_label">Password:</string>
+    <string name="speaker_details">Speaker Details</string>
 </resources>

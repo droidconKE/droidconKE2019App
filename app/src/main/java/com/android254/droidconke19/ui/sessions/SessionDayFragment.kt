@@ -63,7 +63,7 @@ class SessionDayFragment : Fragment() {
 
     private fun redirectToSessionDetails(it: SessionsModel) {
         sessionDetailsViewModel.loadSessionDetails(it)
-        findNavController().navigate(ScheduleFragmentDirections.actionScheduleFragmentToSessionDetailsFragment())
+        findNavController().navigate(ScheduleFragmentDirections.actionScheduleFragmentToSessionDetailsFragment(it.title))
     }
 
     private fun observeLiveData() {

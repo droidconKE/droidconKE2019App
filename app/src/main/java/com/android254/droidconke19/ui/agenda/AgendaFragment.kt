@@ -35,6 +35,7 @@ class AgendaFragment : Fragment() {
 
         //fetch agendas
         agendaViewModel.fetchAgendas()
+        showProgressBar()
         //observe live data emitted by view model
         observeLiveData()
     }
@@ -48,16 +49,16 @@ class AgendaFragment : Fragment() {
         }
     }
 
-    private fun handleAgendaResponse(agendaList: List<AgendaModel>?, agendaRv: RecyclerView) {
-        when {
-            agendaList != null -> {
-                agendaModelList = agendaList
-                initView(agendaRv)
-            }
-        }
+    private fun handleAgendaResponse(agendaList: List<AgendaModel>, agendaRv: RecyclerView) {
+        hideProgressBar()
+        agendaModelList = agendaList
+        initView(agendaRv)
+
+
     }
 
     private fun handleDatabaseError(databaseError: String) {
+        hideProgressBar()
         activity?.toast(databaseError)
     }
 
@@ -70,5 +71,17 @@ class AgendaFragment : Fragment() {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.action_profile)?.isVisible = false
     }
+
+    private fun showProgressBar() {
+        progressBar.visibility = View.VISIBLE
+        agendaRv.visibility = View.GONE
+
+    }
+
+    private fun hideProgressBar() {
+        progressBar.visibility = View.GONE
+        agendaRv.visibility = View.VISIBLE
+    }
+
 
 }

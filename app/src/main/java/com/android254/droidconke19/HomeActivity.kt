@@ -4,8 +4,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -16,12 +14,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.android254.droidconke19.utils.SharedPref.TOKEN_SENT
 import com.android254.droidconke19.utils.isSignedIn
-import com.android254.droidconke19.utils.toast
 import com.android254.droidconke19.viewmodels.HomeViewModel
 import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
@@ -71,12 +65,7 @@ class HomeActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController, drawer_layout)
         NavigationUI.setupWithNavController(nav_view, navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.sessionDetailsFragment -> {
-                    toolbar.visibility = View.GONE
-                }
-                else -> toolbar.visibility = View.VISIBLE
-            }
+
         }
 
     }

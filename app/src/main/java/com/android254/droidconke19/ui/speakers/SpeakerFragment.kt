@@ -33,7 +33,7 @@ class SpeakerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         showSpeakerDetails(speakerArgs)
         speaker_session_background.setOnClickListener {
-            findNavController().navigate(SpeakerFragmentDirections.actionSpeakerFragmentToSessionDetailsFragment())
+            findNavController().navigate(SpeakerFragmentDirections.actionSpeakerFragmentToSessionDetailsFragment(speakerArgs.sessionModel.title))
         }
     }
 
@@ -55,6 +55,6 @@ class SpeakerFragment : Fragment() {
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
-        menu.findItem(R.id.action_profile)?.setVisible(false)
+        menu.findItem(R.id.action_profile)?.isVisible = false
     }
 }

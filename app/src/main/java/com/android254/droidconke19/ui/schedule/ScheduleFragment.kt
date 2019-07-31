@@ -28,11 +28,13 @@ class ScheduleFragment : Fragment() {
         override fun onTabSelected(tab: TabLayout.Tab) {
             viewpager.setCurrentItem(tab.position, true)
         }
+
         override fun onTabReselected(tab: TabLayout.Tab) {
             val adapter = viewpager.adapter as SessionsViewPagerAdapter
             val fragment = adapter.getFragmentAt(viewpager.currentItem)
             fragment?.scrollToTop()
         }
+
         override fun onTabUnselected(tab: TabLayout.Tab) = Unit
     }
 
@@ -95,7 +97,7 @@ class ScheduleFragment : Fragment() {
     }
 
 
-    class SessionsViewPagerAdapter( fm: FragmentManager
+    class SessionsViewPagerAdapter(fm: FragmentManager
     ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         private val cache = ArrayMap<Int, SessionDayFragment>()

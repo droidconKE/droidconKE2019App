@@ -16,22 +16,22 @@
         android:visibility="gone"
         />
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+    <!--<com.google.android.material.appbar.AppBarLayout-->
+        <!--android:id="@+id/app_bar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--&gt;-->
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_back"
-            app:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
-            app:title="@string/session_details_label"
-            app:titleTextColor="@color/white" />
+        <!--<com.google.android.material.appbar.MaterialToolbar-->
+            <!--android:id="@+id/toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--app:navigationIcon="@drawable/ic_back"-->
+            <!--app:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"-->
+            <!--app:title="@string/session_details_label"-->
+            <!--app:titleTextColor="@color/white" />-->
 
-    </com.google.android.material.appbar.AppBarLayout>
+    <!--</com.google.android.material.appbar.AppBarLayout>-->
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
