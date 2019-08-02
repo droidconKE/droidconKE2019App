@@ -46,6 +46,7 @@ class SignOutDialogFragment : DialogFragment() {
         signOutBtn.setOnClickListener {
             unsubscribeNotifications()
             firebaseAuth.signOut()
+            dismiss()
             activity?.toast(getString(R.string.success))
 
         }

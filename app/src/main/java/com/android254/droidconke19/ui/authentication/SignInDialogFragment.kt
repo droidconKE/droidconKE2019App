@@ -13,6 +13,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.android254.droidconke19.R
 import com.android254.droidconke19.utils.toast
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.IdpResponse
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -29,16 +31,6 @@ import org.koin.android.ext.android.inject
 class SignInDialogFragment : DialogFragment() {
     private val firebaseAuth: FirebaseAuth by inject()
     private val RC_SIGN_IN = 1
-    lateinit var gClient: GoogleSignInClient
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
-        gClient = GoogleSignIn.getClient(activity!!, gso)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.sign_in_dialog, container)
@@ -50,41 +42,37 @@ class SignInDialogFragment : DialogFragment() {
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         signInBtn.setOnClickListener {
-            val signInIntent = gClient.signInIntent
-            startActivityForResult(signInIntent, RC_SIGN_IN)
+            makeSignIntent()?.let {
+                startActivityForResult(it, RC_SIGN_IN)
+            }
         }
         cancelText.setOnClickListener {
             dismiss()
         }
     }
 
+    private fun makeSignIntent(): Intent? {
+        dismiss()
+        val providers = mutableListOf(
+                AuthUI.IdpConfig.GoogleBuilder().setSignInOptions(
+                        GoogleSignInOptions.Builder()
+                                .requestId()
+                                .requestEmail()
+                                .build()
+                ).build()
+        )
+
+        return AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)
-                signIn(account!!)
-            } catch (e: ApiException) {
-                Log.e(javaClass.name, "Google auth error", e)
-                activity?.toast(getString(R.string.google_login_failed))
-            }
-        }
-    }
-
-    private fun signIn(account: GoogleSignInAccount) = lifecycleScope.launch {
-        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-        try {
-            firebaseAuth.signInWithCredential(credential).await()
             activity?.toast(getString(R.string.success))
-            dismiss()
-        } catch (e: FirebaseException) {
-            Log.e(javaClass.name, "Firebase error", e)
-            e.message?.let {
-                activity?.toast(it)
-            }
-
         }
     }
+
 }
