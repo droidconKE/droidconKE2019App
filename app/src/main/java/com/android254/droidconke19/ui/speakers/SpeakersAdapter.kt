@@ -10,6 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.SpeakersModel
+import com.android254.droidconke19.utils.loadImage
 import kotlinx.android.synthetic.main.item_speaker.view.*
 
 
@@ -21,13 +22,7 @@ class SpeakersAdapter(private val speakersList: List<SpeakersModel>,private val 
 
         fun bindSpeakerDetails(speakersModel: SpeakersModel) {
             with(speakersModel) {
-                Glide.with(itemView.context).load(photoUrl)
-                        .thumbnail(Glide.with(itemView.context).load(photoUrl))
-                        .apply(RequestOptions()
-                                .placeholder(R.drawable.placeholder_image)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL))
-                        .into(speakerImg)
-
+                speakerImg.loadImage(photoUrl,R.drawable.placeholder_image)
                 speakerNameText.text = name
 
                 itemView.setOnClickListener {

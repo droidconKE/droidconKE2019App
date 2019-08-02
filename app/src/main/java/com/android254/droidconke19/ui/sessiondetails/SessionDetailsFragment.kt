@@ -73,7 +73,6 @@ class SessionDetailsFragment : Fragment() {
 
         }
         styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences))
-        displaySessionSpeakers()
 
         bottom_app_bar.replaceMenu(R.menu.menu_bottom_appbar)
         handleBottomBarMenuClick()
@@ -128,7 +127,7 @@ class SessionDetailsFragment : Fragment() {
                 R.id.action_share -> {
                     val shareSession = Intent()
                     shareSession.action = Intent.ACTION_SEND
-                    shareSession.putExtra(Intent.EXTRA_TEXT, "Check out " + "'" + "This session" + "' at " + getString(R.string.droidcoke_hashtag) + "\n" + getString(R.string.droidconke_site))
+                    shareSession.putExtra(Intent.EXTRA_TEXT, "Check out ${session.title}" + getString(R.string.droidcoke_hashtag) + "\n" + getString(R.string.droidconke_site))
                     shareSession.type = "text/plain"
                     startActivity(shareSession)
                 }
@@ -169,14 +168,6 @@ class SessionDetailsFragment : Fragment() {
             }
 
             false
-        }
-    }
-
-    private fun displaySessionSpeakers() {
-        val speakersList = ArrayList<SpeakersModel>()
-        speakersList.add(SpeakersModel(1, "John Doe", "This is bio", "Company", "url"))
-        sessionSpeakersRv.adapter = SpeakersAdapter(speakersList) {
-
         }
     }
 

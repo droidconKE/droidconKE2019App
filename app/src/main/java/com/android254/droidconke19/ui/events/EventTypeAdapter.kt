@@ -10,6 +10,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.EventTypeModel
+import com.android254.droidconke19.utils.loadImage
 import kotlinx.android.synthetic.main.item_event_type.view.*
 
 class EventTypeAdapter(private val eventTypesList: List<EventTypeModel>, private val context: Context) : RecyclerView.Adapter<EventTypeAdapter.EventViewHolder>() {
@@ -20,13 +21,7 @@ class EventTypeAdapter(private val eventTypesList: List<EventTypeModel>, private
 
         fun bindEvents(eventTypeModel: EventTypeModel) {
             with(eventTypeModel) {
-
-                Glide.with(itemView.context).load(eventImageUrl)
-                        .thumbnail(Glide.with(itemView.context).load(eventImageUrl))
-                        .apply(RequestOptions()
-                                .placeholder(R.drawable.splash)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL))
-                        .into(eventImg)
+                eventImg.loadImage(eventImageUrl,R.drawable.splash)
                 eventDescriptionText.text = description
             }
         }

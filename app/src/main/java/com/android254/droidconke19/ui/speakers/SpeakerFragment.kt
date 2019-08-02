@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
 import com.android254.droidconke19.R
+import com.android254.droidconke19.utils.loadImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -41,13 +42,8 @@ class SpeakerFragment : Fragment() {
         speakerNameText.text = speakerArgs.speakerModel.name
         speakerDescriptionText.text = speakerArgs.speakerModel.bio
         speakerCompanyText.text = speakerArgs.speakerModel.company
-        Glide.with(context!!).load(speakerArgs.speakerModel.photoUrl)
-                .thumbnail(Glide.with(context!!).load(speakerArgs.speakerModel.photoUrl))
-                .apply(RequestOptions()
-                        .placeholder(R.drawable.placeholder_image)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL))
-                .into(speaker_image)
-        speakerSessionTitleText.text = speakerArgs.sessionModel.title
+        speaker_image.loadImage(speakerArgs.speakerModel.photoUrl,R.drawable.placeholder_image)
+        speakerArgs.sessionModel.title
         speakerSessionSummaryText.text = speakerArgs.sessionModel.time
 
 

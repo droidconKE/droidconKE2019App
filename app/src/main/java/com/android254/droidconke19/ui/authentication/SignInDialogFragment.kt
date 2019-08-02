@@ -61,7 +61,6 @@ class SignInDialogFragment : DialogFragment() {
                                 .build()
                 ).build()
         )
-
         return AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(providers)

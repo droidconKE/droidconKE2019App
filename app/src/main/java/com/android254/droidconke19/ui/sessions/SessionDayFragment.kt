@@ -25,7 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SessionDayFragment : Fragment() {
     private val sessionsAdapter: SessionsAdapter by lazy {
-        SessionsAdapter{ redirectToSessionDetails(it) }
+        SessionsAdapter { redirectToSessionDetails(it) }
     }
     val day: EventDay by lazy {
         checkNotNull(arguments?.getSerializable(KEY_EVENT_DAY) as EventDay)
@@ -55,7 +55,7 @@ class SessionDayFragment : Fragment() {
     }
 
     private fun fetchDaySessions() {
-        when(day){
+        when (day) {
             EventDay.Thursday -> sessionsViewModel.getSessions("day_one")
             EventDay.Friday -> sessionsViewModel.getSessions("day_two")
         }
@@ -95,13 +95,13 @@ class SessionDayFragment : Fragment() {
         sessionsRv.adapter = sessionsAdapter
     }
 
-    private fun showProgressBar(){
+    private fun showProgressBar() {
         progressBar.visibility = View.VISIBLE
         sessionsRv.visibility = View.GONE
 
     }
 
-    private fun hideProgressBar(){
+    private fun hideProgressBar() {
         progressBar.visibility = View.GONE
         sessionsRv.visibility = View.VISIBLE
     }

@@ -73,8 +73,7 @@ class EventFragment : Fragment() {
                         it.isSuccessful -> // After config data is successfully fetched, it must be activated before newly fetched
                             // values are returned.
                             firebaseRemoteConfig.activate()
-                        else -> {
-                        }
+                        else -> {}
                     }
                     val wifiDetailsModel = WifiDetailsModel(firebaseRemoteConfig.getString("wifi_ssid"), firebaseRemoteConfig.getString("wifi_password"))
                     updateViews(wifiDetailsModel, wifiSsidText, wifiPasswordText)

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.AboutDetailsModel
+import com.android254.droidconke19.utils.loadImage
 import com.android254.droidconke19.utils.nonNull
 import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.viewmodels.AboutViewModel
@@ -86,12 +87,7 @@ class AboutFragment : Fragment() {
         hideProgressBar()
         aboutDetailsList.forEach {
             droidconDescText.text = it.bio
-            Glide.with(context!!).load(it.logoUrl)
-                    .thumbnail(Glide.with(context!!).load(it.logoUrl))
-                    .apply(RequestOptions()
-                            .placeholder(R.drawable.splash)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL))
-                    .into(eventImg)
+            eventImg.loadImage(it.logoUrl, R.drawable.splash)
         }
     }
 
@@ -105,13 +101,13 @@ class AboutFragment : Fragment() {
         aboutType?.let { aboutType -> aboutViewModel.fetchAboutDetails(aboutType) }
     }
 
-    private fun showProgressBar(){
+    private fun showProgressBar() {
         progressBar.visibility = View.VISIBLE
         aboutLinear.visibility = View.GONE
 
     }
 
-    private fun hideProgressBar(){
+    private fun hideProgressBar() {
         progressBar.visibility = View.GONE
         aboutLinear.visibility = View.VISIBLE
     }

@@ -11,6 +11,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.AgendaModel
+import com.android254.droidconke19.utils.loadImage
 import kotlinx.android.synthetic.main.item_agenda.view.*
 
 
@@ -23,12 +24,7 @@ class AgendaAdapter(private val agendaModelList: List<AgendaModel>, private val 
         @SuppressLint("Range")
         fun bindAgendas(agendaModel: AgendaModel) {
             with(agendaModel) {
-                Glide.with(itemView.context).load(iconUrl)
-                        .thumbnail(Glide.with(itemView.context).load(iconUrl))
-                        .apply(RequestOptions()
-                                .placeholder(R.drawable.placeholder_image)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL))
-                        .into(agendaImg)
+                agendaImg.loadImage(iconUrl, R.drawable.placeholder_image)
                 agendaTitleText.text = title
                 agendaTimelineText.text = time
             }

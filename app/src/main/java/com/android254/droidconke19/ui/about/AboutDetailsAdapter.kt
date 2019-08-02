@@ -9,6 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.AboutDetailsModel
+import com.android254.droidconke19.utils.loadImage
 import kotlinx.android.synthetic.main.item_about.view.*
 
 
@@ -20,11 +21,7 @@ class AboutDetailsAdapter(private val aboutDetailsModelList: List<AboutDetailsMo
 
         fun bindAboutDetails(aboutDetailsModel: AboutDetailsModel) {
             with(aboutDetailsModel) {
-                Glide.with(itemView.context).load(logoUrl)
-                        .thumbnail(Glide.with(itemView.context).load(logoUrl))
-                        .apply(RequestOptions()
-                                .diskCacheStrategy(DiskCacheStrategy.ALL))
-                        .into(aboutDetailsImg)
+                aboutDetailsImg.loadImage(logoUrl, R.drawable.placeholder_image)
                 aboutDetailsTitleText.text = name
                 itemView.setOnClickListener {
 
