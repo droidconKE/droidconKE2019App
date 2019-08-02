@@ -4,6 +4,7 @@ apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'com.google.firebase.firebase-perf'
 
 
 android {
@@ -89,15 +90,16 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:17.0.1'
     implementation 'com.firebaseui:firebase-ui-auth:3.3.1'
     implementation 'com.google.firebase:firebase-auth:18.1.0'
-    implementation 'com.google.firebase:firebase-database:18.0.0'
+    implementation 'com.google.firebase:firebase-database:18.0.1'
     implementation 'com.google.firebase:firebase-config:18.0.0'
     implementation 'com.google.firebase:firebase-crash:16.2.1'
     implementation 'com.google.firebase:firebase-messaging:19.0.1'
-    implementation 'com.google.firebase:firebase-firestore:20.1.0'
+    implementation 'com.google.firebase:firebase-firestore:20.2.0'
     implementation "com.firebaseui:firebase-ui-firestore:3.3.0"
     implementation 'com.google.firebase:firebase-common-ktx:18.0.0'
-    implementation 'com.google.firebase:firebase-firestore-ktx:20.1.0'
+    implementation 'com.google.firebase:firebase-firestore-ktx:20.2.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.2.1'
+    implementation 'com.google.firebase:firebase-perf:18.0.1'
 
     //architecture components dependencies
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01"
