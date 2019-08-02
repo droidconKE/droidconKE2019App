@@ -24,6 +24,7 @@ class EventTypeAdapter(private val eventTypesList: List<EventTypeModel>, private
                 Glide.with(itemView.context).load(eventImageUrl)
                         .thumbnail(Glide.with(itemView.context).load(eventImageUrl))
                         .apply(RequestOptions()
+                                .placeholder(R.drawable.splash)
                                 .diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(eventImg)
                 eventDescriptionText.text = description

@@ -35,7 +35,7 @@ class SessionSpeakerImageAdapter(private val speakerList : List<SpeakersModel>):
                 Glide.with(itemView.context).load(photoUrl)
                         .thumbnail(Glide.with(itemView.context).load(photoUrl))
                         .apply(RequestOptions()
-                                .placeholder(R.drawable.profile)
+                                .placeholder(R.drawable.placeholder_image)
                                 .diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(sessionSpeakerImg)
 

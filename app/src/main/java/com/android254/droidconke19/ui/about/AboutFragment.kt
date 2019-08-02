@@ -89,7 +89,7 @@ class AboutFragment : Fragment() {
             Glide.with(context!!).load(it.logoUrl)
                     .thumbnail(Glide.with(context!!).load(it.logoUrl))
                     .apply(RequestOptions()
-                            .placeholder(R.drawable.profile)
+                            .placeholder(R.drawable.splash)
                             .diskCacheStrategy(DiskCacheStrategy.ALL))
                     .into(eventImg)
         }

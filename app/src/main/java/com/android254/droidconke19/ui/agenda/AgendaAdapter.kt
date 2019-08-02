@@ -26,6 +26,7 @@ class AgendaAdapter(private val agendaModelList: List<AgendaModel>, private val 
                 Glide.with(itemView.context).load(iconUrl)
                         .thumbnail(Glide.with(itemView.context).load(iconUrl))
                         .apply(RequestOptions()
+                                .placeholder(R.drawable.placeholder_image)
                                 .diskCacheStrategy(DiskCacheStrategy.ALL))
                         .into(agendaImg)
                 agendaTitleText.text = title

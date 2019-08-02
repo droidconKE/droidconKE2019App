@@ -44,7 +44,7 @@ class SpeakerFragment : Fragment() {
         Glide.with(context!!).load(speakerArgs.speakerModel.photoUrl)
                 .thumbnail(Glide.with(context!!).load(speakerArgs.speakerModel.photoUrl))
                 .apply(RequestOptions()
-                        .placeholder(R.drawable.profile)
+                        .placeholder(R.drawable.placeholder_image)
                         .diskCacheStrategy(DiskCacheStrategy.ALL))
                 .into(speaker_image)
         speakerSessionTitleText.text = speakerArgs.sessionModel.title
