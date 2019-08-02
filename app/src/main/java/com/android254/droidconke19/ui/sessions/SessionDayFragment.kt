@@ -1,5 +1,6 @@
 package com.android254.droidconke19.ui.sessions
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.EventDay
 import com.android254.droidconke19.models.SessionsModel
+import com.android254.droidconke19.repository.FavoritesStore
 import com.android254.droidconke19.ui.filters.Filter
 import com.android254.droidconke19.ui.filters.FilterStore
 import com.android254.droidconke19.ui.schedule.ScheduleFragmentDirections
@@ -22,16 +24,21 @@ import kotlinx.android.synthetic.main.fragment_day_session.*
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.core.parameter.parametersOf
 
 class SessionDayFragment : Fragment() {
-    private val sessionsAdapter: SessionsAdapter by lazy {
-        SessionsAdapter { redirectToSessionDetails(it) }
-    }
-    val day: EventDay by lazy {
+    private val day: EventDay by lazy {
         checkNotNull(arguments?.getSerializable(KEY_EVENT_DAY) as EventDay)
     }
     private val sessionsViewModel: SessionsViewModel by inject()
     private val sessionDetailsViewModel: SessionDetailsViewModel by sharedViewModel()
+    private val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
+    private val favoritesStore: FavoritesStore by lazy {
+        FavoritesStore(sharedPreferences)
+    }
+    private val sessionsAdapter: SessionsAdapter by lazy {
+        SessionsAdapter(favoritesStore) { redirectToSessionDetails(it) }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_day_session, container, false)

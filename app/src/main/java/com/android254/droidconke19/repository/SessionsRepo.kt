@@ -13,13 +13,13 @@ import com.android254.droidconke19.utils.await
 
 class SessionsRepo(db: AppDatabase, private val firestore: FirebaseFirestore) {
 
-    suspend fun getSessions(sessionDay : String): Result<List<SessionsModel>> {
+    suspend fun getSessions(sessionDay: String): Result<List<SessionsModel>> {
         return try {
             val snapshots = firestore.collection(sessionDay)
                     .orderBy("id", Query.Direction.ASCENDING)
                     .get().await()
-            val speakerById : Map<Int, SpeakersModel> = getSpeakerInfo().associateBy { it.id}
-            val sessionList : List<SessionsModel> = snapshots.toObjects()
+            val speakerById: Map<Int, SpeakersModel> = getSpeakerInfo().associateBy { it.id }
+            val sessionList: List<SessionsModel> = snapshots.toObjects()
 
             sessionList.onEach { sessionsModel ->
                 sessionsModel.speaker_id.mapNotNull {
@@ -34,11 +34,11 @@ class SessionsRepo(db: AppDatabase, private val firestore: FirebaseFirestore) {
         }
     }
 
-    suspend fun getSpeakerInfo(): List<SpeakersModel> {
+    private suspend fun getSpeakerInfo(): List<SpeakersModel> {
         val snapshot = firestore.collection("speakers")
                 .get()
                 .await()
         return snapshot.toObjects()
-        }
+    }
 
 }

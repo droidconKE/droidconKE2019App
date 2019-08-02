@@ -40,7 +40,7 @@ class FilterFragment : RoundedBottomSheetFragment() {
             chip.isChecked = false
         }
 
-        val stages = Stage.values().toList().minus(Stage.None).map { it.name }
+        val stages = Stage.values().toList().minus(Stage.None).map { it.value }
         val stageChips = getChips(stages)
         stageChips.forEachIndexed { index, chip ->
             chip.isChecked = filterStore.filter.stages.contains(Stage.values()[index])

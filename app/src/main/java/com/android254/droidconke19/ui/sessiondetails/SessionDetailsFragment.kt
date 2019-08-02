@@ -17,7 +17,6 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.SessionsModel
-import com.android254.droidconke19.models.SpeakersModel
 import com.android254.droidconke19.ui.speakers.SpeakersAdapter
 import com.android254.droidconke19.utils.isSignedIn
 import com.android254.droidconke19.utils.nonNull
@@ -32,7 +31,6 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
 import java.util.*
-import kotlin.collections.ArrayList
 
 class SessionDetailsFragment : Fragment() {
     private val sessionDetailsViewModel: SessionDetailsViewModel by sharedViewModel()
@@ -92,7 +90,7 @@ class SessionDetailsFragment : Fragment() {
     }
 
     private fun setupViews(sessionModel: SessionsModel) {
-        sessionTimeRoomText.text = getString(R.string.session_room_and_session_duration, sessionModel.duration, sessionModel.room)
+        sessionTimeRoomText.text = getString(R.string.session_room_and_session_duration, sessionModel.duration, sessionModel.stage)
         sessionStartTimeText.text = sessionModel.time
         sessionDescriptionText.text = sessionModel.description
         intendedAudienceText.text = sessionModel.session_audience

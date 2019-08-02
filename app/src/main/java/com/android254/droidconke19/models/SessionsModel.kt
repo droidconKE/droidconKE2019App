@@ -4,13 +4,14 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.android254.droidconke19.R
+import com.android254.droidconke19.repository.FavoritesStore
 import com.android254.droidconke19.ui.filters.Filter
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 import kotlin.collections.ArrayList
 
 interface Filterable {
-    fun isInFilter(filter: Filter): Boolean
+    fun isInFilter(filter: Filter, favoritesStore: FavoritesStore): Boolean
 }
 
 @Entity(tableName = "sessionsList")
@@ -45,14 +46,17 @@ data class SessionsModel(
         var photoUrl: String = "",
         val level: Level = Level.None,
         var speakerList: ArrayList<SpeakersModel> = ArrayList(),
-        val end_time_in_am: String =""
+        val end_time_in_am: String = ""
 
 ) : Parcelable, Filterable {
-    override fun isInFilter(filter: Filter): Boolean {
+    override fun isInFilter(filter: Filter, favoritesStore: FavoritesStore): Boolean {
         return if (filter == Filter.empty()) {
             true
         } else {
             var result = true
+            if (filter.isFavorites) {
+                result = result && favoritesStore.isFavorite(this)
+            }
             if (filter.stages.isNotEmpty()) {
                 result = result && filter.stages.contains(stage)
             }
@@ -83,8 +87,12 @@ data class SessionsModel(
     }
 }
 
-enum class Stage {
-    MainHall, Room1, Room2, Room3, None
+enum class Stage(val value: String) {
+    MainHall("Main Hall"),
+    Room1("Room 1"),
+    Room2("Room 2"),
+    Room3("Room 3"),
+    None("None")
 }
 
 enum class Type(val value: String, val resId: Int) {
@@ -97,9 +105,10 @@ enum class Type(val value: String, val resId: Int) {
 }
 
 enum class Level(val resId: Int) {
-    Introductory(R.drawable.ic_outline_signal_cellular_one),
+    Beginner(R.drawable.ic_outline_signal_cellular_one),
     Intermediate(R.drawable.ic_outline_signal_cellular_two),
     Advanced(R.drawable.ic_outline_signal_cellular_three),
+    General(R.drawable.ic_outline_signal_cellular_three),
     None(0)
 }
 
