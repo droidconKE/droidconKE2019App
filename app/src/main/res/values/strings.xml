@@ -179,7 +179,7 @@
     <string name="session_detail_intended_audience">Intended Audience</string>
     <string name="session_detail_tag">Tags</string>
     <string name="session_detail_resource">Resources</string>
-    <string name="session_detail_resource_video">Video</string>
+    <string name="session_detail_reserve_seat">Reserve Seat</string>
     <string name="session_detail_resource_slide">Slides</string>
     <string name="session_bottom_appbar_behavior" translatable="false">droiddevelopers254.droidconke.ui.widget.SessionBottomAppBarBehavior</string>
     <string name="session_audience">beginner session</string>
@@ -222,4 +222,5 @@
     <string name="travel">Travel</string>
     <string name="about">About</string>
     <string name="feedback_thank_you">Thank you for your feedback</string>
+    <string name="seat_served_text">Seat Reserved</string>
 </resources>

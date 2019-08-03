@@ -4,14 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android254.droidconke19.datastates.Result
-import com.android254.droidconke19.models.RoomModel
-import com.android254.droidconke19.models.SessionsModel
-import com.android254.droidconke19.models.SessionsUserFeedback
-import com.android254.droidconke19.models.SpeakersModel
-import com.android254.droidconke19.repository.RoomRepo
-import com.android254.droidconke19.repository.SessionDataRepo
-import com.android254.droidconke19.repository.SessionFeedbackRepo
-import com.android254.droidconke19.repository.SpeakersRepo
+import com.android254.droidconke19.models.*
+import com.android254.droidconke19.repository.*
 import com.android254.droidconke19.utils.NonNullMediatorLiveData
 import kotlinx.coroutines.launch
 
@@ -26,7 +20,6 @@ class SessionDataViewModel(private val sessionDataRepo: SessionDataRepo, private
     private val sessionFeedBackMediatorLiveData = NonNullMediatorLiveData<String>()
     private val sessionFeedbackError = NonNullMediatorLiveData<String>()
 
-
     fun getSessionDataResponse(): LiveData<SessionsModel> = sessionDataStateMediatorLiveData
 
     fun getSessionDataError(): LiveData<String> = sessionDataError
@@ -38,7 +31,6 @@ class SessionDataViewModel(private val sessionDataRepo: SessionDataRepo, private
     fun getRoomInfoResponse(): LiveData<RoomModel> = roomStateMediatorLiveData
 
     fun getRoomInfoError(): LiveData<String> = roomError
-
 
     fun getSessionFeedBackResponse(): LiveData<String> = sessionFeedBackMediatorLiveData
 
@@ -82,4 +74,5 @@ class SessionDataViewModel(private val sessionDataRepo: SessionDataRepo, private
 
         }
     }
+
 }

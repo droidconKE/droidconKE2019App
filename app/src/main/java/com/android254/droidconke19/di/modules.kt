@@ -36,7 +36,7 @@ val appModule = module {
     viewModel { FeedBackViewModel(get()) }
     viewModel { HomeViewModel(get()) }
     viewModel { AnnouncementViewModel(get()) }
-    viewModel { SessionDetailsViewModel(get(), get()) }
+    viewModel { SessionDetailsViewModel(get(), get(),get()) }
 
     factory { (context: Context) -> context.getSharedPreferences(SharedPref.PREF_NAME, Context.MODE_PRIVATE) }
 }
@@ -54,6 +54,7 @@ val dataModule = module {
     single { EventTypeRepo(get()) }
     single { AgendaRepo(get()) }
     single { AnnouncementRepo(get()) }
+    single { ReserveSeatRepo(get()) }
 
     // Database
     single { Room.databaseBuilder(get(), AppDatabase::class.java, "droidconKE_db").fallbackToDestructiveMigration().build() }

@@ -16,6 +16,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.android254.droidconke19.R
+import com.android254.droidconke19.models.ReserveSeatModel
 import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.ui.speakers.SpeakersAdapter
 import com.android254.droidconke19.utils.isSignedIn
@@ -52,6 +53,22 @@ class SessionDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        clickListeners()
+        styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences))
+
+        bottom_app_bar.replaceMenu(R.menu.menu_bottom_appbar)
+        handleBottomBarMenuClick()
+        //observer live data
+        observeLiveData()
+    }
+
+    private fun clickListeners() {
+        sessionReserveSeatText.setOnClickListener {
+            progress_bar.visibility = View.VISIBLE
+            reserveSeat()
+        }
+
         session_favorite.setOnClickListener {
             if (!firebaseAuth.isSignedIn()) {
                 findNavController().navigate(R.id.signInDialogFragment)
@@ -70,20 +87,48 @@ class SessionDetailsFragment : Fragment() {
             }
 
         }
-        styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences))
+    }
 
-        bottom_app_bar.replaceMenu(R.menu.menu_bottom_appbar)
-        handleBottomBarMenuClick()
+    private fun reserveSeat() {
+        if (!firebaseAuth.isSignedIn()) {
+            findNavController().navigate(R.id.signInDialogFragment)
+            return
+        }
+        val reserveSeatModel = ReserveSeatModel(session.id.toString(), session.day_number, session.title, firebaseAuth.currentUser!!.uid)
+        lifecycleScope.launch {
+            sessionDetailsViewModel.reserveSeat(reserveSeatModel, sharedPreferences, session)
+            setTextLabel(sessionDetailsViewModel.isSeatReserved(sharedPreferences, session))
+        }
 
-        //observer live data
-        observeLiveData()
+    }
+
+    private fun setTextLabel(seatReserved: Boolean) {
+        when {
+            seatReserved -> {
+                sessionReserveSeatText.text = getString(R.string.seat_served_text)
+                sessionReserveSeatText.setTextColor(ContextCompat.getColor(context!!, R.color.colorGreen))
+            }
+            else -> {
+                sessionReserveSeatText.text = getString(R.string.session_detail_reserve_seat)
+                sessionReserveSeatText.setTextColor(ContextCompat.getColor(context!!, R.color.colorBlack))
+            }
+        }
     }
 
     private fun observeLiveData() {
         sessionDetailsViewModel.getSessionDetails().nonNull().observe(this) { sessionModel ->
             session = sessionModel
             setupViews(sessionModel)
+            setTextLabel(sessionDetailsViewModel.isSeatReserved(sharedPreferences, session))
         }
+        sessionDetailsViewModel.getReserveSeatResponse().nonNull().observe(this) {
+            handleReserveSeatResponse(it)
+        }
+    }
+
+    private fun handleReserveSeatResponse(it: String) {
+        progress_bar.visibility = View.GONE
+        activity?.toast(it)
     }
 
     private fun setupViews(sessionModel: SessionsModel) {
@@ -128,7 +173,8 @@ class SessionDetailsFragment : Fragment() {
                 }
             }
             when (id) {
-                R.id.action_map -> {}
+                R.id.action_map -> {
+                }
             }
             when (id) {
                 R.id.action_calendar -> {

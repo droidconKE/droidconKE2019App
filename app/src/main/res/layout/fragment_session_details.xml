@@ -251,7 +251,7 @@
                 />
 
             <TextView
-                android:id="@+id/session_go_to_survey"
+                android:id="@+id/sessionFeedbackText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/appbar_padding_top"
@@ -334,21 +334,21 @@
                 />
 
             <TextView
-                android:id="@+id/session_video_button"
+                android:id="@+id/sessionReserveSeatText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/appbar_padding_top"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:drawablePadding="@dimen/appbar_padding_top"
-                android:drawableStart="@drawable/ic_local_movies_outline_gray2_24dp"
+                android:drawableStart="@drawable/ic_ticket"
                 android:focusable="true"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/fab_margin"
                 android:paddingTop="@dimen/appbar_padding_top"
                 android:paddingEnd="@dimen/fab_margin"
                 android:paddingBottom="@dimen/appbar_padding_top"
-                android:text="@string/session_detail_resource_video"
+                android:text="@string/session_detail_reserve_seat"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -374,7 +374,7 @@
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/session_video_button"
+                app:layout_constraintTop_toBottomOf="@id/sessionReserveSeatText"
                 app:layout_goneMarginTop="@dimen/appbar_padding_top"
                 />
 

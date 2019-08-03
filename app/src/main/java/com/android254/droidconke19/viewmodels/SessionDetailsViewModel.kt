@@ -4,7 +4,9 @@ import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.android254.droidconke19.datastates.Result
+import com.android254.droidconke19.models.ReserveSeatModel
 import com.android254.droidconke19.models.SessionsModel
+import com.android254.droidconke19.repository.ReserveSeatRepo
 import com.android254.droidconke19.repository.SessionDataRepo
 import com.android254.droidconke19.utils.NonNullMediatorLiveData
 import com.android254.droidconke19.utils.SharedPref
@@ -15,9 +17,10 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging,
-                              private val sessionDataRepo: SessionDataRepo) : ViewModel() {
+                              private val sessionDataRepo: SessionDataRepo, private val reserveSeatRepo: ReserveSeatRepo) : ViewModel() {
     private val sessionDetailsMediatorLiveData = NonNullMediatorLiveData<SessionsModel>()
     val message = SingleLiveEvent<String>()
+    private val reserveSeatMediatorLiveData = SingleLiveEvent<String>()
 
     fun getSessionDetails(): LiveData<SessionsModel> = sessionDetailsMediatorLiveData
 
@@ -25,6 +28,7 @@ class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging,
         sessionDetailsMediatorLiveData.value = sessionsModel
     }
 
+    fun getReserveSeatResponse(): LiveData<String> = reserveSeatMediatorLiveData
 
     suspend fun addToFavourites(sharedPreferences: SharedPreferences, userId: String): Boolean = withContext(Dispatchers.IO) {
         val slug = sessionDetailsMediatorLiveData.value!!.notification_slug
@@ -67,5 +71,30 @@ class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging,
         sharedPreferences.edit().putStringSet(SharedPref.FAVOURITE_SESSIONS, mutableSetOf()).apply()
     }
 
+    suspend fun reserveSeat(reserveSeatModel: ReserveSeatModel, sharedPreferences: SharedPreferences, sessionsModel: SessionsModel): Boolean = withContext(Dispatchers.IO) {
+        val reservedSeats = sharedPreferences.getStringSet(SharedPref.RESERVED_SEATS, mutableSetOf())!!
+        return@withContext if (reservedSeats.contains(sessionsModel.title)) {
+            reservedSeats.remove(sessionsModel.title)
+            when (val value = reserveSeatRepo.unReserveSeat(reserveSeatModel)) {
+                is Result.Success -> reserveSeatMediatorLiveData.postValue(value.data)
+                is Result.Error -> reserveSeatMediatorLiveData.postValue(value.exception)
+            }
+            sharedPreferences.edit().putStringSet(SharedPref.RESERVED_SEATS, reservedSeats).apply()
+            true
+        } else {
+            reservedSeats.add(sessionsModel.title)
+            when (val value = reserveSeatRepo.reserveSeat(reserveSeatModel)) {
+                is Result.Success -> reserveSeatMediatorLiveData.postValue(value.data)
+                is Result.Error -> reserveSeatMediatorLiveData.postValue(value.exception)
+            }
+            sharedPreferences.edit().putStringSet(SharedPref.RESERVED_SEATS, reservedSeats).apply()
+            true
+        }
+    }
+
+    fun isSeatReserved(sharedPreferences: SharedPreferences, sessionsModel: SessionsModel): Boolean {
+        val reservedSeats = sharedPreferences.getStringSet(SharedPref.RESERVED_SEATS, mutableSetOf())!!
+        return reservedSeats.contains(sessionsModel.title)
+    }
 
 }

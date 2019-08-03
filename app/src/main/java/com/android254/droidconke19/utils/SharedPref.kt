@@ -9,5 +9,6 @@ object SharedPref {
     const val SESSION_STARRED = "sessionStarred"
     const val SESSION_STARRED_ID = "sessionStarredId"
     const val FAVOURITE_SESSIONS = "favouriteSessions"
+    const val RESERVED_SEATS = "reservedSeats"
 
 }
