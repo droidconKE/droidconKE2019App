@@ -3,9 +3,11 @@ package com.android254.droidconke19.ui.sessions
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android254.droidconke19.R
+import com.android254.droidconke19.models.Level
 import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.repository.FavoritesStore
 import com.android254.droidconke19.ui.filters.Filter
@@ -31,7 +33,7 @@ class SessionsAdapter(private val favoritesStore: FavoritesStore, private val it
     }
 
     override fun onBindViewHolder(holder: SessionsViewHolder, position: Int) {
-        sessionsList[position].bindSession(holder, itemClickListener)
+        sessionsList[position].bindSession(holder, itemClickListener,favoritesStore)
     }
 
     override fun getItemCount(): Int {
@@ -88,26 +90,33 @@ class SessionsAdapter(private val favoritesStore: FavoritesStore, private val it
 class AdapterItem(
         private val sessionsModel: SessionsModel
 ) {
-    fun bindSession(viewHolder: SessionsAdapter.SessionsViewHolder, itemClickListener: (SessionsModel) -> Unit) =
+    fun bindSession(viewHolder: SessionsAdapter.SessionsViewHolder, itemClickListener: (SessionsModel) -> Unit, favoritesStore: FavoritesStore) =
             with(viewHolder.itemView) {
                 sessionTitleText.text = sessionsModel.title
                 sessionRoomText.text = sessionsModel.room
                 sessionInAmPmText.text = "${sessionsModel.time_in_am}${sessionsModel.am_pm_label}"
-                sessionAudienceText.text = sessionsModel.session_audience
+                sessionAudienceText.text = sessionsModel.session_audience.name
                 sessionSpeakerImageRv.adapter = SessionSpeakerImageAdapter(sessionsModel.speakerList)
                 sessionSpeakerImageRv.layoutManager = LinearLayoutManager(viewHolder.itemView.context, LinearLayoutManager.HORIZONTAL, false)
                 sessionSpeakerNameRv.adapter = SessionSpeakerTextAdapter(sessionsModel.speakerList)
                 sessionSpeakerNameRv.layoutManager = LinearLayoutManager(viewHolder.itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
                 when (sessionsModel.session_audience) {
-                    "intermediate" -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_intermediate_textview_bg)
-                    "advanced" -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_advanced_level_textvieww_bg)
-                    "beginner" -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_beginner_level_textview_bg)
-                    "general" -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_general_level_textview_bg)
+                    Level.intermediate -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_intermediate_textview_bg)
+                    Level.advanced -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_advanced_level_textvieww_bg)
+                    Level.beginner -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_beginner_level_textview_bg)
+                    Level.general -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_general_level_textview_bg)
                 }
+
+                updateFavoriteIcon(bookMarkImg, favoritesStore)
 
                 setOnClickListener {
                     itemClickListener(sessionsModel)
                 }
             }
+
+    private fun updateFavoriteIcon(bookMarkImg: ImageView?, favoritesStore: FavoritesStore) {
+        val isFavorite = favoritesStore.isFavorite(sessionsModel)
+        if (isFavorite) bookMarkImg?.visibility = View.VISIBLE else bookMarkImg?.visibility = View.GONE
+    }
 }

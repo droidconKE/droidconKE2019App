@@ -60,11 +60,11 @@ class SessionDetailsFragment : Fragment() {
             val userId = firebaseAuth.currentUser!!.uid
             lifecycleScope.launch {
                 progress_bar.visibility = View.VISIBLE
-//                if (sessionDetailsViewModel.addToFavourites(sharedPreferences, userId)) {
-//                    activity?.toast(getString(R.string.session_added))
-//                } else {
-//                    activity?.toast(getString(R.string.session_removed))
-//                }
+                if (sessionDetailsViewModel.addToFavourites(sharedPreferences, userId)) {
+                    activity?.toast(getString(R.string.session_added))
+                } else {
+                    activity?.toast(getString(R.string.session_removed))
+                }
                 styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences))
                 progress_bar.visibility = View.GONE
             }
@@ -84,16 +84,13 @@ class SessionDetailsFragment : Fragment() {
             session = sessionModel
             setupViews(sessionModel)
         }
-        sessionDetailsViewModel.message.observe(this, Observer {
-            activity?.toast(it)
-        })
     }
 
     private fun setupViews(sessionModel: SessionsModel) {
         sessionTimeRoomText.text = getString(R.string.session_room_and_session_duration, sessionModel.duration, sessionModel.stage)
         sessionStartTimeText.text = sessionModel.time
         sessionDescriptionText.text = sessionModel.description
-        intendedAudienceText.text = sessionModel.session_audience
+        intendedAudienceText.text = sessionModel.session_audience.name
         topicChip.text = sessionModel.topic
         typeChip.text = sessionModel.type.value
         sessionSpeakersRv.adapter = SpeakersAdapter(sessionModel.speakerList) { speakerModel ->

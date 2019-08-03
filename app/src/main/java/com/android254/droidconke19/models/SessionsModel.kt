@@ -41,10 +41,9 @@ data class SessionsModel(
         var day_number: String = "",
         var time_in_am: String = "",
         var am_pm_label: String = "",
-        var session_audience: String = "",
         var notification_slug: String = "",
         var photoUrl: String = "",
-        val level: Level = Level.None,
+        val session_audience: Level = Level.None,
         var speakerList: ArrayList<SpeakersModel> = ArrayList(),
         val end_time_in_am: String = ""
 
@@ -64,7 +63,7 @@ data class SessionsModel(
                 result = result && filter.types.contains(type)
             }
             if (filter.levels.isNotEmpty()) {
-                result = result && filter.levels.contains(level)
+                result = result && filter.levels.contains(session_audience)
             }
             return result
         }
@@ -105,10 +104,10 @@ enum class Type(val value: String, val resId: Int) {
 }
 
 enum class Level(val resId: Int) {
-    Beginner(R.drawable.ic_outline_signal_cellular_one),
-    Intermediate(R.drawable.ic_outline_signal_cellular_two),
-    Advanced(R.drawable.ic_outline_signal_cellular_three),
-    General(R.drawable.ic_outline_signal_cellular_three),
+    beginner(R.drawable.ic_outline_signal_cellular_one),
+    intermediate(R.drawable.ic_outline_signal_cellular_two),
+    advanced(R.drawable.ic_outline_signal_cellular_three),
+    general(R.drawable.ic_outline_signal_cellular_three),
     None(0)
 }
 

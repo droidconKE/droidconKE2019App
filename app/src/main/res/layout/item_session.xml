@@ -108,6 +108,14 @@
                     android:layout_toEndOf="@id/timeSeparatorText"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/small_margin"/>
+                <ImageView
+                    android:id="@+id/bookMarkImg"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_bookmark_black_24dp"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"/>
 
             </RelativeLayout>
 

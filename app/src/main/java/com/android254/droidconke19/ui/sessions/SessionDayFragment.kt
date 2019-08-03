@@ -52,7 +52,6 @@ class SessionDayFragment : Fragment() {
         //fetch sessions according to day
         fetchDaySessions()
 
-
         val filterStore = FilterStore.instance
         if (filterStore.filter != Filter.empty()) {
             applyFilter(filterStore.filter)
@@ -77,7 +76,9 @@ class SessionDayFragment : Fragment() {
         sessionsViewModel.getSessionsResponse().nonNull().observe(this) { sessionList ->
             updateAdapterWithList(sessionList)
         }
-
+        sessionsViewModel.getSessionsError().nonNull().observe(this){databaseError ->
+            handleError(databaseError)
+        }
     }
 
     private fun updateAdapterWithList(sessionList: List<SessionsModel>) {
@@ -95,6 +96,7 @@ class SessionDayFragment : Fragment() {
     }
 
     private fun handleError(databaseError: String?) {
+        hideProgressBar()
         activity?.toast(databaseError.toString())
     }
 
