@@ -70,5 +70,6 @@ class InfoFragment : Fragment() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.action_profile)?.isVisible = false
+        menu.findItem(R.id.eventFeedbackFragment)?.isVisible = false
     }
 }

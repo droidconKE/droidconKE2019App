@@ -4,9 +4,13 @@
     tools:context="com.android254.droidconke19.ui.activities.WelcomeActivity">
     <item
         android:id="@+id/action_profile"
-        android:orderInCategory="100"
         android:title="@string/action_sign_out"
         android:icon="@drawable/ic_account_circle_black_24dp"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         />
+    <item
+        android:id="@+id/eventFeedbackFragment"
+        android:title="@string/event_feedback_label"
+        android:icon="@drawable/ic_event_feedback"
+        app:showAsAction="always"/>
 </menu>

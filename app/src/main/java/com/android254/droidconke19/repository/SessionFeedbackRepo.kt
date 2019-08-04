@@ -11,7 +11,7 @@ class SessionFeedbackRepo(private val firestore: FirebaseFirestore) {
 
     suspend fun sendFeedBack(userSessionFeedback: SessionsUserFeedback): Result<String> {
         return try {
-            firestore.collection("sessionsFeedback")
+            firestore.collection("session_feedback_2019")
                     .add(userSessionFeedback)
                     .await()
             Result.Success("Thank you for your feedback")

@@ -64,7 +64,6 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fab_margin"
-            app:icon="@drawable/ic_send_white"
             android:text="@string/submit_feedback"
             android:background="@drawable/round_button"
             app:iconGravity="textStart"

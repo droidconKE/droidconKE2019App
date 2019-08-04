@@ -184,7 +184,7 @@
     <string name="session_bottom_appbar_behavior" translatable="false">droiddevelopers254.droidconke.ui.widget.SessionBottomAppBarBehavior</string>
     <string name="session_audience">beginner session</string>
     <string name="session_details_label">Session Details</string>
-    <string name="session_feed_back_label">Feedback</string>
+    <string name="session_feed_back_label">Session Feedback</string>
     <string name="session_time_in_am_pm">9.00 AM</string>
     <string name="session_room_name">Main Stage</string>
     <string name="agenda_image_description">Agenda Image</string>
@@ -223,4 +223,6 @@
     <string name="about">About</string>
     <string name="feedback_thank_you">Thank you for your feedback</string>
     <string name="seat_served_text">Seat Reserved</string>
+    <string name="event_feedback_label">Event Feedback</string>
+    <string name="empty_field_error">This field is required</string>
 </resources>

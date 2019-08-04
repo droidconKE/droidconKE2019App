@@ -87,6 +87,10 @@ class SessionDetailsFragment : Fragment() {
             }
 
         }
+
+        sessionFeedbackText.setOnClickListener {
+            findNavController().navigate(R.id.action_sessionDetailsFragment_to_sessionFeedbackFragment)
+        }
     }
 
     private fun reserveSeat() {
@@ -215,5 +219,6 @@ class SessionDetailsFragment : Fragment() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.action_profile)?.isVisible = false
+        menu.findItem(R.id.eventFeedbackFragment)?.isVisible = false
     }
 }

@@ -93,6 +93,11 @@
             android:name="dayNumber"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/eventFeedbackFragment"
+        android:name="com.android254.droidconke19.ui.feedback.EventFeedbackFragment"
+        android:label="@string/event_feedback_label"
+        tools:layout="@layout/fragment_event_feedback"/>
 
 
 </navigation>

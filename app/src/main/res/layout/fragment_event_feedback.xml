@@ -36,13 +36,19 @@
             android:layout_marginBottom="@dimen/fab_margin"/>
 
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/fab_margin"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:id="@+id/txtEventFeedback"
-            android:hint="@string/hintEventFeedback"
-            android:layout_height="wrap_content" />
+       <com.google.android.material.textfield.TextInputLayout
+           android:id="@+id/eventFeedbackLayout"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           app:errorEnabled="true">
+           <com.google.android.material.textfield.TextInputEditText
+               android:id="@+id/eventFeedbackEdit"
+               android:layout_width="match_parent"
+               android:layout_marginTop="@dimen/fab_margin"
+               android:layout_marginBottom="@dimen/fab_margin"
+               android:hint="@string/hintEventFeedback"
+               android:layout_height="wrap_content" />
+       </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/submitSessionFeedBackBtn"
@@ -50,7 +56,6 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fab_margin"
-            app:icon="@drawable/ic_send_white"
             android:text="@string/submit_feedback"
             android:background="@drawable/round_button"
             app:iconGravity="textStart"

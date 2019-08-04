@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.onNavDestinationSelected
 import com.android254.droidconke19.utils.SharedPref.TOKEN_SENT
 import com.android254.droidconke19.utils.isSignedIn
 import com.android254.droidconke19.viewmodels.HomeViewModel
@@ -98,7 +99,7 @@ class HomeActivity : AppCompatActivity() {
                 }
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> super.onOptionsItemSelected(item) || item.onNavDestinationSelected(findNavController(R.id.navHostFragment))
         }
     }
 
