@@ -1,23 +1,29 @@
 package com.android254.droidconke19.ui.feedback
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.models.SessionsUserFeedback
+import com.android254.droidconke19.utils.isSignedIn
 import com.android254.droidconke19.utils.nonNull
 import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.viewmodels.SessionDataViewModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_session_feedback.*
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 
 class SessionFeedbackFragment : Fragment() {
     private val sessionDataViewModel: SessionDataViewModel by inject()
+    private val sessionFeedbackArgs: SessionFeedbackFragmentArgs by navArgs()
+    private val firebaseAuth: FirebaseAuth by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_session_feedback, container, false)
@@ -31,18 +37,45 @@ class SessionFeedbackFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sessionFeedbackTitleText.text = sessionFeedbackArgs.sessionTitle
+
+        submitSessionFeedBackBtn.setOnClickListener {
+            val sessionFeedback = sessionFeedbackEdit.text.toString()
+            submitSessionFeedback(sessionFeedback)
+        }
         //observe live data emitted by view model
         observeLiveData()
     }
 
-    private fun observeLiveData() {
-        sessionDataViewModel.getSessionDataResponse().nonNull().observe(this) {
-            handleFetchSessionData(it)
+    private fun submitSessionFeedback(sessionFeedback: String) {
+        if (firebaseAuth.isSignedIn()) {
+            when {
+                !validateInputs(sessionFeedback) -> return
+                else -> {
+                    showProgressbar()
+                    val sessionsUserFeedback = SessionsUserFeedback(firebaseAuth.currentUser?.uid!!, sessionFeedbackArgs.sessionId, sessionFeedbackArgs.dayNumber, sessionFeedbackArgs.sessionTitle, sessionFeedback)
+                    sessionDataViewModel.sendSessionFeedBack(sessionsUserFeedback)
+                }
+            }
+        }
+    }
 
+    private fun validateInputs(sessionFeedback: String): Boolean {
+        var valid = true
+        when {
+            TextUtils.isEmpty(sessionFeedback) -> {
+                sessionFeedbackLayout.error = getString(R.string.empty_field_error)
+                sessionFeedbackEdit.requestFocus()
+                valid = false
+            }
+            else -> {
+                sessionFeedbackLayout.error = null
+            }
         }
-        sessionDataViewModel.getSessionDataError().nonNull().observe(this) {
-            handleDatabaseError(it)
-        }
+        return valid
+    }
+
+    private fun observeLiveData() {
         sessionDataViewModel.getSessionFeedBackResponse().nonNull().observe(this) {
             handleFeedbackResponse(it)
         }
@@ -53,34 +86,29 @@ class SessionFeedbackFragment : Fragment() {
     }
 
     private fun handleFeedbackResponse(feedback: String) {
-        progressBar.visibility = View.GONE
-        txtSessionUserFeedback.setText("")
-        activity?.toast(getString(R.string.feedback_thank_you))
-    }
-
-    private fun getSessionData(dayNumber: String, sessionId: Int) {
-        sessionDataViewModel.getSessionDetails(dayNumber, sessionId)
-    }
-
-    private fun handleFetchSessionData(sessionsModel: SessionsModel) {
-        //set the data on the view
-//        txtSessionFeedbackTitle.text = sessionsModel.title
+        hideProgressBar()
+        sessionFeedbackEdit.setText("")
+        activity?.toast(feedback)
     }
 
     private fun handleDatabaseError(databaseError: String) {
+        hideProgressBar()
         activity?.toast(databaseError)
-    }
-
-    private fun postUserFeedback(userFeedback: SessionsUserFeedback) {
-
-        progressBar.visibility = View.VISIBLE
-        sessionDataViewModel.sendSessionFeedBack(userFeedback)
-
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.action_profile)?.isVisible = false
         menu.findItem(R.id.eventFeedbackFragment)?.isVisible = false
+    }
+
+    private fun showProgressbar() {
+        feedbackLinear.visibility = View.GONE
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        progressBar.visibility = View.GONE
+        feedbackLinear.visibility = View.VISIBLE
     }
 }

@@ -89,7 +89,8 @@ class SessionDetailsFragment : Fragment() {
         }
 
         sessionFeedbackText.setOnClickListener {
-            findNavController().navigate(R.id.action_sessionDetailsFragment_to_sessionFeedbackFragment)
+            val sessionFeedbackAction = SessionDetailsFragmentDirections.actionSessionDetailsFragmentToSessionFeedbackFragment(session.day_number, session.day_number, session.id,session.title)
+            findNavController().navigate(sessionFeedbackAction)
         }
     }
 
@@ -174,10 +175,6 @@ class SessionDetailsFragment : Fragment() {
                     shareSession.putExtra(Intent.EXTRA_TEXT, "Check out ${session.title}" + getString(R.string.droidcoke_hashtag) + "\n" + getString(R.string.droidconke_site))
                     shareSession.type = "text/plain"
                     startActivity(shareSession)
-                }
-            }
-            when (id) {
-                R.id.action_map -> {
                 }
             }
             when (id) {

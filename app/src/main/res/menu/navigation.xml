@@ -11,10 +11,4 @@
         android:id="@+id/navigation_schedule"
         android:icon="@drawable/ic_today_black_24dp"
         android:title="@string/title_schedule" />
-
-    <item
-        android:id="@+id/navigation_map"
-        android:icon="@drawable/ic_location_on_black_24dp"
-        android:title="@string/title_map" />
-
 </menu>

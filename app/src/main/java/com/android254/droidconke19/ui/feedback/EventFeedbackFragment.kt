@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.android254.droidconke19.R
+import com.android254.droidconke19.models.UserEventFeedback
 import com.android254.droidconke19.utils.isSignedIn
 import com.android254.droidconke19.utils.nonNull
 import com.android254.droidconke19.utils.observe
@@ -46,7 +47,9 @@ class EventFeedbackFragment : Fragment() {
             when {
                 !validateInputs(eventFeedback) -> return
                 else -> {
-                    progressBarEventFeedBack.visibility = View.VISIBLE
+                    showProgressbar()
+                    val userEventFeedback = UserEventFeedback(eventFeedback)
+                    feedBackViewModel.sendEventFeedBack(userEventFeedback)
                 }
             }
         }
@@ -80,12 +83,14 @@ class EventFeedbackFragment : Fragment() {
     }
 
     private fun handleDataError(it: String) {
+        hideProgressBar()
         activity?.toast(it)
     }
 
     private fun handleFeedbackResponse(feedback: String) {
-        progressBarEventFeedBack.visibility = View.GONE
-        activity?.toast(getString(R.string.feedback_thank_you))
+        hideProgressBar()
+        eventFeedbackEdit.setText("")
+        activity?.toast(feedback)
 
     }
 
@@ -93,5 +98,16 @@ class EventFeedbackFragment : Fragment() {
         super.onPrepareOptionsMenu(menu)
         menu.findItem(R.id.action_profile)?.isVisible = false
         menu.findItem(R.id.eventFeedbackFragment)?.isVisible = false
+    }
+
+    private fun showProgressbar() {
+        eventFeedbackLinear.visibility = View.GONE
+        progressBarEventFeedBack.visibility = View.VISIBLE
+
+    }
+
+    private fun hideProgressBar() {
+        progressBarEventFeedBack.visibility = View.GONE
+        eventFeedbackLinear.visibility = View.VISIBLE
     }
 }
