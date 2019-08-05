@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:scrollbars="none"
                 android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_about"/>
             <TextView
                 android:layout_width="match_parent"

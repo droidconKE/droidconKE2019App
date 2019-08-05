@@ -69,7 +69,6 @@ class AboutFragment : Fragment() {
     private fun handleSponsorsResponse(it: List<AboutDetailsModel>) {
         hideProgressBar()
         sponsorsRv.adapter = AboutDetailsAdapter(it) {}
-        sponsorsRv.layoutManager = GridLayoutManager(context, 2)
 
     }
 
