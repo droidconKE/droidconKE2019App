@@ -18,22 +18,15 @@ import kotlinx.coroutines.withContext
 
 class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging,
                               private val sessionDataRepo: SessionDataRepo, private val reserveSeatRepo: ReserveSeatRepo) : ViewModel() {
-    private val sessionDetailsMediatorLiveData = NonNullMediatorLiveData<SessionsModel>()
     val message = SingleLiveEvent<String>()
     private val reserveSeatMediatorLiveData = SingleLiveEvent<String>()
 
-    fun getSessionDetails(): LiveData<SessionsModel> = sessionDetailsMediatorLiveData
-
-    fun loadSessionDetails(sessionsModel: SessionsModel) {
-        sessionDetailsMediatorLiveData.value = sessionsModel
-    }
-
     fun getReserveSeatResponse(): LiveData<String> = reserveSeatMediatorLiveData
 
-    suspend fun addToFavourites(sharedPreferences: SharedPreferences, userId: String): Boolean = withContext(Dispatchers.IO) {
-        val slug = sessionDetailsMediatorLiveData.value!!.notification_slug
-        val dayNumber = sessionDetailsMediatorLiveData.value!!.day_number
-        val sessionId = sessionDetailsMediatorLiveData.value!!.id
+    suspend fun addToFavourites(sharedPreferences: SharedPreferences, userId: String,sessionsModel: SessionsModel): Boolean = withContext(Dispatchers.IO) {
+        val slug = sessionsModel.notification_slug
+        val dayNumber = sessionsModel.day_number
+        val sessionId = sessionsModel.id
         val favourites = sharedPreferences.getStringSet(SharedPref.FAVOURITE_SESSIONS, mutableSetOf())!!
         return@withContext if (favourites.contains(slug)) {
             favourites.remove(slug)
@@ -56,8 +49,8 @@ class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging,
         }
     }
 
-    fun isFavourite(sharedPreferences: SharedPreferences): Boolean {
-        val slug = sessionDetailsMediatorLiveData.value!!.notification_slug
+    fun isFavourite(sharedPreferences: SharedPreferences,sessionsModel: SessionsModel): Boolean {
+        val slug = sessionsModel.notification_slug
         val favourites = sharedPreferences.getStringSet(SharedPref.FAVOURITE_SESSIONS, mutableSetOf())!!
         return favourites.contains(slug)
     }

@@ -68,15 +68,14 @@ class SessionDayFragment : Fragment() {
     }
 
     private fun redirectToSessionDetails(it: SessionsModel) {
-        sessionDetailsViewModel.loadSessionDetails(it)
-        findNavController().navigate(ScheduleFragmentDirections.actionScheduleFragmentToSessionDetailsFragment(it.title))
+        findNavController().navigate(ScheduleFragmentDirections.actionScheduleFragmentToSessionDetailsFragment(it,it.title))
     }
 
     private fun observeLiveData() {
         sessionsViewModel.getSessionsResponse().nonNull().observe(this) { sessionList ->
             updateAdapterWithList(sessionList)
         }
-        sessionsViewModel.getSessionsError().nonNull().observe(this){databaseError ->
+        sessionsViewModel.getSessionsError().nonNull().observe(this) { databaseError ->
             handleError(databaseError)
         }
     }

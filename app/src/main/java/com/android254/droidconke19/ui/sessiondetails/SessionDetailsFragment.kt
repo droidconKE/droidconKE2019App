@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.ReserveSeatModel
 import com.android254.droidconke19.models.SessionsModel
@@ -38,6 +39,7 @@ class SessionDetailsFragment : Fragment() {
     private val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
     private val firebaseAuth: FirebaseAuth by inject()
     lateinit var session: SessionsModel
+    private val sessionDetailsFragmentArgs: SessionDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -54,13 +56,17 @@ class SessionDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        session = sessionDetailsFragmentArgs.sessionModel
+
         clickListeners()
-        styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences))
+        styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences, session))
 
         bottom_app_bar.replaceMenu(R.menu.menu_bottom_appbar)
         handleBottomBarMenuClick()
         //observer live data
         observeLiveData()
+        setupViews(session)
+        setTextLabel(sessionDetailsViewModel.isSeatReserved(sharedPreferences, session))
     }
 
     private fun clickListeners() {
@@ -77,19 +83,19 @@ class SessionDetailsFragment : Fragment() {
             val userId = firebaseAuth.currentUser!!.uid
             lifecycleScope.launch {
                 progress_bar.visibility = View.VISIBLE
-                if (sessionDetailsViewModel.addToFavourites(sharedPreferences, userId)) {
+                if (sessionDetailsViewModel.addToFavourites(sharedPreferences, userId, session)) {
                     activity?.toast(getString(R.string.session_added))
                 } else {
                     activity?.toast(getString(R.string.session_removed))
                 }
-                styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences))
+                styleFavouritesButton(sessionDetailsViewModel.isFavourite(sharedPreferences, session))
                 progress_bar.visibility = View.GONE
             }
 
         }
 
         sessionFeedbackText.setOnClickListener {
-            val sessionFeedbackAction = SessionDetailsFragmentDirections.actionSessionDetailsFragmentToSessionFeedbackFragment(session.day_number, session.day_number, session.id,session.title)
+            val sessionFeedbackAction = SessionDetailsFragmentDirections.actionSessionDetailsFragmentToSessionFeedbackFragment(session.day_number, session.day_number, session.id, session.title)
             findNavController().navigate(sessionFeedbackAction)
         }
     }
@@ -121,11 +127,6 @@ class SessionDetailsFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        sessionDetailsViewModel.getSessionDetails().nonNull().observe(this) { sessionModel ->
-            session = sessionModel
-            setupViews(sessionModel)
-            setTextLabel(sessionDetailsViewModel.isSeatReserved(sharedPreferences, session))
-        }
         sessionDetailsViewModel.getReserveSeatResponse().nonNull().observe(this) {
             handleReserveSeatResponse(it)
         }

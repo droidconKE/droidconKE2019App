@@ -44,12 +44,15 @@
         <action
             android:id="@+id/action_sessionDetailsFragment_to_speakerFragment"
             app:destination="@id/speakerFragment" />
-        <argument
-            android:name="sessionTitle"
-            app:argType="string" />
         <action
             android:id="@+id/action_sessionDetailsFragment_to_sessionFeedbackFragment"
             app:destination="@id/sessionFeedbackFragment" />
+        <argument
+            android:name="sessionModel"
+            app:argType="com.android254.droidconke19.models.SessionsModel" />
+        <argument
+            android:name="sessionTitle"
+            android:defaultValue="Firebase" />
 
     </fragment>
     <fragment

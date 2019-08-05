@@ -34,7 +34,7 @@ class SpeakerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         showSpeakerDetails(speakerArgs)
         speaker_session_background.setOnClickListener {
-            findNavController().navigate(SpeakerFragmentDirections.actionSpeakerFragmentToSessionDetailsFragment(speakerArgs.sessionModel.title))
+            findNavController().navigate(SpeakerFragmentDirections.actionSpeakerFragmentToSessionDetailsFragment(speakerArgs.sessionModel, speakerArgs.sessionModel.title))
         }
     }
 
@@ -42,7 +42,7 @@ class SpeakerFragment : Fragment() {
         speakerNameText.text = speakerArgs.speakerModel.name
         speakerDescriptionText.text = speakerArgs.speakerModel.bio
         speakerCompanyText.text = speakerArgs.speakerModel.company
-        speaker_image.loadImage(speakerArgs.speakerModel.photoUrl,R.drawable.placeholder_image)
+        speaker_image.loadImage(speakerArgs.speakerModel.photoUrl, R.drawable.placeholder_image)
         speakerArgs.sessionModel.title
         speakerSessionSummaryText.text = speakerArgs.sessionModel.time
 
