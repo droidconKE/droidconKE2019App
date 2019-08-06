@@ -62,8 +62,8 @@ class SessionDayFragment : Fragment() {
 
     private fun fetchDaySessions() {
         when (day) {
-            EventDay.Thursday -> sessionsViewModel.getSessions("day_one")
-            EventDay.Friday -> sessionsViewModel.getSessions("day_two")
+            EventDay.Thursday -> sessionsViewModel.getSessions("day_one_2019")
+            EventDay.Friday -> sessionsViewModel.getSessions("day_two_2019")
         }
     }
 

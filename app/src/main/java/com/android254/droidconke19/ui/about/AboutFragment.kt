@@ -36,7 +36,7 @@ class AboutFragment : Fragment() {
         fetchOrganizersDetails("organizers")
 
         //get sponsors details
-        fetchSponsorsDetails("sponsors")
+        fetchSponsorsDetails("sponsors_2019")
         showProgressBar()
         //observe live data
         observeLiveData()

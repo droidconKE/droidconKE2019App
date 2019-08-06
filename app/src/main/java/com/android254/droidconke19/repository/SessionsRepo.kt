@@ -35,7 +35,7 @@ class SessionsRepo(db: AppDatabase, private val firestore: FirebaseFirestore) {
     }
 
     private suspend fun getSpeakerInfo(): List<SpeakersModel> {
-        val snapshot = firestore.collection("speakers")
+        val snapshot = firestore.collection("speakers2019")
                 .get()
                 .await()
         return snapshot.toObjects()

@@ -11,7 +11,7 @@ class SpeakersRepo(private val firestore: FirebaseFirestore) {
 
     suspend fun getSpeakersInfo(speakerId: Int): Result<List<SpeakersModel>> {
         return try {
-            val snapshot = firestore.collection("speakers")
+            val snapshot = firestore.collection("speakers2019")
                     .whereEqualTo("id", speakerId)
                     .get()
                     .await()

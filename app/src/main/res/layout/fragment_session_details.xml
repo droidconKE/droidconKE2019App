@@ -224,7 +224,7 @@
             </com.google.android.material.chip.ChipGroup>
 
             <ImageView
-                android:id="@+id/divider_top_survey"
+                android:id="@+id/divider_top_feedback"
                 android:layout_width="0dp"
                 android:layout_height="4dp"
                 android:layout_marginEnd="16dp"
@@ -240,14 +240,14 @@
 
 
             <TextView
-                android:id="@+id/session_survey_title"
+                android:id="@+id/session_feedback_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="26dp"
                 android:textColor="@color/colorBlack"
                 android:text="@string/session_feed_back_label"
                 app:layout_constraintStart_toStartOf="@id/sessionTimeRoomText"
-                app:layout_constraintTop_toBottomOf="@id/divider_top_survey"
+                app:layout_constraintTop_toBottomOf="@id/divider_top_feedback"
                 />
 
             <TextView
@@ -263,7 +263,7 @@
                 android:text="@string/session_go_to_feedback"
                 android:textAppearance="@style/TextAppearance.Roboto.Body1"
                 android:textColor="@color/colorPrimary"
-                app:layout_constraintBaseline_toBaselineOf="@id/session_survey_title"
+                app:layout_constraintBaseline_toBaselineOf="@id/session_feedback_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 />
 
@@ -279,7 +279,7 @@
                 android:src="@drawable/shape_dashed_line"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/session_survey_title"
+                app:layout_constraintTop_toBottomOf="@id/session_feedback_title"
                 />
 
             <TextView
@@ -349,6 +349,7 @@
                 android:paddingEnd="@dimen/fab_margin"
                 android:paddingBottom="@dimen/appbar_padding_top"
                 android:text="@string/session_detail_reserve_seat"
+                android:visibility="gone"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -371,6 +372,7 @@
                 android:paddingEnd="@dimen/fab_margin"
                 android:paddingBottom="@dimen/appbar_padding_top"
                 android:text="@string/session_detail_resource_slide"
+                android:visibility="gone"
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -12,7 +12,7 @@ class AgendaRepo(val firestore: FirebaseFirestore) {
 
     suspend fun agendaData(): Result<List<AgendaModel>> {
         return try {
-            val snapshot = firestore.collection("agenda").orderBy("id", Query.Direction.ASCENDING).get().await()
+            val snapshot = firestore.collection("agenda_2019").orderBy("id", Query.Direction.ASCENDING).get().await()
             return Result.Success(snapshot.toObjects())
 
         } catch (e: FirebaseFirestoreException) {

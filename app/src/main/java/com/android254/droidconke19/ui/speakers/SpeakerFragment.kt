@@ -45,6 +45,7 @@ class SpeakerFragment : Fragment() {
         speaker_image.loadImage(speakerArgs.speakerModel.photoUrl, R.drawable.placeholder_image)
         speakerArgs.sessionModel.title
         speakerSessionSummaryText.text = speakerArgs.sessionModel.time
+        speakerSessionTitleText.text = speakerArgs.sessionModel.title
 
 
     }
