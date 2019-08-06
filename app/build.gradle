@@ -21,8 +21,8 @@ android {
         applicationId "com.android254.droidconke19"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 2
-        versionName '1.0.2'
+        versionCode 4
+        versionName '1.0.4'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "DroidconKe-$versionName")
         vectorDrawables.useSupportLibrary = true
