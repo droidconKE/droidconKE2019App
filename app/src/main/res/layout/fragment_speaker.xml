@@ -95,6 +95,7 @@
                 android:paddingBottom="2dp"
                 android:text="@string/event_description"
                 android:textAlignment="viewStart"
+                android:textColor="@color/grayText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/speakerNameText"
                 app:layout_constraintTop_toBottomOf="@id/divider1"
@@ -124,6 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/speaker_session_head"
+                android:textColor="@color/grayText"
                 app:layout_constraintStart_toStartOf="@id/speakerNameText"
                 app:layout_constraintTop_toBottomOf="@id/divider2"
                 />

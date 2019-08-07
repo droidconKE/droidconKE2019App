@@ -105,6 +105,7 @@
                 android:layout_marginTop="@dimen/medium_margin"
                 android:layout_toEndOf="@id/timeSeparatorText"
                 android:text="@string/session_room_name"
+                android:textColor="@color/grayText"
                 android:textSize="@dimen/text_size_extra_small" />
 
             <ImageView

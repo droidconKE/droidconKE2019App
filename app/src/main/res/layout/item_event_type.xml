@@ -36,6 +36,7 @@
                 android:id="@+id/eventDescriptionText"
                 android:layout_margin="@dimen/fab_margin"
                 android:textSize="@dimen/text_size_small"
+                android:textColor="@color/grayText"
                 tools:text="@string/event_description"
                 android:layout_height="wrap_content" />
 
