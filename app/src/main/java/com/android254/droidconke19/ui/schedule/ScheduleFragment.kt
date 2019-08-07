@@ -1,5 +1,6 @@
 package com.android254.droidconke19.ui.schedule
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.ArrayMap
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.lifecycleScope
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.EventDay
 import com.android254.droidconke19.ui.filters.Filter
@@ -16,12 +18,22 @@ import com.android254.droidconke19.ui.filters.FilterChip
 import com.android254.droidconke19.ui.filters.FilterFragment
 import com.android254.droidconke19.ui.filters.FilterStore
 import com.android254.droidconke19.ui.sessions.SessionDayFragment
+import com.android254.droidconke19.utils.isSignedIn
+import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.view_active_filters.*
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import org.threeten.bp.format.DateTimeFormatter
 
 class ScheduleFragment : Fragment() {
+
+    private val auth: FirebaseAuth by inject()
+    private val sessionDetailsViewModel: SessionDetailsViewModel by viewModel()
+    private val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
 
 
     private val onTabSelectedListener = object : TabLayout.OnTabSelectedListener {
@@ -44,7 +56,13 @@ class ScheduleFragment : Fragment() {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_schedule, container, false)
+        val view = inflater.inflate(R.layout.fragment_schedule, container, false)
+        lifecycleScope.launchWhenStarted {
+            if (auth.isSignedIn()) {
+                sessionDetailsViewModel.fetchFavourites(sharedPreferences, auth.currentUser!!.uid)
+            }
+        }
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
