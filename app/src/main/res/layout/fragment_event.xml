@@ -42,6 +42,7 @@
                         style="@style/CollapsibleCardTitle"
                         android:text="@string/wifi_label"
                         android:textSize="@dimen/text_size_small"
+                        android:textColor="@color/grayText"
                         android:layout_height="wrap_content"
                         android:textAllCaps="true"/>
                     <LinearLayout
@@ -62,6 +63,7 @@
                                 style="@style/CollapsibleCardTitle"
                                 android:text="@string/wifi_name_label"
                                 android:textSize="@dimen/text_size_small"
+                                android:textColor="@color/grayText"
                                 android:layout_height="wrap_content" />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -70,6 +72,7 @@
                                 style="@style/CollapsibleCardTitle"
                                 android:text="@string/password_label"
                                 android:textSize="@dimen/text_size_small"
+                                android:textColor="@color/grayText"
                                 android:layout_height="wrap_content" />
 
                         </LinearLayout>

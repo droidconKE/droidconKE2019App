@@ -58,6 +58,7 @@
             android:paddingTop="@dimen/spacing_normal"
             android:visibility="gone"
             android:lineSpacingExtra="8dp"
+            android:textColor="@color/grayText"
             tools:text="This is a card description" />
 
     </LinearLayout>
