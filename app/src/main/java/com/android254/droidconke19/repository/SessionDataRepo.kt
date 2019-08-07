@@ -43,6 +43,27 @@ class SessionDataRepo(db: AppDatabase, private val firestore: FirebaseFirestore)
         }
     }
 
+    suspend fun getStarredSessions(userId: String): Result<List<String>> {
+        return try {
+            val snapshot = firestore.collection(starredSessionCollection)
+                    .whereEqualTo("user_id", userId)
+                    .get()
+                    .await()
+            val slugs = mutableListOf<String>()
+            if (snapshot.isEmpty) {
+                println("No starred sessions found")
+            } else {
+                println("Found ${snapshot.size()} starred session(s)")
+            }
+            snapshot.forEach {
+                slugs.add(it["slug"] as String)
+            }
+            Result.Success(slugs)
+        } catch (e: FirebaseFirestoreException) {
+            Result.Error(e.message)
+        }
+    }
+
     suspend fun starrSession(dayNumber: String, sessionId: Int, userId: String, slug: String): Result<String> {
         if (!isSessionStarred(dayNumber, sessionId, userId)) {
             return try {
