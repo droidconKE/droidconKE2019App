@@ -17,7 +17,6 @@ import com.android254.droidconke19.utils.SharedPref.TOKEN_SENT
 import com.android254.droidconke19.utils.isSignedIn
 import com.android254.droidconke19.viewmodels.HomeViewModel
 import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
-import com.crashlytics.android.Crashlytics
 import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
@@ -48,6 +47,8 @@ class HomeActivity : AppCompatActivity() {
         setupNotifications()
         //observe live data emitted by view model
         observeLiveData()
+        // Set version
+        version_text.text = "v${BuildConfig.VERSION_NAME}"
 
     }
 
