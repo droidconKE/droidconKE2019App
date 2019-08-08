@@ -48,7 +48,7 @@ class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging,
         }
     }
 
-    suspend fun fetchFavourites(sharedPreferences: SharedPreferences, userId: String) {
+    suspend fun fetchFavourites(sharedPreferences: SharedPreferences, userId: String) = withContext(Dispatchers.IO) {
         when (val value = sessionDataRepo.getStarredSessions(userId)) {
             is Result.Success -> {
                 val favourites = value.data

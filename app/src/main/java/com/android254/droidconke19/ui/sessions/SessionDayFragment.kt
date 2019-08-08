@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.android254.droidconke19.R
@@ -17,25 +16,19 @@ import com.android254.droidconke19.repository.FavoritesStore
 import com.android254.droidconke19.ui.filters.Filter
 import com.android254.droidconke19.ui.filters.FilterStore
 import com.android254.droidconke19.ui.schedule.ScheduleFragmentDirections
-import com.android254.droidconke19.utils.isSignedIn
 import com.android254.droidconke19.utils.nonNull
 import com.android254.droidconke19.utils.observe
-import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
 import com.android254.droidconke19.viewmodels.SessionsViewModel
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_day_session.*
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
 
 class SessionDayFragment : Fragment() {
     private val day: EventDay by lazy {
         checkNotNull(arguments?.getSerializable(KEY_EVENT_DAY) as EventDay)
     }
-    private val auth: FirebaseAuth by inject()
     private val sessionsViewModel: SessionsViewModel by inject()
-    private val sessionDetailsViewModel: SessionDetailsViewModel by sharedViewModel()
     private val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
     private val favoritesStore: FavoritesStore by lazy {
         FavoritesStore(sharedPreferences)
@@ -45,13 +38,7 @@ class SessionDayFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_day_session, container, false)
-        lifecycleScope.launchWhenStarted {
-            if (auth.isSignedIn()) {
-                sessionDetailsViewModel.fetchFavourites(sharedPreferences, auth.currentUser!!.uid)
-            }
-        }
-        return view
+        return inflater.inflate(R.layout.fragment_day_session, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
