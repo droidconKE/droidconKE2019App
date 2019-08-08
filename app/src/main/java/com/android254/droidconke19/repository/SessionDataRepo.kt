@@ -56,7 +56,13 @@ class SessionDataRepo(db: AppDatabase, private val firestore: FirebaseFirestore)
                 println("Found ${snapshot.size()} starred session(s)")
             }
             snapshot.forEach {
-                slugs.add(it["slug"] as String)
+                val slug = it["slug"] as String?
+                slug?.let {
+                    slugs.add(it)
+                } ?: run {
+                    println("No slug found")
+                }
+
             }
             Result.Success(slugs)
         } catch (e: FirebaseFirestoreException) {
