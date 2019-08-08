@@ -168,14 +168,14 @@ class SessionDetailsFragment : Fragment() {
                 divider_top_feedback.visibility = View.GONE
                 session_feedback_title.visibility = View.GONE
                 sessionFeedbackText.visibility = View.GONE
-                session_slide_button.visibility = View.GONE
+//                session_slide_button.visibility = View.GONE
                 sessionReserveSeatText.visibility = View.VISIBLE
             }
             "sessionEnded" -> {
                 divider_top_feedback.visibility = View.VISIBLE
                 session_feedback_title.visibility = View.VISIBLE
                 sessionFeedbackText.visibility = View.VISIBLE
-                session_slide_button.visibility = View.VISIBLE
+//                session_slide_button.visibility = View.VISIBLE
                 sessionReserveSeatText.visibility = View.GONE
             }
         }
