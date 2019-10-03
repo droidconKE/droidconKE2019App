@@ -43,7 +43,7 @@ val appModule = module {
 
 val dataModule = module {
     // Repos
-    single { AboutDetailsRepo(get()) }
+    single<AboutDetailsRepo> { AboutDetailsRepoImpl(get()) }
     single { SessionsRepo(get(), get()) }
     single { SessionDataRepo(get(), get()) }
     single { SpeakersRepo(get()) }

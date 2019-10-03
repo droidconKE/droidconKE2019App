@@ -11,7 +11,7 @@ class InstanceIdService : FirebaseMessagingService() {
 
     private val sharedPreferences: SharedPreferences by inject { parametersOf(this) }
 
-    override fun onNewToken(token: String?) {
+    override fun onNewToken(token: String) {
         super.onNewToken(token)
         saveToken(token)
     }
