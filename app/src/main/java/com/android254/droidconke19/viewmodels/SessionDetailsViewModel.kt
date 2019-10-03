@@ -8,7 +8,6 @@ import com.android254.droidconke19.models.ReserveSeatModel
 import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.repository.ReserveSeatRepo
 import com.android254.droidconke19.repository.SessionDataRepo
-import com.android254.droidconke19.utils.NonNullMediatorLiveData
 import com.android254.droidconke19.utils.SharedPref
 import com.android254.droidconke19.utils.SingleLiveEvent
 import com.google.firebase.messaging.FirebaseMessaging
@@ -23,7 +22,7 @@ class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging,
 
     fun getReserveSeatResponse(): LiveData<String> = reserveSeatMediatorLiveData
 
-    suspend fun addToFavourites(sharedPreferences: SharedPreferences, userId: String,sessionsModel: SessionsModel): Boolean = withContext(Dispatchers.IO) {
+    suspend fun addToFavourites(sharedPreferences: SharedPreferences, userId: String, sessionsModel: SessionsModel): Boolean = withContext(Dispatchers.IO) {
         val slug = sessionsModel.notification_slug
         val dayNumber = sessionsModel.day_number
         val sessionId = sessionsModel.id
@@ -49,7 +48,19 @@ class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging,
         }
     }
 
-    fun isFavourite(sharedPreferences: SharedPreferences,sessionsModel: SessionsModel): Boolean {
+    suspend fun fetchFavourites(sharedPreferences: SharedPreferences, userId: String) = withContext(Dispatchers.IO) {
+        when (val value = sessionDataRepo.getStarredSessions(userId)) {
+            is Result.Success -> {
+                val favourites = value.data
+                if (favourites.isNotEmpty()) {
+                    sharedPreferences.edit().putStringSet(SharedPref.FAVOURITE_SESSIONS, favourites.toSet()).apply()
+                }
+            }
+            is Result.Error -> message.postValue(value.exception)
+        }
+    }
+
+    fun isFavourite(sharedPreferences: SharedPreferences, sessionsModel: SessionsModel): Boolean {
         val slug = sessionsModel.notification_slug
         val favourites = sharedPreferences.getStringSet(SharedPref.FAVOURITE_SESSIONS, mutableSetOf())!!
         return favourites.contains(slug)

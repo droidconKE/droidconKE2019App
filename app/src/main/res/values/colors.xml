@@ -30,6 +30,7 @@
     <color name="gray3">#D8D7DC</color>
     <color name="gray4">#F5F5F5</color>
     <color name="white">#FFFFFF</color>
+    <color name="grayText">#808080</color>
 
     <!-- Components -->
     <color name="tag_text_red">#F63529</color>

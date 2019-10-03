@@ -11,8 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -41,6 +41,12 @@ class SessionDetailsFragment : Fragment() {
     lateinit var session: SessionsModel
     private val sessionDetailsFragmentArgs: SessionDetailsFragmentArgs by navArgs()
 
+    private val navListener = NavController.OnDestinationChangedListener { controller, destination, _ ->
+        if (controller.currentDestination?.id == R.id.sessionDetailsFragment) {
+            progress_bar.visibility = View.GONE
+        }
+    }
+
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -67,6 +73,12 @@ class SessionDetailsFragment : Fragment() {
         observeLiveData()
         setupViews(session)
         setTextLabel(sessionDetailsViewModel.isSeatReserved(sharedPreferences, session))
+        findNavController().addOnDestinationChangedListener(navListener)
+    }
+
+    override fun onDestroyView() {
+        findNavController().removeOnDestinationChangedListener(navListener)
+        super.onDestroyView()
     }
 
     private fun clickListeners() {
@@ -156,14 +168,14 @@ class SessionDetailsFragment : Fragment() {
                 divider_top_feedback.visibility = View.GONE
                 session_feedback_title.visibility = View.GONE
                 sessionFeedbackText.visibility = View.GONE
-                session_slide_button.visibility = View.GONE
+//                session_slide_button.visibility = View.GONE
                 sessionReserveSeatText.visibility = View.VISIBLE
             }
             "sessionEnded" -> {
                 divider_top_feedback.visibility = View.VISIBLE
                 session_feedback_title.visibility = View.VISIBLE
                 sessionFeedbackText.visibility = View.VISIBLE
-                session_slide_button.visibility = View.VISIBLE
+//                session_slide_button.visibility = View.VISIBLE
                 sessionReserveSeatText.visibility = View.GONE
             }
         }

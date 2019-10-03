@@ -19,11 +19,9 @@ import com.android254.droidconke19.ui.schedule.ScheduleFragmentDirections
 import com.android254.droidconke19.utils.nonNull
 import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.viewmodels.SessionsViewModel
-import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_day_session.*
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
 
 class SessionDayFragment : Fragment() {
@@ -31,7 +29,6 @@ class SessionDayFragment : Fragment() {
         checkNotNull(arguments?.getSerializable(KEY_EVENT_DAY) as EventDay)
     }
     private val sessionsViewModel: SessionsViewModel by inject()
-    private val sessionDetailsViewModel: SessionDetailsViewModel by sharedViewModel()
     private val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
     private val favoritesStore: FavoritesStore by lazy {
         FavoritesStore(sharedPreferences)

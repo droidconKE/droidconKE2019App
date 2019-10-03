@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:text="@string/speaker_name"
         android:textSize="@dimen/text_size_extra_small"
+        android:textColor="@color/grayText"
         android:layout_marginTop="@dimen/small_margin"
         android:layout_marginEnd="@dimen/small_margin"
         />

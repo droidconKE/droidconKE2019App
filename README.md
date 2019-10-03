@@ -1,7 +1,7 @@
 # droidconKE Android App
 
 
-Android app for the first ever Android Developer conference-droidcon in Nairobi 2018
+Android app for the second  Android Developer conference-droidcon in Nairobi 2019
 
 This project is the Android app for the conference. The app supports devices
 running Android 5.0+, and is optimized for phones and tablets of all shapes
@@ -9,7 +9,7 @@ and sizes.
 
 # Source
 
-The source code in this repository reflects the app as of droidconKE 2018.
+The source code in this repository reflects the app as of droidconKE 2019.
 
 # Features
 
@@ -20,9 +20,6 @@ events.
 The app also displays a map of the venue and shows informational pages to guide
 attendees during the conference.
 
-<div>
-  <img align="center" src="schedule.png" alt="Schedule screenshot" height="640" width="360">
-</div>
 
 # Development Environment
 
@@ -74,14 +71,6 @@ let us inform the app about changes to conference data on our server.
 manage in-app constants.
 - [Firebase Authentification](https://firebase.google.com/docs/auth/) helped us 
 to provide easy and secure authentification using email.
-
-# \[ 🚧 Work in progress 👷‍♀️⛏👷🔧️ 🚧 \]
-
-* Rewriting .droidconKE app in Kotlin and taking advantage of kotlin features like coroutines,kotlin android extensions etc
-* Version 2.0 features writeup(UI Improvements, Event Reservation Feature,Starring Session Feature etc) 
-* CI/CD Setup
-* Offline First Architecture Improvements
-
 
 ### License
 

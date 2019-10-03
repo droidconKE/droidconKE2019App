@@ -94,7 +94,7 @@ class AdapterItem(
             with(viewHolder.itemView) {
                 sessionTitleText.text = sessionsModel.title
                 sessionRoomText.text = sessionsModel.room
-                sessionInAmPmText.text = "${sessionsModel.time_in_am}${sessionsModel.am_pm_label}"
+                sessionInAmPmText.text = sessionsModel.time_in_am
                 sessionAudienceText.text = sessionsModel.session_audience.name
                 sessionSpeakerImageRv.adapter = SessionSpeakerImageAdapter(sessionsModel.speakerList)
                 sessionSpeakerImageRv.layoutManager = LinearLayoutManager(viewHolder.itemView.context, LinearLayoutManager.HORIZONTAL, false)
@@ -106,6 +106,8 @@ class AdapterItem(
                     Level.advanced -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_advanced_level_textvieww_bg)
                     Level.beginner -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_beginner_level_textview_bg)
                     Level.general -> sessionAudienceText.setBackgroundResource(R.drawable.rounded_general_level_textview_bg)
+                    else -> {
+                    }
                 }
 
                 updateFavoriteIcon(bookMarkImg, favoritesStore)
