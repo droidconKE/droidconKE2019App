@@ -1,14 +1,18 @@
 package com.android254.droidconke19.repository
 
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
 import com.android254.droidconke19.datastates.Result
 import com.android254.droidconke19.models.RoomModel
 import com.android254.droidconke19.utils.await
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 
-class RoomRepo(private val firestore: FirebaseFirestore) {
+interface RoomRepo {
+    suspend fun getRoomDetails(roomId: Int): Result<RoomModel>
+}
 
-    suspend fun getRoomDetails(roomId: Int): Result<RoomModel> {
+class RoomRepoImpl(private val firestore: FirebaseFirestore) : RoomRepo {
+
+    override suspend fun getRoomDetails(roomId: Int): Result<RoomModel> {
         return try {
             val snapshot = firestore.collection("rooms")
                     .whereEqualTo("id", roomId)

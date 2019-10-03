@@ -44,17 +44,17 @@ val appModule = module {
 val dataModule = module {
     // Repos
     single<AboutDetailsRepo> { AboutDetailsRepoImpl(get()) }
-    single { SessionsRepo(get(), get()) }
-    single { SessionDataRepo(get(), get()) }
-    single { SpeakersRepo(get()) }
-    single { RoomRepo(get()) }
-    single { SessionFeedbackRepo(get()) }
-    single { UpdateTokenRepo(get()) }
-    single { EventFeedbackRepo(get()) }
-    single { EventTypeRepo(get()) }
-    single { AgendaRepo(get()) }
-    single { AnnouncementRepo(get()) }
-    single { ReserveSeatRepo(get()) }
+    single<SessionsRepo> { SessionsRepoImpl(get(), get()) }
+    single<SessionDataRepo> { SessionDataRepoImpl(get(), get()) }
+    single<SpeakersRepo> { SpeakersRepoImpl(get()) }
+    single<RoomRepo> { RoomRepoImpl(get()) }
+    single<SessionFeedbackRepo> { SessionFeedbackRepoImpl(get()) }
+    single<UpdateTokenRepo> { UpdateTokenRepoImpl(get()) }
+    single<EventFeedbackRepo> { EventFeedbackRepoImpl(get()) }
+    single<EventTypeRepo> { EventTypeRepoImpl(get()) }
+    single<AgendaRepo> { AgendaRepoImpl(get()) }
+    single<AnnouncementRepo> { AnnouncementRepoImpl(get()) }
+    single<ReserveSeatRepo> { ReserveSeatRepoImpl(get()) }
 
     // Database
     single { Room.databaseBuilder(get(), AppDatabase::class.java, "droidconKE_db").fallbackToDestructiveMigration().build() }

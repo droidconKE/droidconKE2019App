@@ -1,15 +1,21 @@
 package com.android254.droidconke19.repository
 
+import com.android254.droidconke19.datastates.Result
 import com.android254.droidconke19.models.ReserveSeatModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.tasks.await
-import com.android254.droidconke19.datastates.Result
 
-class ReserveSeatRepo(val firestore: FirebaseFirestore) {
+interface ReserveSeatRepo {
+    suspend fun reserveSeat(reserveSeatModel: ReserveSeatModel): Result<String>
+
+    suspend fun unReserveSeat(reserveSeatModel: ReserveSeatModel): Result<String>
+}
+
+class ReserveSeatRepoImpl(val firestore: FirebaseFirestore) : ReserveSeatRepo {
 
 
-    suspend fun reserveSeat(reserveSeatModel: ReserveSeatModel): Result<String> {
+    override suspend fun reserveSeat(reserveSeatModel: ReserveSeatModel): Result<String> {
         if (!isSeatReserved(reserveSeatModel)) {
             return try {
                 firestore.collection("reserved_seats").add(reserveSeatModel).await()
@@ -36,7 +42,7 @@ class ReserveSeatRepo(val firestore: FirebaseFirestore) {
         }
     }
 
-    suspend fun unReserveSeat(reserveSeatModel: ReserveSeatModel): Result<String>{
+    override suspend fun unReserveSeat(reserveSeatModel: ReserveSeatModel): Result<String> {
         return try {
             val snapshot = firestore.collection("reserved_seats")
                     .whereEqualTo("day_number", reserveSeatModel.day_number)
