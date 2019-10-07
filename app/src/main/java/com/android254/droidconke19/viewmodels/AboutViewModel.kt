@@ -3,7 +3,7 @@ package com.android254.droidconke19.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android254.droidconke19.datastates.Result
+import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.models.AboutDetailsModel
 import com.android254.droidconke19.repository.AboutDetailsRepo
 import com.android254.droidconke19.utils.NonNullMediatorLiveData
@@ -33,8 +33,8 @@ class AboutViewModel(private val aboutDetailsRepo: AboutDetailsRepo) : ViewModel
     fun fetchAboutDetails(aboutType: String) {
         viewModelScope.launch {
             when (val value = aboutDetailsRepo.getAboutDetails(aboutType)) {
-                is Result.Success -> detailsStateMediatorLiveData.postValue(value.data)
-                is Result.Error -> detailsError.postValue(value.exception)
+                is FirebaseResult.Success -> detailsStateMediatorLiveData.postValue(value.data)
+                is FirebaseResult.Error -> detailsError.postValue(value.exception)
             }
         }
     }
@@ -42,8 +42,8 @@ class AboutViewModel(private val aboutDetailsRepo: AboutDetailsRepo) : ViewModel
     fun getOrganizers(aboutType: String) {
         viewModelScope.launch {
             when (val value = aboutDetailsRepo.getAboutDetails(aboutType)) {
-                is Result.Success -> organizersMediatorLiveData.postValue(value.data)
-                is Result.Error -> organizersError.postValue(value.exception)
+                is FirebaseResult.Success -> organizersMediatorLiveData.postValue(value.data)
+                is FirebaseResult.Error -> organizersError.postValue(value.exception)
             }
         }
 
@@ -52,8 +52,8 @@ class AboutViewModel(private val aboutDetailsRepo: AboutDetailsRepo) : ViewModel
     fun getSponsors(aboutType: String) {
         viewModelScope.launch {
             when (val value = aboutDetailsRepo.getAboutDetails(aboutType)) {
-                is Result.Success -> sponsorsMediatorLiveData.postValue(value.data)
-                is Result.Error -> sponsorsError.postValue(value.exception)
+                is FirebaseResult.Success -> sponsorsMediatorLiveData.postValue(value.data)
+                is FirebaseResult.Error -> sponsorsError.postValue(value.exception)
             }
         }
     }

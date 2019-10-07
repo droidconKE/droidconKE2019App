@@ -2,20 +2,20 @@ package com.android254.droidconke19.repository
 
 import com.android254.droidconke19.database.AppDatabase
 import com.android254.droidconke19.database.dao.SessionsDao
-import com.android254.droidconke19.datastates.Result
+import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.models.SessionsModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.tasks.await
 
 interface SessionDataRepo {
-    suspend fun getSessionData(dayNumber: String, sessionId: Int): Result<SessionsModel>
+    suspend fun getSessionData(dayNumber: String, sessionId: Int): FirebaseResult<SessionsModel>
 
-    suspend fun getStarredSessions(userId: String): Result<List<String>>
+    suspend fun getStarredSessions(userId: String): FirebaseResult<List<String>>
 
-    suspend fun starrSession(dayNumber: String, sessionId: Int, userId: String, slug: String): Result<String>
+    suspend fun starrSession(dayNumber: String, sessionId: Int, userId: String, slug: String): FirebaseResult<String>
 
-    suspend fun unstarrSession(dayNumber: String, sessionId: Int, userId: String): Result<String>
+    suspend fun unstarrSession(dayNumber: String, sessionId: Int, userId: String): FirebaseResult<String>
 
     suspend fun clearStarredSessions(userId: String)
 }
@@ -25,7 +25,7 @@ class SessionDataRepoImpl(db: AppDatabase, private val firestore: FirebaseFirest
 
     private val starredSessionCollection = "starred_sessions"
 
-    override suspend fun getSessionData(dayNumber: String, sessionId: Int): Result<SessionsModel> {
+    override suspend fun getSessionData(dayNumber: String, sessionId: Int): FirebaseResult<SessionsModel> {
         return try {
             val snapshot = firestore.collection(dayNumber)
                     .whereEqualTo("id", sessionId)
@@ -34,9 +34,9 @@ class SessionDataRepoImpl(db: AppDatabase, private val firestore: FirebaseFirest
             val doc = snapshot.documents.first()
             val sessionsModel = doc.toObject(SessionsModel::class.java)
             val newSessionsModel = sessionsModel?.copy(documentId = doc.id)
-            Result.Success(newSessionsModel!!)
+            FirebaseResult.Success(newSessionsModel!!)
         } catch (e: FirebaseFirestoreException) {
-            Result.Error(e.message)
+            FirebaseResult.Error(e.message)
         }
 
     }
@@ -55,7 +55,7 @@ class SessionDataRepoImpl(db: AppDatabase, private val firestore: FirebaseFirest
         }
     }
 
-    override suspend fun getStarredSessions(userId: String): Result<List<String>> {
+    override suspend fun getStarredSessions(userId: String): FirebaseResult<List<String>> {
         return try {
             val snapshot = firestore.collection(starredSessionCollection)
                     .whereEqualTo("user_id", userId)
@@ -76,13 +76,13 @@ class SessionDataRepoImpl(db: AppDatabase, private val firestore: FirebaseFirest
                 }
 
             }
-            Result.Success(slugs)
+            FirebaseResult.Success(slugs)
         } catch (e: FirebaseFirestoreException) {
-            Result.Error(e.message)
+            FirebaseResult.Error(e.message)
         }
     }
 
-    override suspend fun starrSession(dayNumber: String, sessionId: Int, userId: String, slug: String): Result<String> {
+    override suspend fun starrSession(dayNumber: String, sessionId: Int, userId: String, slug: String): FirebaseResult<String> {
         if (!isSessionStarred(dayNumber, sessionId, userId)) {
             return try {
                 val data = hashMapOf(
@@ -95,16 +95,16 @@ class SessionDataRepoImpl(db: AppDatabase, private val firestore: FirebaseFirest
 
                 val starredSessionRef = firestore.collection(starredSessionCollection).document()
                 starredSessionRef.set(data).await()
-                Result.Success("Session added to favourites")
+                FirebaseResult.Success("Session added to favourites")
             } catch (e: FirebaseFirestoreException) {
-                Result.Error(e.message)
+                FirebaseResult.Error(e.message)
             }
         }
 
-        return Result.Error("Session already starred")
+        return FirebaseResult.Error("Session already starred")
     }
 
-    override suspend fun unstarrSession(dayNumber: String, sessionId: Int, userId: String): Result<String> {
+    override suspend fun unstarrSession(dayNumber: String, sessionId: Int, userId: String): FirebaseResult<String> {
         return try {
             val snapshot = firestore.collection(starredSessionCollection)
                     .whereEqualTo("day", dayNumber)
@@ -115,9 +115,9 @@ class SessionDataRepoImpl(db: AppDatabase, private val firestore: FirebaseFirest
             if (!snapshot.isEmpty) {
                 snapshot.documents.first().reference.delete().await()
             }
-            Result.Success("Session removed from favourites")
+            FirebaseResult.Success("Session removed from favourites")
         } catch (e: FirebaseFirestoreException) {
-            Result.Error(e.message)
+            FirebaseResult.Error(e.message)
         }
 
     }

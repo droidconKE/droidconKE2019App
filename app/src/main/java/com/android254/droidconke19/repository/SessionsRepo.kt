@@ -1,7 +1,7 @@
 package com.android254.droidconke19.repository
 
 import com.android254.droidconke19.database.AppDatabase
-import com.android254.droidconke19.datastates.Result
+import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.models.SpeakersModel
 import com.android254.droidconke19.utils.await
@@ -11,12 +11,12 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObjects
 
 interface SessionsRepo {
-    suspend fun getSessions(sessionDay: String): Result<List<SessionsModel>>
+    suspend fun getSessions(sessionDay: String): FirebaseResult<List<SessionsModel>>
 }
 
 class SessionsRepoImpl(db: AppDatabase, private val firestore: FirebaseFirestore) : SessionsRepo {
 
-    override suspend fun getSessions(sessionDay: String): Result<List<SessionsModel>> {
+    override suspend fun getSessions(sessionDay: String): FirebaseResult<List<SessionsModel>> {
         return try {
             val snapshots = firestore.collection(sessionDay)
                     .orderBy("id", Query.Direction.ASCENDING)
@@ -31,9 +31,9 @@ class SessionsRepoImpl(db: AppDatabase, private val firestore: FirebaseFirestore
                     }
                 }
             }
-            Result.Success(sessionList)
+            FirebaseResult.Success(sessionList)
         } catch (e: FirebaseFirestoreException) {
-            Result.Error(e.message)
+            FirebaseResult.Error(e.message)
         }
     }
 
