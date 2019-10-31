@@ -20,6 +20,10 @@ events.
 The app also displays a map of the venue and shows informational pages to guide
 attendees during the conference.
 
+<div>
+  <img align="center" src="schedule.png" alt="Schedule screenshot" height="640" width="360">
+</div>
+
 
 # Development Environment
 
@@ -56,6 +60,11 @@ from the rest of the app (we liked using Firestore, but if we wanted to swap it
 out for a different data source in the future, our architecture allows us to do
 so in a clean way).
 
+We also have Kotlin coroutines for 
+asynchronous network calls. As Firebase now supports Kotlin Coroutines we used  courtines to get read of firebase callbacks for the various firebase components.
+
+We used [KOIN](https://insert-koin.io/) for dependency injection.
+
 ## Firebase
 
 The app makes considerable use of the following Firebase components:
@@ -77,7 +86,7 @@ to provide easy and secure authentification using email.
 ```
 MIT License
 
-Copyright (c) 2018 droidConKE
+Copyright (c) 2019 droidConKE
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
