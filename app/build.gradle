@@ -44,6 +44,7 @@ android {
         unitTests {
             returnDefaultValues = true
             includeAndroidResources = true
+            animationsDisabled
         }
     }
 
@@ -55,15 +56,20 @@ android {
         experimental = true
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
-    def coroutines_version = '1.2.1'
+    def coroutines_version = '1.3.1'
     def koin_version = '2.0.1'
     def room_version = '2.1.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat-resources:1.1.0'
     implementation 'com.google.android.material:material:1.1.0-alpha10'
     // Maintain version 2.0.0-alpha2 till issue is resolved (https://issuetracker.google.com/issues/121395935)
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
@@ -98,7 +104,7 @@ dependencies {
     implementation "com.firebaseui:firebase-ui-firestore:3.3.0"
     implementation 'com.google.firebase:firebase-common-ktx:19.1.0'
     implementation 'com.google.firebase:firebase-firestore-ktx:21.1.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.2.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.3.1'
     implementation 'com.google.firebase:firebase-perf:19.0.0'
 
     //architecture components dependencies
@@ -131,8 +137,17 @@ dependencies {
     testImplementation 'androidx.test.ext:junit:1.1.1'
     testImplementation 'androidx.test:rules:1.2.0'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0'
+    testImplementation("io.mockk:mockk:1.9.3")
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
     testImplementation "androidx.room:room-testing:$room_version"
+    testImplementation "androidx.test.espresso:espresso-core:3.2.0"
+    testImplementation "androidx.test.espresso:espresso-contrib:3.2.0"
+    testImplementation "androidx.test.espresso:espresso-intents:3.2.0"
+    testImplementation "org.robolectric:robolectric:4.3"
+    testImplementation "com.agoda.kakao:kakao:2.1.0"
+    implementation("androidx.fragment:fragment-testing:1.1.0") {
+        exclude group: "androidx.test", module: "core"
+    }
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test:rules:1.2.0'

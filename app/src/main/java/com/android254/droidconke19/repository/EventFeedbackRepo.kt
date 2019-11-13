@@ -1,21 +1,21 @@
 package com.android254.droidconke19.repository
 
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
 import com.android254.droidconke19.datastates.Result
+import com.android254.droidconke19.datastates.runCatching
 import com.android254.droidconke19.models.UserEventFeedback
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
+interface EventFeedbackRepo {
+    suspend fun sendFeedBack(userEventFeedback: UserEventFeedback): Result<String>
+}
 
-class EventFeedbackRepo(val firestore: FirebaseFirestore) {
+class EventFeedbackRepoImpl(val firestore: FirebaseFirestore) : EventFeedbackRepo {
 
-    suspend fun sendFeedBack(userEventFeedback: UserEventFeedback): Result<String> {
-        return try {
-            firestore.collection("event_feedback_2019").add(userEventFeedback).await()
-            Result.Success("Thank you for your feedback")
+    override suspend fun sendFeedBack(userEventFeedback: UserEventFeedback): Result<String> =
+            runCatching {
+                firestore.collection("event_feedback_2019").add(userEventFeedback).await()
+                "Thank you for your feedback"
+            }
 
-        } catch (e: FirebaseFirestoreException) {
-            Result.Error(e.message)
-        }
-    }
 }

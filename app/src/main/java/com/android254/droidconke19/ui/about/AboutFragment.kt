@@ -12,9 +12,6 @@ import com.android254.droidconke19.utils.loadImage
 import com.android254.droidconke19.utils.nonNull
 import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.viewmodels.AboutViewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.fragment_about.*
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject

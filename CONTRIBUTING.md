@@ -4,12 +4,13 @@
 
 We'd love to accept your patches! 
 
-To contribute to droidconKE simply open a pull request against the [develop branch](https://github.com/droidconKE/droidconKE/tree/develop) or the [kotlin branch](https://github.com/droidconKE/droidconKE/tree/kotlin)
+To contribute to droidconKE simply open a pull request against the [develop branch](https://github.com/droidconKE/droidconKE2019App/tree/develop)
 
 
 
 To ensure you that your pull request is accepted:
 
+1. Raise an issue first of what you are working on.
 1. Describe your changes in the pull request description.
 1. Be consistent with the coding style being used.
 1. Make commits of logical units

@@ -3,7 +3,7 @@ package com.android254.droidconke19.viewmodels
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.android254.droidconke19.datastates.Result
+import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.models.ReserveSeatModel
 import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.repository.ReserveSeatRepo
@@ -31,8 +31,8 @@ class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging,
             favourites.remove(slug)
             firebaseMessaging.unsubscribeFromTopic(slug).await()
             when (val value = sessionDataRepo.unstarrSession(dayNumber, sessionId, userId)) {
-                is Result.Success -> message.postValue(value.data)
-                is Result.Error -> message.postValue(value.exception)
+                is FirebaseResult.Success -> message.postValue(value.data)
+                is FirebaseResult.Error -> message.postValue(value.exception)
             }
             sharedPreferences.edit().putStringSet(SharedPref.FAVOURITE_SESSIONS, favourites).apply()
             false
@@ -40,8 +40,8 @@ class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging,
             favourites.add(slug)
             firebaseMessaging.subscribeToTopic(slug).await()
             when (val value = sessionDataRepo.starrSession(dayNumber, sessionId, userId, slug)) {
-                is Result.Success -> message.postValue(value.data)
-                is Result.Error -> message.postValue(value.exception)
+                is FirebaseResult.Success -> message.postValue(value.data)
+                is FirebaseResult.Error -> message.postValue(value.exception)
             }
             sharedPreferences.edit().putStringSet(SharedPref.FAVOURITE_SESSIONS, favourites).apply()
             true
@@ -50,13 +50,13 @@ class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging,
 
     suspend fun fetchFavourites(sharedPreferences: SharedPreferences, userId: String) = withContext(Dispatchers.IO) {
         when (val value = sessionDataRepo.getStarredSessions(userId)) {
-            is Result.Success -> {
+            is FirebaseResult.Success -> {
                 val favourites = value.data
                 if (favourites.isNotEmpty()) {
                     sharedPreferences.edit().putStringSet(SharedPref.FAVOURITE_SESSIONS, favourites.toSet()).apply()
                 }
             }
-            is Result.Error -> message.postValue(value.exception)
+            is FirebaseResult.Error -> message.postValue(value.exception)
         }
     }
 
@@ -80,16 +80,16 @@ class SessionDetailsViewModel(private val firebaseMessaging: FirebaseMessaging,
         return@withContext if (reservedSeats.contains(sessionsModel.title)) {
             reservedSeats.remove(sessionsModel.title)
             when (val value = reserveSeatRepo.unReserveSeat(reserveSeatModel)) {
-                is Result.Success -> reserveSeatMediatorLiveData.postValue(value.data)
-                is Result.Error -> reserveSeatMediatorLiveData.postValue(value.exception)
+                is FirebaseResult.Success -> reserveSeatMediatorLiveData.postValue(value.data)
+                is FirebaseResult.Error -> reserveSeatMediatorLiveData.postValue(value.exception)
             }
             sharedPreferences.edit().putStringSet(SharedPref.RESERVED_SEATS, reservedSeats).apply()
             true
         } else {
             reservedSeats.add(sessionsModel.title)
             when (val value = reserveSeatRepo.reserveSeat(reserveSeatModel)) {
-                is Result.Success -> reserveSeatMediatorLiveData.postValue(value.data)
-                is Result.Error -> reserveSeatMediatorLiveData.postValue(value.exception)
+                is FirebaseResult.Success -> reserveSeatMediatorLiveData.postValue(value.data)
+                is FirebaseResult.Error -> reserveSeatMediatorLiveData.postValue(value.exception)
             }
             sharedPreferences.edit().putStringSet(SharedPref.RESERVED_SEATS, reservedSeats).apply()
             true

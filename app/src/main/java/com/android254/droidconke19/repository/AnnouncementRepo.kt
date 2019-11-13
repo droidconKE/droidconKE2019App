@@ -1,22 +1,22 @@
 package com.android254.droidconke19.repository
 
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.ktx.toObjects
 import com.android254.droidconke19.datastates.Result
+import com.android254.droidconke19.datastates.runCatching
 import com.android254.droidconke19.models.Announcement
 import com.android254.droidconke19.utils.await
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObjects
 
-class AnnouncementRepo(val firestore: FirebaseFirestore) {
+interface AnnouncementRepo {
+    suspend fun getAnnouncements(): Result<List<Announcement>>
+}
 
-    suspend fun getAnnouncements(): Result<List<Announcement>> {
-        return try {
-            val snapshot = firestore.collection("announcements").get().await()
-            return Result.Success(snapshot.toObjects())
+class AnnouncementRepoImpl(val firestore: FirebaseFirestore) : AnnouncementRepo {
 
-        } catch (e: FirebaseFirestoreException) {
-            Result.Error(e.message)
-        }
+    override suspend fun getAnnouncements(): Result<List<Announcement>> =
+            runCatching {
+                val snapshot = firestore.collection("announcements").get().await()
+                snapshot.toObjects<Announcement>()
+            }
 
-    }
 }
