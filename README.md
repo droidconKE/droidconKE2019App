@@ -27,7 +27,7 @@ attendees during the conference.
 
 # Development Environment
 
-The app is written  in Java and Kotlin and uses the Gradle build system.
+The app is written fully in Kotlin and uses the Gradle build system.
 
 To build the app, use the `gradlew build` command or use "Import Project" in
 Android Studio. A canary or stable version >= 3.2 of Android Studio is
@@ -62,6 +62,8 @@ so in a clean way).
 
 We also have Kotlin coroutines for 
 asynchronous network calls. As Firebase now supports Kotlin Coroutines we used  courtines to get read of firebase callbacks for the various firebase components.
+
+We used [Navigation component](https://developer.android.com/guide/navigation) to simplify into a single Activity app.
 
 We used [KOIN](https://insert-koin.io/) for dependency injection.
 
