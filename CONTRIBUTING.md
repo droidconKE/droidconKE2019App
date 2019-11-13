@@ -16,6 +16,8 @@ To ensure you that your pull request is accepted:
 1. Make commits of logical units
 1. Write descriptive commit messages and not 2 worded commits.
 1. Check for unnecessary whitespace with `git diff --check` before committing.
+1. Add tests for all the changes made to make sure that everything works as expected.
+1. We will also do thorough testing on our ebd so that broken code is not pushed.
 
 
 
