@@ -5,10 +5,10 @@ import kotlinx.coroutines.withContext
 
 suspend fun <T, R : Any> T.runCatching(
         block: suspend T.() -> R
-): Result<R> = withContext(Dispatchers.IO) {
+): FirebaseResult<R> = withContext(Dispatchers.IO) {
     return@withContext try {
-        Result.Success(block())
+        FirebaseResult.Success(block())
     } catch (e: Exception) {
-        Result.Error(e.message)
+        FirebaseResult.Error(e.message)
     }
 }

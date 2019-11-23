@@ -1,30 +1,29 @@
 package com.android254.droidconke19.repository
 
-import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.models.ReserveSeatModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.tasks.await
-import com.android254.droidconke19.datastates.Result
+import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.datastates.runCatching
 
 interface ReserveSeatRepo {
-    suspend fun reserveSeat(reserveSeatModel: ReserveSeatModel): Result<String>
+    suspend fun reserveSeat(reserveSeatModel: ReserveSeatModel): FirebaseResult<String>
 
-    suspend fun unReserveSeat(reserveSeatModel: ReserveSeatModel): Result<String>
+    suspend fun unReserveSeat(reserveSeatModel: ReserveSeatModel): FirebaseResult<String>
 }
 
 class ReserveSeatRepoImpl(val firestore: FirebaseFirestore) : ReserveSeatRepo {
 
 
-    override suspend fun reserveSeat(reserveSeatModel: ReserveSeatModel): Result<String> {
+    override suspend fun reserveSeat(reserveSeatModel: ReserveSeatModel): FirebaseResult<String> {
         return if (!isSeatReserved(reserveSeatModel)) {
             runCatching {
                 firestore.collection("reserved_seats").add(reserveSeatModel).await()
                 "Seat successfully reserved"
             }
         } else {
-            return Result.Error("Seat already reserved")
+            return FirebaseResult.Error("Seat already reserved")
         }
     }
 
@@ -43,7 +42,7 @@ class ReserveSeatRepoImpl(val firestore: FirebaseFirestore) : ReserveSeatRepo {
     }
 
 
-    override suspend fun unReserveSeat(reserveSeatModel: ReserveSeatModel): Result<String> {
+    override suspend fun unReserveSeat(reserveSeatModel: ReserveSeatModel): FirebaseResult<String> {
         return runCatching {
             val snapshot = firestore.collection("reserved_seats")
                     .whereEqualTo("day_number", reserveSeatModel.day_number)

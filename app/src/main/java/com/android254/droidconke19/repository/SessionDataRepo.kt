@@ -2,7 +2,7 @@ package com.android254.droidconke19.repository
 
 import com.android254.droidconke19.database.AppDatabase
 import com.android254.droidconke19.database.dao.SessionsDao
-import com.android254.droidconke19.datastates.Result
+import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.datastates.runCatching
 import com.android254.droidconke19.models.SessionsModel
 import com.google.firebase.firestore.FirebaseFirestore
@@ -10,13 +10,13 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.tasks.await
 
 interface SessionDataRepo {
-    suspend fun getSessionData(dayNumber: String, sessionId: Int): Result<SessionsModel>
+    suspend fun getSessionData(dayNumber: String, sessionId: Int): FirebaseResult<SessionsModel>
 
-    suspend fun getStarredSessions(userId: String): Result<List<String>>
+    suspend fun getStarredSessions(userId: String): FirebaseResult<List<String>>
 
-    suspend fun starrSession(dayNumber: String, sessionId: Int, userId: String, slug: String): Result<String>
+    suspend fun starrSession(dayNumber: String, sessionId: Int, userId: String, slug: String): FirebaseResult<String>
 
-    suspend fun unstarrSession(dayNumber: String, sessionId: Int, userId: String): Result<String>
+    suspend fun unstarrSession(dayNumber: String, sessionId: Int, userId: String): FirebaseResult<String>
 
     suspend fun clearStarredSessions(userId: String)
 }
@@ -26,7 +26,7 @@ class SessionDataRepoImpl(db: AppDatabase, private val firestore: FirebaseFirest
 
     private val starredSessionCollection = "starred_sessions"
 
-    override suspend fun getSessionData(dayNumber: String, sessionId: Int): Result<SessionsModel> =
+    override suspend fun getSessionData(dayNumber: String, sessionId: Int): FirebaseResult<SessionsModel> =
             runCatching {
                 val snapshot = firestore.collection(dayNumber)
                         .whereEqualTo("id", sessionId)
@@ -53,7 +53,7 @@ class SessionDataRepoImpl(db: AppDatabase, private val firestore: FirebaseFirest
         }
     }
 
-    override suspend fun getStarredSessions(userId: String): Result<List<String>> =
+    override suspend fun getStarredSessions(userId: String): FirebaseResult<List<String>> =
             runCatching {
                 val snapshot = firestore.collection(starredSessionCollection)
                         .whereEqualTo("user_id", userId)
@@ -77,7 +77,7 @@ class SessionDataRepoImpl(db: AppDatabase, private val firestore: FirebaseFirest
                 slugs
             }
 
-    override suspend fun starrSession(dayNumber: String, sessionId: Int, userId: String, slug: String): Result<String> {
+    override suspend fun starrSession(dayNumber: String, sessionId: Int, userId: String, slug: String): FirebaseResult<String> {
         return if(!isSessionStarred(dayNumber, sessionId, userId)) {
             runCatching {
                 val data = hashMapOf(
@@ -93,11 +93,11 @@ class SessionDataRepoImpl(db: AppDatabase, private val firestore: FirebaseFirest
                 "Session added to favourites"
             }
         } else {
-            Result.Error("Session already starred")
+            FirebaseResult.Error("Session already starred")
         }
     }
 
-    override suspend fun unstarrSession(dayNumber: String, sessionId: Int, userId: String): Result<String> =
+    override suspend fun unstarrSession(dayNumber: String, sessionId: Int, userId: String): FirebaseResult<String> =
             runCatching {
                 val snapshot = firestore.collection(starredSessionCollection)
                         .whereEqualTo("day", dayNumber)
