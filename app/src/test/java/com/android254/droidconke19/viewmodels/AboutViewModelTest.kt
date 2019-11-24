@@ -2,7 +2,7 @@ package com.android254.droidconke19.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.android254.droidconke19.CoroutinesRule
-import com.android254.droidconke19.datastates.Result
+import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.repository.AboutDetailsRepo
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -43,7 +43,7 @@ class AboutViewModelTest {
     @Test
     fun `test fetchAboutDetails`() = runBlockingTest {
 
-        coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns Result.Success(emptyList())
+        coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Success(emptyList())
 
         aboutViewModel.fetchAboutDetails("value", this)
 
@@ -56,7 +56,7 @@ class AboutViewModelTest {
     @Test
     fun `test fetchAboutDetails error `() = runBlockingTest {
 
-        coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns Result.Error("Some error")
+        coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Error("Some error")
 
         aboutViewModel.fetchAboutDetails("value", this)
 
@@ -69,7 +69,7 @@ class AboutViewModelTest {
     @Test
     fun `test getOrganizers`() = runBlockingTest {
 
-        coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns Result.Success(emptyList())
+        coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Success(emptyList())
 
         aboutViewModel.getOrganizers("value", this)
 
@@ -80,7 +80,7 @@ class AboutViewModelTest {
     @Test
     fun `test getOrganizers error `() = runBlockingTest {
 
-        coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns Result.Error("Some error")
+        coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Error("Some error")
 
         aboutViewModel.getOrganizers("value", this)
 
@@ -92,7 +92,7 @@ class AboutViewModelTest {
     @Test
     fun `test getSponsors`() = runBlockingTest {
 
-        coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns Result.Success(emptyList())
+        coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Success(emptyList())
 
         aboutViewModel.getSponsors("value", this)
 
@@ -104,7 +104,7 @@ class AboutViewModelTest {
     @Test
     fun `test getSponsors error `() = runBlockingTest {
 
-        coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns Result.Error("Some error")
+        coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Error("Some error")
 
         aboutViewModel.getSponsors("value", this)
 
