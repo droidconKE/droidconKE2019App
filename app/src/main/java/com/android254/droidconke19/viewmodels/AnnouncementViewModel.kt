@@ -3,7 +3,7 @@ package com.android254.droidconke19.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android254.droidconke19.datastates.Result
+import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.models.Announcement
 import com.android254.droidconke19.repository.AnnouncementRepo
 import com.android254.droidconke19.utils.NonNullMediatorLiveData
@@ -21,8 +21,8 @@ class AnnouncementViewModel(private val announcementRepo: AnnouncementRepo) : Vi
     fun getAnnouncements() {
         viewModelScope.launch {
             when (val value = announcementRepo.getAnnouncements()) {
-                is Result.Success -> announcementMediatorLiveData.postValue(value.data)
-                is Result.Error -> announcementError.postValue(value.exception)
+                is FirebaseResult.Success -> announcementMediatorLiveData.postValue(value.data)
+                is FirebaseResult.Error -> announcementError.postValue(value.exception)
             }
         }
     }
