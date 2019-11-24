@@ -3,7 +3,6 @@ package com.android254.droidconke19.viewmodels
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.android254.droidconke19.CoroutinesRule
 import com.android254.droidconke19.datastates.Result
-import com.android254.droidconke19.observeOnce
 import com.android254.droidconke19.repository.AboutDetailsRepo
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -11,6 +10,7 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
@@ -41,80 +41,76 @@ class AboutViewModelTest {
     }
 
     @Test
-    fun `test fetchAboutDetails`() {
+    fun `test fetchAboutDetails`() = runBlockingTest {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns Result.Success(emptyList())
 
-        aboutViewModel.fetchAboutDetails("value")
+        aboutViewModel.fetchAboutDetails("value", this)
 
-        aboutViewModel.getAboutDetailsResponse().observeOnce {
-            assertThat(it, `is`(empty()))
-        }
+        val response = aboutViewModel.getAboutDetailsResponse()
+
+        assertThat(response.value, `is`(empty()))
 
     }
 
     @Test
-    fun `test fetchAboutDetails error `() {
+    fun `test fetchAboutDetails error `() = runBlockingTest {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns Result.Error("Some error")
 
-        aboutViewModel.fetchAboutDetails("value")
+        aboutViewModel.fetchAboutDetails("value", this)
 
-        aboutViewModel.getAboutDetailsError().observeOnce {
-            assertThat(it, `is`("Some error"))
-        }
+        val error = aboutViewModel.getAboutDetailsError()
+
+        assertThat(error.value, `is`("Some error"))
 
     }
 
     @Test
-    fun `test getOrganizers`() {
+    fun `test getOrganizers`() = runBlockingTest {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns Result.Success(emptyList())
 
-        aboutViewModel.getOrganizers("value")
+        aboutViewModel.getOrganizers("value", this)
 
-        aboutViewModel.getAboutDetailsResponse().observeOnce {
-            assertThat(it, `is`(empty()))
-        }
-
+        val response = aboutViewModel.getOrganizersResponse()
+        assertThat(response.value, `is`(empty()))
     }
 
     @Test
-    fun `test getOrganizers error `() {
+    fun `test getOrganizers error `() = runBlockingTest {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns Result.Error("Some error")
 
-        aboutViewModel.getOrganizers("value")
+        aboutViewModel.getOrganizers("value", this)
 
-        aboutViewModel.getAboutDetailsError().observeOnce {
-            assertThat(it, `is`("Some error"))
-        }
+        val error = aboutViewModel.getOrganizerError()
+        assertThat(error.value, `is`("Some error"))
 
     }
 
     @Test
-    fun `test getSponsors`() {
+    fun `test getSponsors`() = runBlockingTest {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns Result.Success(emptyList())
 
-        aboutViewModel.getSponsors("value")
+        aboutViewModel.getSponsors("value", this)
 
-        aboutViewModel.getAboutDetailsResponse().observeOnce {
-            assertThat(it, `is`(empty()))
-        }
+        val response = aboutViewModel.getSponsorsResponse()
+        assertThat(response.value, `is`(empty()))
 
     }
 
     @Test
-    fun `test getSponsors error `() {
+    fun `test getSponsors error `() = runBlockingTest {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns Result.Error("Some error")
 
-        aboutViewModel.getSponsors("value")
+        aboutViewModel.getSponsors("value", this)
 
-        aboutViewModel.getAboutDetailsError().observeOnce {
-            assertThat(it, `is`("Some error"))
-        }
+        val error = aboutViewModel.getSponsorsError()
+
+        assertThat(error.value, `is`("Some error"))
 
     }
 }
