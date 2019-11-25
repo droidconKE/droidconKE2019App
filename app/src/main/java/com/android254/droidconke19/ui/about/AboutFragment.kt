@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.AboutDetailsModel
 import com.android254.droidconke19.utils.loadImage
-import com.android254.droidconke19.utils.nonNull
-import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.viewmodels.AboutViewModel
 import kotlinx.android.synthetic.main.fragment_about.*
 import org.jetbrains.anko.toast
@@ -49,18 +48,18 @@ class AboutFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        aboutViewModel.getAboutDetailsResponse().nonNull().observe(this) { aboutDetailsList ->
+        aboutViewModel.getAboutDetailsResponse().observe(this, Observer { aboutDetailsList ->
             handleFetchAboutDetails(aboutDetailsList)
-        }
-        aboutViewModel.getAboutDetailsError().nonNull().observe(this) { databaseError ->
+        })
+        aboutViewModel.getAboutDetailsError().observe(this, Observer { databaseError ->
             handleDatabaseError(databaseError)
-        }
-        aboutViewModel.getOrganizersResponse().nonNull().observe(this) {
+        })
+        aboutViewModel.getOrganizersResponse().observe(this, Observer {
             handleGetOrganizersResponse(it)
-        }
-        aboutViewModel.getSponsorsResponse().nonNull().observe(this) {
+        })
+        aboutViewModel.getSponsorsResponse().observe(this, Observer {
             handleSponsorsResponse(it)
-        }
+        })
     }
 
     private fun handleSponsorsResponse(it: List<AboutDetailsModel>) {

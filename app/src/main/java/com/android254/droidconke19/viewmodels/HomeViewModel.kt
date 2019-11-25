@@ -1,16 +1,16 @@
 package com.android254.droidconke19.viewmodels
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.repository.UpdateTokenRepo
-import com.android254.droidconke19.utils.NonNullMediatorLiveData
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val updateTokenRepo: UpdateTokenRepo) : ViewModel() {
-    private val updateTokenStateMediatorLiveData = NonNullMediatorLiveData<Boolean>()
-    private val updateTokenError = NonNullMediatorLiveData<String>()
+    private val updateTokenStateMediatorLiveData = MediatorLiveData<Boolean>()
+    private val updateTokenError = MediatorLiveData<String>()
 
     fun getUpdateTokenResponse(): LiveData<Boolean> = updateTokenStateMediatorLiveData
 

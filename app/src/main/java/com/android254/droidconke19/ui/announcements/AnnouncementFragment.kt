@@ -6,10 +6,9 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.Announcement
-import com.android254.droidconke19.utils.nonNull
-import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.viewmodels.AnnouncementViewModel
 import kotlinx.android.synthetic.main.fragment_announcements.*
 import org.jetbrains.anko.toast
@@ -56,14 +55,13 @@ class AnnouncementFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        announcementViewModel.getAnnouncementsResponse().nonNull().observe(this) {
+        announcementViewModel.getAnnouncementsResponse().observe(this, Observer {
             hideProgressBar()
             announcementAdapter.setAnnouncements(it)
-        }
-        announcementViewModel.getAnnouncementError().nonNull().observe(this) {
+        })
+        announcementViewModel.getAnnouncementError().observe(this, Observer {
             handleError(it)
-
-        }
+        })
 
     }
 

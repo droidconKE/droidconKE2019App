@@ -1,17 +1,17 @@
 package com.android254.droidconke19.viewmodels
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.models.EventTypeModel
 import com.android254.droidconke19.repository.EventTypeRepo
-import com.android254.droidconke19.utils.NonNullMediatorLiveData
 import kotlinx.coroutines.launch
 
 class EventTypeViewModel( private val eventTypeRepo: EventTypeRepo) : ViewModel() {
-    private val eventTypeModelMediatorLiveData = NonNullMediatorLiveData<List<EventTypeModel>>()
-    private val eventDetailsError = NonNullMediatorLiveData<String>()
+    private val eventTypeModelMediatorLiveData = MediatorLiveData<List<EventTypeModel>>()
+    private val eventDetailsError = MediatorLiveData<String>()
 
 
     fun getWifiDetailsResponse(): LiveData<List<EventTypeModel>> = eventTypeModelMediatorLiveData

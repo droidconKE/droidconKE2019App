@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.android254.droidconke19.R
@@ -16,8 +17,6 @@ import com.android254.droidconke19.repository.FavoritesStore
 import com.android254.droidconke19.ui.filters.Filter
 import com.android254.droidconke19.ui.filters.FilterStore
 import com.android254.droidconke19.ui.schedule.ScheduleFragmentDirections
-import com.android254.droidconke19.utils.nonNull
-import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.viewmodels.SessionsViewModel
 import kotlinx.android.synthetic.main.fragment_day_session.*
 import org.jetbrains.anko.toast
@@ -65,16 +64,16 @@ class SessionDayFragment : Fragment() {
     }
 
     private fun redirectToSessionDetails(it: SessionsModel) {
-        findNavController().navigate(ScheduleFragmentDirections.actionScheduleFragmentToSessionDetailsFragment(it,it.title))
+        findNavController().navigate(ScheduleFragmentDirections.actionScheduleFragmentToSessionDetailsFragment(it, it.title))
     }
 
     private fun observeLiveData() {
-        sessionsViewModel.getSessionsResponse().nonNull().observe(this) { sessionList ->
+        sessionsViewModel.getSessionsResponse().observe(this, Observer { sessionList ->
             updateAdapterWithList(sessionList)
-        }
-        sessionsViewModel.getSessionsError().nonNull().observe(this) { databaseError ->
+        })
+        sessionsViewModel.getSessionsError().observe(this, Observer { databaseError ->
             handleError(databaseError)
-        }
+        })
     }
 
     private fun updateAdapterWithList(sessionList: List<SessionsModel>) {

@@ -1,22 +1,22 @@
 package com.android254.droidconke19.viewmodels
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.models.AboutDetailsModel
 import com.android254.droidconke19.repository.AboutDetailsRepo
-import com.android254.droidconke19.utils.NonNullMediatorLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class AboutViewModel(private val aboutDetailsRepo: AboutDetailsRepo) : ViewModel() {
-    private val detailsStateMediatorLiveData = NonNullMediatorLiveData<List<AboutDetailsModel>>()
-    private val detailsError = NonNullMediatorLiveData<String>()
-    private val organizersMediatorLiveData = NonNullMediatorLiveData<List<AboutDetailsModel>>()
-    private val organizersError = NonNullMediatorLiveData<String>()
-    private val sponsorsMediatorLiveData = NonNullMediatorLiveData<List<AboutDetailsModel>>()
-    private val sponsorsError = NonNullMediatorLiveData<String>()
+    private val detailsStateMediatorLiveData = MediatorLiveData<List<AboutDetailsModel>>()
+    private val detailsError = MediatorLiveData<String>()
+    private val organizersMediatorLiveData = MediatorLiveData<List<AboutDetailsModel>>()
+    private val organizersError = MediatorLiveData<String>()
+    private val sponsorsMediatorLiveData = MediatorLiveData<List<AboutDetailsModel>>()
+    private val sponsorsError = MediatorLiveData<String>()
 
 
     fun getAboutDetailsResponse(): LiveData<List<AboutDetailsModel>> = detailsStateMediatorLiveData
