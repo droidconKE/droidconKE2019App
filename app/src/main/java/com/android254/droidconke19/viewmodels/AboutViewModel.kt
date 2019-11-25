@@ -7,6 +7,7 @@ import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.models.AboutDetailsModel
 import com.android254.droidconke19.repository.AboutDetailsRepo
 import com.android254.droidconke19.utils.NonNullMediatorLiveData
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class AboutViewModel(private val aboutDetailsRepo: AboutDetailsRepo) : ViewModel() {
@@ -30,8 +31,8 @@ class AboutViewModel(private val aboutDetailsRepo: AboutDetailsRepo) : ViewModel
 
     fun getSponsorsError(): LiveData<String> = sponsorsError
 
-    fun fetchAboutDetails(aboutType: String) {
-        viewModelScope.launch {
+    fun fetchAboutDetails(aboutType: String, scope: CoroutineScope = viewModelScope) {
+        scope.launch {
             when (val value = aboutDetailsRepo.getAboutDetails(aboutType)) {
                 is FirebaseResult.Success -> detailsStateMediatorLiveData.postValue(value.data)
                 is FirebaseResult.Error -> detailsError.postValue(value.exception)
@@ -39,8 +40,8 @@ class AboutViewModel(private val aboutDetailsRepo: AboutDetailsRepo) : ViewModel
         }
     }
 
-    fun getOrganizers(aboutType: String) {
-        viewModelScope.launch {
+    fun getOrganizers(aboutType: String, scope: CoroutineScope = viewModelScope) {
+        scope.launch {
             when (val value = aboutDetailsRepo.getAboutDetails(aboutType)) {
                 is FirebaseResult.Success -> organizersMediatorLiveData.postValue(value.data)
                 is FirebaseResult.Error -> organizersError.postValue(value.exception)
@@ -49,8 +50,8 @@ class AboutViewModel(private val aboutDetailsRepo: AboutDetailsRepo) : ViewModel
 
     }
 
-    fun getSponsors(aboutType: String) {
-        viewModelScope.launch {
+    fun getSponsors(aboutType: String, scope: CoroutineScope = viewModelScope) {
+        scope.launch {
             when (val value = aboutDetailsRepo.getAboutDetails(aboutType)) {
                 is FirebaseResult.Success -> sponsorsMediatorLiveData.postValue(value.data)
                 is FirebaseResult.Error -> sponsorsError.postValue(value.exception)
