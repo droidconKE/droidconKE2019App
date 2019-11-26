@@ -3,6 +3,7 @@ package com.android254.droidconke19.viewmodels
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.android254.droidconke19.CoroutinesRule
 import com.android254.droidconke19.datastates.FirebaseResult
+import com.android254.droidconke19.getOrAwaitValue
 import com.android254.droidconke19.repository.AboutDetailsRepo
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -41,76 +42,76 @@ class AboutViewModelTest {
     }
 
     @Test
-    fun `test fetchAboutDetails`() = runBlockingTest {
+    fun `test fetchAboutDetails`() {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Success(emptyList())
 
-        aboutViewModel.fetchAboutDetails("value", this)
+        aboutViewModel.fetchAboutDetails("value")
 
         val response = aboutViewModel.getAboutDetailsResponse()
 
-        assertThat(response.value, `is`(empty()))
+        assertThat(response.getOrAwaitValue(), `is`(empty()))
 
     }
 
     @Test
-    fun `test fetchAboutDetails error `() = runBlockingTest {
+    fun `test fetchAboutDetails error `() {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Error("Some error")
 
-        aboutViewModel.fetchAboutDetails("value", this)
+        aboutViewModel.fetchAboutDetails("value")
 
         val error = aboutViewModel.getAboutDetailsError()
 
-        assertThat(error.value, `is`("Some error"))
+        assertThat(error.getOrAwaitValue(), `is`("Some error"))
 
     }
 
     @Test
-    fun `test getOrganizers`() = runBlockingTest {
+    fun `test getOrganizers`() {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Success(emptyList())
 
-        aboutViewModel.getOrganizers("value", this)
+        aboutViewModel.getOrganizers("value")
 
         val response = aboutViewModel.getOrganizersResponse()
-        assertThat(response.value, `is`(empty()))
+        assertThat(response.getOrAwaitValue(), `is`(empty()))
     }
 
     @Test
-    fun `test getOrganizers error `() = runBlockingTest {
+    fun `test getOrganizers error `() {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Error("Some error")
 
-        aboutViewModel.getOrganizers("value", this)
+        aboutViewModel.getOrganizers("value")
 
         val error = aboutViewModel.getOrganizerError()
-        assertThat(error.value, `is`("Some error"))
+        assertThat(error.getOrAwaitValue(), `is`("Some error"))
 
     }
 
     @Test
-    fun `test getSponsors`() = runBlockingTest {
+    fun `test getSponsors`() {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Success(emptyList())
 
-        aboutViewModel.getSponsors("value", this)
+        aboutViewModel.getSponsors("value")
 
         val response = aboutViewModel.getSponsorsResponse()
-        assertThat(response.value, `is`(empty()))
+        assertThat(response.getOrAwaitValue(), `is`(empty()))
 
     }
 
     @Test
-    fun `test getSponsors error `() = runBlockingTest {
+    fun `test getSponsors error `() {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Error("Some error")
 
-        aboutViewModel.getSponsors("value", this)
+        aboutViewModel.getSponsors("value")
 
         val error = aboutViewModel.getSponsorsError()
 
-        assertThat(error.value, `is`("Some error"))
+        assertThat(error.getOrAwaitValue(), `is`("Some error"))
 
     }
 }
