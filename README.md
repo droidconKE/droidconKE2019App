@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/droidconKE/droidconKE2019App.svg?branch=develop)](https://travis-ci.org/droidconKE/droidconKE2019App)
+
 # droidconKE Android App
 
 
