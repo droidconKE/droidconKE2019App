@@ -6,7 +6,6 @@ env:
   - ANDROID_COMPILE_SDK="29" ANDROID_BUILD_TOOLS="29.0.2" ANDROID_SDK_TOOLS="4333796"
 
 before_install:
-    -in gradle-local.properties.enc -out gradle-local.properties -d
   - sudo apt-get --quiet update --yes
   - sudo apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
   - echo "org.gradle.daemon=false" >> gradle.properties
