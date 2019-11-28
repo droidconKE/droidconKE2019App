@@ -3,7 +3,6 @@ package com.android254.droidconke19.viewmodels
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.android254.droidconke19.CoroutinesRule
 import com.android254.droidconke19.datastates.FirebaseResult
-import com.android254.droidconke19.getOrAwaitValue
 import com.android254.droidconke19.repository.AboutDetailsRepo
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -11,7 +10,6 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
@@ -50,7 +48,7 @@ class AboutViewModelTest {
 
         val response = aboutViewModel.getAboutDetailsResponse()
 
-        assertThat(response.getOrAwaitValue(), `is`(empty()))
+        assertThat(response.value, `is`(empty()))
 
     }
 
@@ -63,7 +61,7 @@ class AboutViewModelTest {
 
         val error = aboutViewModel.getAboutDetailsError()
 
-        assertThat(error.getOrAwaitValue(), `is`("Some error"))
+        assertThat(error.value, `is`("Some error"))
 
     }
 
@@ -75,7 +73,7 @@ class AboutViewModelTest {
         aboutViewModel.getOrganizers("value")
 
         val response = aboutViewModel.getOrganizersResponse()
-        assertThat(response.getOrAwaitValue(), `is`(empty()))
+        assertThat(response.value, `is`(empty()))
     }
 
     @Test
@@ -86,7 +84,7 @@ class AboutViewModelTest {
         aboutViewModel.getOrganizers("value")
 
         val error = aboutViewModel.getOrganizerError()
-        assertThat(error.getOrAwaitValue(), `is`("Some error"))
+        assertThat(error.value, `is`("Some error"))
 
     }
 
@@ -98,7 +96,7 @@ class AboutViewModelTest {
         aboutViewModel.getSponsors("value")
 
         val response = aboutViewModel.getSponsorsResponse()
-        assertThat(response.getOrAwaitValue(), `is`(empty()))
+        assertThat(response.value, `is`(empty()))
 
     }
 
@@ -111,7 +109,7 @@ class AboutViewModelTest {
 
         val error = aboutViewModel.getSponsorsError()
 
-        assertThat(error.getOrAwaitValue(), `is`("Some error"))
+        assertThat(error.value, `is`("Some error"))
 
     }
 }
