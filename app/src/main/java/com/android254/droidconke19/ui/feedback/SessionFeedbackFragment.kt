@@ -7,13 +7,11 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.android254.droidconke19.R
-import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.models.SessionsUserFeedback
 import com.android254.droidconke19.utils.isSignedIn
-import com.android254.droidconke19.utils.nonNull
-import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.viewmodels.SessionDataViewModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_session_feedback.*
@@ -76,12 +74,12 @@ class SessionFeedbackFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        sessionDataViewModel.getSessionFeedBackResponse().nonNull().observe(this) {
+        sessionDataViewModel.getSessionFeedBackResponse().observe(this, Observer{
             handleFeedbackResponse(it)
-        }
-        sessionDataViewModel.getSessionFeedbackError().nonNull().observe(this) {
+        })
+        sessionDataViewModel.getSessionFeedbackError().observe(this, Observer {
             handleDatabaseError(it)
-        }
+        })
 
     }
 

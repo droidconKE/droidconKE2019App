@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -21,8 +22,6 @@ import com.android254.droidconke19.models.ReserveSeatModel
 import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.ui.speakers.SpeakersAdapter
 import com.android254.droidconke19.utils.isSignedIn
-import com.android254.droidconke19.utils.nonNull
-import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.utils.toast
 import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -139,9 +138,9 @@ class SessionDetailsFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        sessionDetailsViewModel.getReserveSeatResponse().nonNull().observe(this) {
+        sessionDetailsViewModel.getReserveSeatResponse().observe(this, Observer {
             handleReserveSeatResponse(it)
-        }
+        })
     }
 
     private fun handleReserveSeatResponse(it: String) {

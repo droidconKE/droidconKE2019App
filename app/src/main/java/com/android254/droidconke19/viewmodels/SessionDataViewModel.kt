@@ -1,24 +1,30 @@
 package com.android254.droidconke19.viewmodels
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android254.droidconke19.datastates.FirebaseResult
-import com.android254.droidconke19.models.*
-import com.android254.droidconke19.repository.*
-import com.android254.droidconke19.utils.NonNullMediatorLiveData
+import com.android254.droidconke19.models.RoomModel
+import com.android254.droidconke19.models.SessionsModel
+import com.android254.droidconke19.models.SessionsUserFeedback
+import com.android254.droidconke19.models.SpeakersModel
+import com.android254.droidconke19.repository.RoomRepo
+import com.android254.droidconke19.repository.SessionDataRepo
+import com.android254.droidconke19.repository.SessionFeedbackRepo
+import com.android254.droidconke19.repository.SpeakersRepo
 import kotlinx.coroutines.launch
 
 
 class SessionDataViewModel(private val sessionDataRepo: SessionDataRepo, private val speakersRepo: SpeakersRepo, private val roomRepo: RoomRepo, private val sessionFeedbackRepo: SessionFeedbackRepo) : ViewModel() {
-    private val sessionDataStateMediatorLiveData = NonNullMediatorLiveData<SessionsModel>()
-    private val sessionDataError = NonNullMediatorLiveData<String>()
-    private val speakersStateMediatorLiveData = NonNullMediatorLiveData<List<SpeakersModel>>()
-    private val speakersError = NonNullMediatorLiveData<String>()
-    private val roomStateMediatorLiveData = NonNullMediatorLiveData<RoomModel>()
-    private val roomError = NonNullMediatorLiveData<String>()
-    private val sessionFeedBackMediatorLiveData = NonNullMediatorLiveData<String>()
-    private val sessionFeedbackError = NonNullMediatorLiveData<String>()
+    private val sessionDataStateMediatorLiveData = MediatorLiveData<SessionsModel>()
+    private val sessionDataError = MediatorLiveData<String>()
+    private val speakersStateMediatorLiveData = MediatorLiveData<List<SpeakersModel>>()
+    private val speakersError = MediatorLiveData<String>()
+    private val roomStateMediatorLiveData = MediatorLiveData<RoomModel>()
+    private val roomError = MediatorLiveData<String>()
+    private val sessionFeedBackMediatorLiveData = MediatorLiveData<String>()
+    private val sessionFeedbackError = MediatorLiveData<String>()
 
     fun getSessionDataResponse(): LiveData<SessionsModel> = sessionDataStateMediatorLiveData
 

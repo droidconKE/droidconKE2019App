@@ -10,7 +10,6 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.empty
@@ -41,11 +40,11 @@ class AboutViewModelTest {
     }
 
     @Test
-    fun `test fetchAboutDetails`() = runBlockingTest {
+    fun `test fetchAboutDetails`() {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Success(emptyList())
 
-        aboutViewModel.fetchAboutDetails("value", this)
+        aboutViewModel.fetchAboutDetails("value")
 
         val response = aboutViewModel.getAboutDetailsResponse()
 
@@ -54,11 +53,11 @@ class AboutViewModelTest {
     }
 
     @Test
-    fun `test fetchAboutDetails error `() = runBlockingTest {
+    fun `test fetchAboutDetails error `() {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Error("Some error")
 
-        aboutViewModel.fetchAboutDetails("value", this)
+        aboutViewModel.fetchAboutDetails("value")
 
         val error = aboutViewModel.getAboutDetailsError()
 
@@ -67,22 +66,22 @@ class AboutViewModelTest {
     }
 
     @Test
-    fun `test getOrganizers`() = runBlockingTest {
+    fun `test getOrganizers`() {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Success(emptyList())
 
-        aboutViewModel.getOrganizers("value", this)
+        aboutViewModel.getOrganizers("value")
 
         val response = aboutViewModel.getOrganizersResponse()
         assertThat(response.value, `is`(empty()))
     }
 
     @Test
-    fun `test getOrganizers error `() = runBlockingTest {
+    fun `test getOrganizers error `() {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Error("Some error")
 
-        aboutViewModel.getOrganizers("value", this)
+        aboutViewModel.getOrganizers("value")
 
         val error = aboutViewModel.getOrganizerError()
         assertThat(error.value, `is`("Some error"))
@@ -90,11 +89,11 @@ class AboutViewModelTest {
     }
 
     @Test
-    fun `test getSponsors`() = runBlockingTest {
+    fun `test getSponsors`() {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Success(emptyList())
 
-        aboutViewModel.getSponsors("value", this)
+        aboutViewModel.getSponsors("value")
 
         val response = aboutViewModel.getSponsorsResponse()
         assertThat(response.value, `is`(empty()))
@@ -102,11 +101,11 @@ class AboutViewModelTest {
     }
 
     @Test
-    fun `test getSponsors error `() = runBlockingTest {
+    fun `test getSponsors error `() {
 
         coEvery { aboutDetailsRepo.getAboutDetails(any()) } returns FirebaseResult.Error("Some error")
 
-        aboutViewModel.getSponsors("value", this)
+        aboutViewModel.getSponsors("value")
 
         val error = aboutViewModel.getSponsorsError()
 

@@ -6,11 +6,10 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.AgendaModel
-import com.android254.droidconke19.utils.nonNull
-import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.viewmodels.AgendaViewModel
 import kotlinx.android.synthetic.main.fragment_agenda.*
 import org.jetbrains.anko.toast
@@ -40,12 +39,12 @@ class AgendaFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        agendaViewModel.getAgendasResponse().nonNull().observe(this) {
+        agendaViewModel.getAgendasResponse().observe(this, Observer {
             handleAgendaResponse(it, agendaRv)
-        }
-        agendaViewModel.getAgendaError().nonNull().observe(this) {
+        })
+        agendaViewModel.getAgendaError().observe(this, Observer {
             handleDatabaseError(it)
-        }
+        })
     }
 
     private fun handleAgendaResponse(agendaList: List<AgendaModel>, agendaRv: RecyclerView) {

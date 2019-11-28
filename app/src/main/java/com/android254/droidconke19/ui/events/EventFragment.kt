@@ -7,16 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.android254.droidconke19.BuildConfig
 import com.android254.droidconke19.R
 import com.android254.droidconke19.models.EventTypeModel
 import com.android254.droidconke19.models.WifiDetailsModel
-import com.android254.droidconke19.utils.nonNull
-import com.android254.droidconke19.utils.observe
 import com.android254.droidconke19.viewmodels.EventTypeViewModel
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import kotlinx.android.synthetic.main.fragment_event.*
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
@@ -51,12 +50,12 @@ class EventFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        eventTypeViewModel.getWifiDetailsResponse().nonNull().observe(this) {
+        eventTypeViewModel.getWifiDetailsResponse().observe(this, Observer {
             handleFetchEventsResponse(it, eventTypesRv)
-        }
-        eventTypeViewModel.getWifiDetailsError().nonNull().observe(this) {
+        })
+        eventTypeViewModel.getWifiDetailsError().observe(this, Observer {
             handleDatabaseError(it)
-        }
+        })
     }
 
     private fun getRemoteConfigValues(wifiSsidText: TextView, wifiPasswordText: TextView) {
@@ -73,7 +72,8 @@ class EventFragment : Fragment() {
                         it.isSuccessful -> // After config data is successfully fetched, it must be activated before newly fetched
                             // values are returned.
                             firebaseRemoteConfig.activate()
-                        else -> {}
+                        else -> {
+                        }
                     }
                     val wifiDetailsModel = WifiDetailsModel(firebaseRemoteConfig.getString("wifi_ssid"), firebaseRemoteConfig.getString("wifi_password"))
                     updateViews(wifiDetailsModel, wifiSsidText, wifiPasswordText)
@@ -104,13 +104,13 @@ class EventFragment : Fragment() {
 
     }
 
-    private fun showProgressBar(){
+    private fun showProgressBar() {
         progressBar.visibility = View.VISIBLE
         eventTypeLinear.visibility = View.GONE
 
     }
 
-    private fun hideProgressBar(){
+    private fun hideProgressBar() {
         progressBar.visibility = View.GONE
         eventTypeLinear.visibility = View.VISIBLE
     }
