@@ -3,6 +3,7 @@ package com.android254.droidconke19.di
 import android.content.Context
 import androidx.room.Room
 import com.android254.droidconke19.database.AppDatabase
+import com.android254.droidconke19.firebase.FirebaseRemoteConfigFactory
 import com.android254.droidconke19.repository.*
 import com.android254.droidconke19.utils.SharedPref
 import com.android254.droidconke19.viewmodels.*
@@ -19,7 +20,7 @@ val appModule = module {
     // Firebase dependencies
     single { Firebase.firestore }
     single { FirebaseAuth.getInstance() }
-    single { FirebaseRemoteConfig.getInstance() }
+    single { FirebaseRemoteConfigFactory.create() }
     single { FirebaseMessaging.getInstance() }
     single {
         val db = FirebaseDatabase.getInstance()
