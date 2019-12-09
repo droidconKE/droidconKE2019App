@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
+    android:id="@+id/events_relativeLayout"
     android:background="@color/gray4"
     android:layout_height="match_parent"
    >
