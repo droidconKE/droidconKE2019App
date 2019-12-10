@@ -5,3 +5,7 @@ data class WifiDetailsModel (
         var wifiPassword: String
 )
 
+
+
+val WifiDetailsModel.isPropertiesNotEmpty
+    get() = wifiSsid.isNotEmpty() and wifiPassword.isNotEmpty()

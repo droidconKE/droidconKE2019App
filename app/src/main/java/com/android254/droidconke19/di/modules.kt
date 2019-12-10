@@ -3,6 +3,7 @@ package com.android254.droidconke19.di
 import android.content.Context
 import androidx.room.Room
 import com.android254.droidconke19.database.AppDatabase
+import com.android254.droidconke19.firebase.FirebaseRemoteConfigFactory
 import com.android254.droidconke19.repository.*
 import com.android254.droidconke19.utils.SharedPref
 import com.android254.droidconke19.viewmodels.*
@@ -19,7 +20,7 @@ val appModule = module {
     // Firebase dependencies
     single { Firebase.firestore }
     single { FirebaseAuth.getInstance() }
-    single { FirebaseRemoteConfig.getInstance() }
+    single { FirebaseRemoteConfigFactory.create() }
     single { FirebaseMessaging.getInstance() }
     single {
         val db = FirebaseDatabase.getInstance()
@@ -32,7 +33,7 @@ val appModule = module {
     viewModel { SessionsViewModel(get()) }
     viewModel { SessionDataViewModel(get(), get(), get(), get()) }
     viewModel { AgendaViewModel(get()) }
-    viewModel { EventTypeViewModel(get()) }
+    viewModel { EventTypeViewModel(get(), get()) }
     viewModel { FeedBackViewModel(get()) }
     viewModel { HomeViewModel(get()) }
     viewModel { AnnouncementViewModel(get()) }
@@ -55,6 +56,7 @@ val dataModule = module {
     single<AgendaRepo> { AgendaRepoImpl(get()) }
     single<AnnouncementRepo> { AnnouncementRepoImpl(get()) }
     single<ReserveSeatRepo> { ReserveSeatRepoImpl(get()) }
+    single<WifiDetailsRepo> { WifiDetailsRepoImpl(get()) }
 
     // Database
     single { Room.databaseBuilder(get(), AppDatabase::class.java, "droidconKE_db").fallbackToDestructiveMigration().build() }
