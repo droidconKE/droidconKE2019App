@@ -47,7 +47,7 @@ class EventFragment : Fragment() {
         eventTypeViewModel.getWifiDetailsResponse().observe(this, Observer {
             handleFetchEventsResponse(it, eventTypesRv)
         })
-        eventTypeViewModel.getWifiDetailsError().observe(this, Observer {
+        eventTypeViewModel.getFirebaseError().observe(this, Observer {
             handleDatabaseError(it)
         })
         eventTypeViewModel.wifiDetails.observe(viewLifecycleOwner, Observer {

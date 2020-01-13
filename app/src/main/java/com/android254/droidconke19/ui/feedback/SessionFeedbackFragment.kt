@@ -77,7 +77,7 @@ class SessionFeedbackFragment : Fragment() {
         sessionDataViewModel.getSessionFeedBackResponse().observe(this, Observer{
             handleFeedbackResponse(it)
         })
-        sessionDataViewModel.getSessionFeedbackError().observe(this, Observer {
+        sessionDataViewModel.getFirebaseError().observe(this, Observer {
             handleDatabaseError(it)
         })
 

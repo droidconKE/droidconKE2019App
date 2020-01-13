@@ -11,30 +11,25 @@ import kotlinx.coroutines.launch
 
 class AboutViewModel(private val aboutDetailsRepo: AboutDetailsRepo) : ViewModel() {
     private val detailsStateMediatorLiveData = MediatorLiveData<List<AboutDetailsModel>>()
-    private val detailsError = MediatorLiveData<String>()
+    private val firebaseError = MediatorLiveData<String>()
     private val organizersMediatorLiveData = MediatorLiveData<List<AboutDetailsModel>>()
-    private val organizersError = MediatorLiveData<String>()
     private val sponsorsMediatorLiveData = MediatorLiveData<List<AboutDetailsModel>>()
-    private val sponsorsError = MediatorLiveData<String>()
 
 
     fun getAboutDetailsResponse(): LiveData<List<AboutDetailsModel>> = detailsStateMediatorLiveData
 
-    fun getAboutDetailsError(): LiveData<String> = detailsError
+    fun getFirebaseError(): LiveData<String> = firebaseError
 
     fun getOrganizersResponse(): LiveData<List<AboutDetailsModel>> = organizersMediatorLiveData
 
-    fun getOrganizerError(): LiveData<String> = organizersError
-
     fun getSponsorsResponse(): LiveData<List<AboutDetailsModel>> = sponsorsMediatorLiveData
 
-    fun getSponsorsError(): LiveData<String> = sponsorsError
 
     fun fetchAboutDetails(aboutType: String) {
         viewModelScope.launch {
             when (val value = aboutDetailsRepo.getAboutDetails(aboutType)) {
                 is FirebaseResult.Success -> detailsStateMediatorLiveData.postValue(value.data)
-                is FirebaseResult.Error -> detailsError.postValue(value.exception)
+                is FirebaseResult.Error -> firebaseError.postValue(value.exception)
             }
         }
     }
@@ -43,7 +38,7 @@ class AboutViewModel(private val aboutDetailsRepo: AboutDetailsRepo) : ViewModel
         viewModelScope.launch {
             when (val value = aboutDetailsRepo.getAboutDetails(aboutType)) {
                 is FirebaseResult.Success -> organizersMediatorLiveData.postValue(value.data)
-                is FirebaseResult.Error -> organizersError.postValue(value.exception)
+                is FirebaseResult.Error -> firebaseError.postValue(value.exception)
             }
         }
 
@@ -53,7 +48,7 @@ class AboutViewModel(private val aboutDetailsRepo: AboutDetailsRepo) : ViewModel
         viewModelScope.launch {
             when (val value = aboutDetailsRepo.getAboutDetails(aboutType)) {
                 is FirebaseResult.Success -> sponsorsMediatorLiveData.postValue(value.data)
-                is FirebaseResult.Error -> sponsorsError.postValue(value.exception)
+                is FirebaseResult.Error -> firebaseError.postValue(value.exception)
             }
         }
     }

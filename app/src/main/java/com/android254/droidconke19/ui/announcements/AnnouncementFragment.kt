@@ -59,7 +59,7 @@ class AnnouncementFragment : Fragment() {
             hideProgressBar()
             announcementAdapter.setAnnouncements(it)
         })
-        announcementViewModel.getAnnouncementError().observe(this, Observer {
+        announcementViewModel.getFirebaseError().observe(this, Observer {
             handleError(it)
         })
 

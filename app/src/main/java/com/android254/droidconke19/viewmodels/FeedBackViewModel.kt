@@ -12,18 +12,18 @@ import kotlinx.coroutines.launch
 
 class FeedBackViewModel(private val eventFeedBackRepo: EventFeedbackRepo) : ViewModel() {
     private val feedBackStateMediatorLiveData = MediatorLiveData<String>()
-    private val eventFeedbackError = MediatorLiveData<String>()
+    private val firebaseError = MediatorLiveData<String>()
 
     fun getEventFeedBackResponse(): LiveData<String> = feedBackStateMediatorLiveData
 
-    fun getEventFeedbackError(): LiveData<String> = eventFeedbackError
+    fun getFirebaseError(): LiveData<String> = firebaseError
 
 
     fun sendEventFeedBack(userEventFeedback: UserEventFeedback) {
         viewModelScope.launch {
             when (val value = eventFeedBackRepo.sendFeedBack(userEventFeedback)) {
                 is FirebaseResult.Success -> feedBackStateMediatorLiveData.postValue(value.data)
-                is FirebaseResult.Error -> eventFeedbackError.postValue(value.exception)
+                is FirebaseResult.Error -> firebaseError.postValue(value.exception)
             }
         }
     }

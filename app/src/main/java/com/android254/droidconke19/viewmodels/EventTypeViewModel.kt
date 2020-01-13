@@ -8,14 +8,13 @@ import com.android254.droidconke19.repository.EventTypeRepo
 import com.android254.droidconke19.repository.WifiDetailsRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class EventTypeViewModel(
         private val eventTypeRepo: EventTypeRepo,
         private val wifiDetailsRepo: WifiDetailsRepo
 ) : ViewModel() {
     private val eventTypeModelMediatorLiveData = MediatorLiveData<List<EventTypeModel>>()
-    private val eventDetailsError = MediatorLiveData<String>()
+    private val firebaseError = MediatorLiveData<String>()
 
     val wifiDetails: MutableLiveData<FirebaseResult<WifiDetailsModel>> by lazy {
         MutableLiveData<FirebaseResult<WifiDetailsModel>>().also {
@@ -27,14 +26,14 @@ class EventTypeViewModel(
     fun getWifiDetailsResponse(): LiveData<List<EventTypeModel>> = eventTypeModelMediatorLiveData
 
     // TODO Rename method
-    fun getWifiDetailsError(): LiveData<String> = eventDetailsError
+    fun getFirebaseError(): LiveData<String> = firebaseError
 
 
     fun fetchSessions() {
         viewModelScope.launch {
             when (val value = eventTypeRepo.getSessionData()) {
                 is FirebaseResult.Success -> eventTypeModelMediatorLiveData.postValue(value.data)
-                is FirebaseResult.Error -> eventDetailsError.postValue(value.exception)
+                is FirebaseResult.Error -> firebaseError.postValue(value.exception)
             }
         }
     }
@@ -46,7 +45,7 @@ class EventTypeViewModel(
     }
 
     fun retry() {
-        if (eventDetailsError.value != null)
+        if (firebaseError.value != null)
             fetchSessions()
 
         if (wifiDetails.value is FirebaseResult.Error)

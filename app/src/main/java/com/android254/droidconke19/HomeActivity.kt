@@ -7,15 +7,12 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.onNavDestinationSelected
-import com.android254.droidconke19.utils.SharedPref.TOKEN_SENT
 import com.android254.droidconke19.utils.isSignedIn
-import com.android254.droidconke19.viewmodels.HomeViewModel
 import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
 import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.FirebaseAuth
@@ -33,7 +30,6 @@ class HomeActivity : AppCompatActivity() {
     private val firebaseMessaging: FirebaseMessaging by inject()
     private val firebaseAuth: FirebaseAuth by inject()
     private lateinit var params: AppBarLayout.LayoutParams
-    private val homeViewModel: HomeViewModel by viewModel()
     private val sessionDetailsViewModel: SessionDetailsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,8 +41,6 @@ class HomeActivity : AppCompatActivity() {
         setupNavigation()
 
         setupNotifications()
-        //observe live data emitted by view model
-        observeLiveData()
         // Set version
         version_text.text = "v${BuildConfig.VERSION_NAME}"
 
@@ -70,19 +64,6 @@ class HomeActivity : AppCompatActivity() {
 
         }
 
-    }
-
-    private fun observeLiveData() {
-        homeViewModel.getUpdateTokenResponse().observe(this, Observer {
-            when {
-                it -> {
-                    sharedPreferences.edit().putInt(TOKEN_SENT, 1).apply()
-                }
-                else -> {
-                    sharedPreferences.edit().putInt(TOKEN_SENT, 0).apply()
-                }
-            }
-        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

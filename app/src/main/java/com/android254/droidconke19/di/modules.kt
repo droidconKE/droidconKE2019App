@@ -35,7 +35,6 @@ val appModule = module {
     viewModel { AgendaViewModel(get()) }
     viewModel { EventTypeViewModel(get(), get()) }
     viewModel { FeedBackViewModel(get()) }
-    viewModel { HomeViewModel(get()) }
     viewModel { AnnouncementViewModel(get()) }
     viewModel { SessionDetailsViewModel(get(), get(),get()) }
 

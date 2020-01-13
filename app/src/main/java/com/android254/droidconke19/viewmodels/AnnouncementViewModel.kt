@@ -11,18 +11,18 @@ import kotlinx.coroutines.launch
 
 class AnnouncementViewModel(private val announcementRepo: AnnouncementRepo) : ViewModel() {
     private val announcementMediatorLiveData = MediatorLiveData<List<Announcement>>()
-    private val announcementError = MediatorLiveData<String>()
+    private val firebaseError = MediatorLiveData<String>()
 
 
     fun getAnnouncementsResponse(): LiveData<List<Announcement>> = announcementMediatorLiveData
 
-    fun getAnnouncementError(): LiveData<String> = announcementError
+    fun getFirebaseError(): LiveData<String> = firebaseError
 
     fun getAnnouncements() {
         viewModelScope.launch {
             when (val value = announcementRepo.getAnnouncements()) {
                 is FirebaseResult.Success -> announcementMediatorLiveData.postValue(value.data)
-                is FirebaseResult.Error -> announcementError.postValue(value.exception)
+                is FirebaseResult.Error -> firebaseError.postValue(value.exception)
             }
         }
     }

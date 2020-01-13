@@ -42,7 +42,7 @@ class AgendaFragment : Fragment() {
         agendaViewModel.getAgendasResponse().observe(this, Observer {
             handleAgendaResponse(it, agendaRv)
         })
-        agendaViewModel.getAgendaError().observe(this, Observer {
+        agendaViewModel.getFirebaseError().observe(this, Observer {
             handleDatabaseError(it)
         })
     }

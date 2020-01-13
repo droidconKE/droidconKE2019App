@@ -76,7 +76,7 @@ class EventFeedbackFragment : Fragment() {
         feedBackViewModel.getEventFeedBackResponse().observe(this, Observer {
             handleFeedbackResponse(it)
         })
-        feedBackViewModel.getEventFeedbackError().observe(this, Observer {
+        feedBackViewModel.getFirebaseError().observe(this, Observer {
             handleDataError(it)
         })
     }

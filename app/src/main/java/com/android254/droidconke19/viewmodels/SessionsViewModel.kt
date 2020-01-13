@@ -11,18 +11,18 @@ import kotlinx.coroutines.launch
 
 class SessionsViewModel(private val sessionsRepo: SessionsRepo) : ViewModel() {
     private val sessionsStateMediatorLiveData = MediatorLiveData<List<SessionsModel>>()
-    private val sessionError = MediatorLiveData<String>()
+    private val firebaseError = MediatorLiveData<String>()
 
 
     fun getSessionsResponse(): LiveData<List<SessionsModel>> = sessionsStateMediatorLiveData
 
-    fun getSessionsError(): LiveData<String> = sessionError
+    fun getFirebaseError(): LiveData<String> = firebaseError
 
     fun getSessions(sessionDay: String) {
         viewModelScope.launch {
             when (val value = sessionsRepo.getSessions(sessionDay)) {
                 is FirebaseResult.Success -> sessionsStateMediatorLiveData.postValue(value.data)
-                is FirebaseResult.Error -> sessionError.postValue(value.exception)
+                is FirebaseResult.Error -> firebaseError.postValue(value.exception)
             }
         }
     }

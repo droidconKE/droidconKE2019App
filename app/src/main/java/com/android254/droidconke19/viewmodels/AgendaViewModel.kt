@@ -11,17 +11,17 @@ import kotlinx.coroutines.launch
 
 class AgendaViewModel(private val agendaRepo: AgendaRepo) : ViewModel() {
     private val agendaStateMediatorLiveData = MediatorLiveData<List<AgendaModel>>()
-    private val agendaError = MediatorLiveData<String>()
+    private val firebaseError = MediatorLiveData<String>()
 
     fun getAgendasResponse(): LiveData<List<AgendaModel>> = agendaStateMediatorLiveData
 
-    fun getAgendaError(): LiveData<String> = agendaError
+    fun getFirebaseError(): LiveData<String> = firebaseError
 
     fun fetchAgendas() {
         viewModelScope.launch {
             when (val value = agendaRepo.agendaData()) {
                 is FirebaseResult.Success -> agendaStateMediatorLiveData.postValue(value.data)
-                is FirebaseResult.Error -> agendaError.postValue(value.exception)
+                is FirebaseResult.Error -> firebaseError.postValue(value.exception)
             }
         }
     }

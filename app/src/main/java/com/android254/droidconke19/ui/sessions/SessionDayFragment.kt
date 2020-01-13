@@ -71,7 +71,7 @@ class SessionDayFragment : Fragment() {
         sessionsViewModel.getSessionsResponse().observe(this, Observer { sessionList ->
             updateAdapterWithList(sessionList)
         })
-        sessionsViewModel.getSessionsError().observe(this, Observer { databaseError ->
+        sessionsViewModel.getFirebaseError().observe(this, Observer { databaseError ->
             handleError(databaseError)
         })
     }

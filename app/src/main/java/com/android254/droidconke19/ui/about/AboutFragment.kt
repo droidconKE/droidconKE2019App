@@ -51,8 +51,8 @@ class AboutFragment : Fragment() {
         aboutViewModel.getAboutDetailsResponse().observe(this, Observer { aboutDetailsList ->
             handleFetchAboutDetails(aboutDetailsList)
         })
-        aboutViewModel.getAboutDetailsError().observe(this, Observer { databaseError ->
-            handleDatabaseError(databaseError)
+        aboutViewModel.getFirebaseError().observe(this, Observer { firebaseError ->
+            handleDatabaseError(firebaseError)
         })
         aboutViewModel.getOrganizersResponse().observe(this, Observer {
             handleGetOrganizersResponse(it)
