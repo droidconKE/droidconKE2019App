@@ -1,8 +1,6 @@
 package com.android254.droidconke19.di
 
 import android.content.Context
-import androidx.room.Room
-import com.android254.droidconke19.database.AppDatabase
 import com.android254.droidconke19.firebase.FirebaseRemoteConfigFactory
 import com.android254.droidconke19.repository.*
 import com.android254.droidconke19.utils.SharedPref
@@ -12,7 +10,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -44,8 +41,8 @@ val appModule = module {
 val dataModule = module {
     // Repos
     single<AboutDetailsRepo> { AboutDetailsRepoImpl(get()) }
-    single<SessionsRepo> { SessionsRepoImpl(get(), get()) }
-    single<SessionDataRepo> { SessionDataRepoImpl(get(), get()) }
+    single<SessionsRepo> { SessionsRepoImpl(get()) }
+    single<SessionDataRepo> { SessionDataRepoImpl(get()) }
     single<SpeakersRepo> { SpeakersRepoImpl(get()) }
     single<RoomRepo> { RoomRepoImpl(get()) }
     single<SessionFeedbackRepo> { SessionFeedbackRepoImpl(get()) }
@@ -57,6 +54,4 @@ val dataModule = module {
     single<ReserveSeatRepo> { ReserveSeatRepoImpl(get()) }
     single<WifiDetailsRepo> { WifiDetailsRepoImpl(get()) }
 
-    // Database
-    single { Room.databaseBuilder(get(), AppDatabase::class.java, "droidconKE_db").fallbackToDestructiveMigration().build() }
 }

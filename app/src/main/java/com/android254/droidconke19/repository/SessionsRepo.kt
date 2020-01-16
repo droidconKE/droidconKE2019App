@@ -1,6 +1,5 @@
 package com.android254.droidconke19.repository
 
-import com.android254.droidconke19.database.AppDatabase
 import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.datastates.runCatching
 import com.android254.droidconke19.models.SessionsModel
@@ -14,7 +13,7 @@ interface SessionsRepo {
     suspend fun getSessions(sessionDay: String): FirebaseResult<List<SessionsModel>>
 }
 
-class SessionsRepoImpl(db: AppDatabase, private val firestore: FirebaseFirestore) : SessionsRepo {
+class SessionsRepoImpl(private val firestore: FirebaseFirestore) : SessionsRepo {
 
     override suspend fun getSessions(sessionDay: String): FirebaseResult<List<SessionsModel>> =
             runCatching {

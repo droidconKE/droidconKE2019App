@@ -1,11 +1,11 @@
 package com.android254.droidconke19.repository
 
+import com.android254.droidconke19.datastates.FirebaseResult
+import com.android254.droidconke19.datastates.runCatching
 import com.android254.droidconke19.models.ReserveSeatModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import kotlinx.coroutines.tasks.await
-import com.android254.droidconke19.datastates.FirebaseResult
-import com.android254.droidconke19.datastates.runCatching
 
 interface ReserveSeatRepo {
     suspend fun reserveSeat(reserveSeatModel: ReserveSeatModel): FirebaseResult<String>

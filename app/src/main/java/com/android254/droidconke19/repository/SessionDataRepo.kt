@@ -1,7 +1,5 @@
 package com.android254.droidconke19.repository
 
-import com.android254.droidconke19.database.AppDatabase
-import com.android254.droidconke19.database.dao.SessionsDao
 import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.datastates.runCatching
 import com.android254.droidconke19.models.SessionsModel
@@ -21,9 +19,7 @@ interface SessionDataRepo {
     suspend fun clearStarredSessions(userId: String)
 }
 
-class SessionDataRepoImpl(db: AppDatabase, private val firestore: FirebaseFirestore) : SessionDataRepo {
-    private val sessionsDao: SessionsDao = db.sessionsDao()
-
+class SessionDataRepoImpl(private val firestore: FirebaseFirestore) : SessionDataRepo {
     private val starredSessionCollection = "starred_sessions"
 
     override suspend fun getSessionData(dayNumber: String, sessionId: Int): FirebaseResult<SessionsModel> =
