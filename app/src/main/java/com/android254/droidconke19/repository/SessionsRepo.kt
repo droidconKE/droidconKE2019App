@@ -4,10 +4,10 @@ import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.datastates.runCatching
 import com.android254.droidconke19.models.SessionsModel
 import com.android254.droidconke19.models.SpeakersModel
-import com.android254.droidconke19.utils.await
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObjects
+import kotlinx.coroutines.tasks.await
 
 interface SessionsRepo {
     suspend fun getSessions(sessionDay: String): FirebaseResult<List<SessionsModel>>

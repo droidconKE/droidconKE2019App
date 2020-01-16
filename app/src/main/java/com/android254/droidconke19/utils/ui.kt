@@ -14,10 +14,6 @@ fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
-fun Context.longToast(message: String) {
-    Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-}
-
 fun ImageView.loadImage(url: String?, @DrawableRes placeholder: Int
 ) {
     Glide.with(context).load(url).apply { apply(RequestOptions().placeholder(placeholder).diskCacheStrategy(DiskCacheStrategy.ALL)) }.into(this)

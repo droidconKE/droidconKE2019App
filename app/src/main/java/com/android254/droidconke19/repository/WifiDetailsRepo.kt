@@ -17,7 +17,6 @@ class WifiDetailsRepoImpl(private val firebaseRemoteConfig: FirebaseRemoteConfig
             runCatching {
                 // Fetch Firebase RemoteConfig values
                 firebaseRemoteConfig.fetchAndActivate().await()
-
                 // Create an instance of WifiDetailsModels from active Firebase RemoteConfig values
                 WifiDetailsModelFactory.create(firebaseRemoteConfig)
             }

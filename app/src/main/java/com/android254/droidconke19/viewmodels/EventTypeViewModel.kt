@@ -22,10 +22,8 @@ class EventTypeViewModel(
         }
     }
 
-    // TODO Rename method
     fun getWifiDetailsResponse(): LiveData<List<EventTypeModel>> = eventTypeModelMediatorLiveData
 
-    // TODO Rename method
     fun getFirebaseError(): LiveData<String> = firebaseError
 
 

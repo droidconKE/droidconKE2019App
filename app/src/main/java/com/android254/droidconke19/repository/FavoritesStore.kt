@@ -6,7 +6,7 @@ import com.android254.droidconke19.utils.SharedPref
 
 class FavoritesStore(private val sharedPreferences: SharedPreferences) {
 
-    val favorites: MutableSet<String> = sharedPreferences.getStringSet(SharedPref.FAVOURITE_SESSIONS, mutableSetOf())!!
+    private val favorites: MutableSet<String> = sharedPreferences.getStringSet(SharedPref.FAVOURITE_SESSIONS, mutableSetOf())!!
 
     fun isFavorite(sessionsModel: SessionsModel): Boolean {
         return favorites.contains(sessionsModel.notification_slug)

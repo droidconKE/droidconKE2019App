@@ -3,10 +3,10 @@ package com.android254.droidconke19.repository
 import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.datastates.runCatching
 import com.android254.droidconke19.models.AgendaModel
-import com.android254.droidconke19.utils.await
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObjects
+import kotlinx.coroutines.tasks.await
 
 interface AgendaRepo {
     suspend fun agendaData(): FirebaseResult<List<AgendaModel>>

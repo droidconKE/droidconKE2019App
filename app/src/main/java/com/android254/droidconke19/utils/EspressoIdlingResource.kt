@@ -3,7 +3,6 @@ package com.android254.droidconke19.utils
 import androidx.test.espresso.IdlingResource
 
 object EspressoIdlingResource {
-
     private const val resource = "GLOBAL"
     private val countingIdlingResource = SimpleCountingIdlingResource(resource)
 
