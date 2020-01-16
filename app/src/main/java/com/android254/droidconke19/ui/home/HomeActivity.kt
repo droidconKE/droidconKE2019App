@@ -1,4 +1,4 @@
-package com.android254.droidconke19
+package com.android254.droidconke19.ui.home
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -12,6 +12,8 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.onNavDestinationSelected
+import com.android254.droidconke19.BuildConfig
+import com.android254.droidconke19.R
 import com.android254.droidconke19.utils.isSignedIn
 import com.android254.droidconke19.viewmodels.SessionDetailsViewModel
 import com.google.android.material.appbar.AppBarLayout
@@ -25,7 +27,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class HomeActivity : AppCompatActivity() {
-    val sharedPreferences: SharedPreferences by inject { parametersOf(this) }
+    private val sharedPreferences: SharedPreferences by inject { parametersOf(this) }
     private val firebaseRemoteConfig: FirebaseRemoteConfig by inject()
     private val firebaseMessaging: FirebaseMessaging by inject()
     private val firebaseAuth: FirebaseAuth by inject()

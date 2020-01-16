@@ -117,8 +117,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         //collapse bottom sheet
         view.collapseBottomSheetImg.setOnClickListener {
-            when {
-                bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED -> bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
+            when (bottomSheetBehavior?.state) {
+                BottomSheetBehavior.STATE_EXPANDED -> bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
 

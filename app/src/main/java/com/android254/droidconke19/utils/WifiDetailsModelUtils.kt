@@ -1,4 +1,4 @@
-package com.android254.droidconke19.models.utils
+package com.android254.droidconke19.utils
 
 import com.android254.droidconke19.models.WifiDetailsModel
 import com.android254.droidconke19.models.isPropertiesNotEmpty

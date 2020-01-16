@@ -1,7 +1,7 @@
 package com.android254.droidconke19.repository
 
 import com.android254.droidconke19.datastates.FirebaseResult
-import com.android254.droidconke19.datastates.runCatching
+import com.android254.droidconke19.utils.runCatching
 import com.android254.droidconke19.models.EventTypeModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query

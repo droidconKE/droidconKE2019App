@@ -1,5 +1,6 @@
-package com.android254.droidconke19.datastates
+package com.android254.droidconke19.utils
 
+import com.android254.droidconke19.datastates.FirebaseResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

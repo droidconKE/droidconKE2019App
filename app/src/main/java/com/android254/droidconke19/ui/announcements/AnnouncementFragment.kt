@@ -55,11 +55,11 @@ class AnnouncementFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        announcementViewModel.getAnnouncementsResponse().observe(this, Observer {
+        announcementViewModel.getAnnouncementsResponse().observe(viewLifecycleOwner, Observer {
             hideProgressBar()
             announcementAdapter.setAnnouncements(it)
         })
-        announcementViewModel.getFirebaseError().observe(this, Observer {
+        announcementViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer {
             handleError(it)
         })
 

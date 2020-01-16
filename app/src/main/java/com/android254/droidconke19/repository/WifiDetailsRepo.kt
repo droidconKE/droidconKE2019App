@@ -1,9 +1,9 @@
 package com.android254.droidconke19.repository
 
 import com.android254.droidconke19.datastates.FirebaseResult
-import com.android254.droidconke19.datastates.runCatching
+import com.android254.droidconke19.utils.runCatching
 import com.android254.droidconke19.models.WifiDetailsModel
-import com.android254.droidconke19.models.utils.WifiDetailsModelFactory
+import com.android254.droidconke19.utils.WifiDetailsModelFactory
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.coroutines.tasks.await
 

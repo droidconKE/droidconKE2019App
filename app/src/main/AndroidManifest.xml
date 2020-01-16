@@ -19,7 +19,7 @@
         android:theme="@style/AppTheme.NoActionBar">
 
         <activity
-            android:name="com.android254.droidconke19.HomeActivity"
+            android:name="com.android254.droidconke19.ui.home.HomeActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Launch">
             <intent-filter>

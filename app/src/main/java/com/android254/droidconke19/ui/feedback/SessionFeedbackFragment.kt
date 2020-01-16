@@ -74,10 +74,10 @@ class SessionFeedbackFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        sessionDataViewModel.getSessionFeedBackResponse().observe(this, Observer{
+        sessionDataViewModel.getSessionFeedBackResponse().observe(viewLifecycleOwner, Observer{
             handleFeedbackResponse(it)
         })
-        sessionDataViewModel.getFirebaseError().observe(this, Observer {
+        sessionDataViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer {
             handleDatabaseError(it)
         })
 

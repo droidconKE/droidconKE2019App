@@ -48,16 +48,16 @@ class AboutFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        aboutViewModel.getAboutDetailsResponse().observe(this, Observer { aboutDetailsList ->
+        aboutViewModel.getAboutDetailsResponse().observe(viewLifecycleOwner, Observer { aboutDetailsList ->
             handleFetchAboutDetails(aboutDetailsList)
         })
-        aboutViewModel.getFirebaseError().observe(this, Observer { firebaseError ->
+        aboutViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer { firebaseError ->
             handleDatabaseError(firebaseError)
         })
-        aboutViewModel.getOrganizersResponse().observe(this, Observer {
+        aboutViewModel.getOrganizersResponse().observe(viewLifecycleOwner, Observer {
             handleGetOrganizersResponse(it)
         })
-        aboutViewModel.getSponsorsResponse().observe(this, Observer {
+        aboutViewModel.getSponsorsResponse().observe(viewLifecycleOwner, Observer {
             handleSponsorsResponse(it)
         })
     }

@@ -138,7 +138,7 @@ class SessionDetailsFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        sessionDetailsViewModel.getReserveSeatResponse().observe(this, Observer {
+        sessionDetailsViewModel.getReserveSeatResponse().observe(viewLifecycleOwner, Observer {
             handleReserveSeatResponse(it)
         })
     }

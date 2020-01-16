@@ -73,10 +73,10 @@ class EventFeedbackFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        feedBackViewModel.getEventFeedBackResponse().observe(this, Observer {
+        feedBackViewModel.getEventFeedBackResponse().observe(viewLifecycleOwner, Observer {
             handleFeedbackResponse(it)
         })
-        feedBackViewModel.getFirebaseError().observe(this, Observer {
+        feedBackViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer {
             handleDataError(it)
         })
     }

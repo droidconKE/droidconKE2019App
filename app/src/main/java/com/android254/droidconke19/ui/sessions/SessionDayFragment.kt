@@ -68,10 +68,10 @@ class SessionDayFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        sessionsViewModel.getSessionsResponse().observe(this, Observer { sessionList ->
+        sessionsViewModel.getSessionsResponse().observe(viewLifecycleOwner, Observer { sessionList ->
             updateAdapterWithList(sessionList)
         })
-        sessionsViewModel.getFirebaseError().observe(this, Observer { databaseError ->
+        sessionsViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer { databaseError ->
             handleError(databaseError)
         })
     }
