@@ -33,7 +33,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.core.parameter.parametersOf
 import java.util.*
 
-class SessionDetailsFragment : Fragment() {
+class SessionDetailsFragment : Fragment(R.layout.fragment_session_details) {
     private val sessionDetailsViewModel: SessionDetailsViewModel by sharedViewModel()
     private val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
     private val firebaseAuth: FirebaseAuth by inject()
@@ -44,13 +44,6 @@ class SessionDetailsFragment : Fragment() {
         if (controller.currentDestination?.id == R.id.sessionDetailsFragment) {
             progress_bar.visibility = View.GONE
         }
-    }
-
-    override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_session_details, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -167,14 +160,12 @@ class SessionDetailsFragment : Fragment() {
                 divider_top_feedback.visibility = View.GONE
                 session_feedback_title.visibility = View.GONE
                 sessionFeedbackText.visibility = View.GONE
-//                session_slide_button.visibility = View.GONE
                 sessionReserveSeatText.visibility = View.VISIBLE
             }
             "sessionEnded" -> {
                 divider_top_feedback.visibility = View.VISIBLE
                 session_feedback_title.visibility = View.VISIBLE
                 sessionFeedbackText.visibility = View.VISIBLE
-//                session_slide_button.visibility = View.VISIBLE
                 sessionReserveSeatText.visibility = View.GONE
             }
         }

@@ -14,17 +14,10 @@ import kotlinx.android.synthetic.main.fragment_announcements.*
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 
-class AnnouncementFragment : Fragment() {
+class AnnouncementFragment : Fragment(R.layout.fragment_announcements) {
     private val announcementViewModel: AnnouncementViewModel by inject()
     private var announcementList: List<Announcement> = ArrayList()
     private lateinit var announcementAdapter: AnnouncementsAdapter
-
-    override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_announcements, container, false)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

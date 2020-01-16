@@ -16,13 +16,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.fragment_speaker.*
 
-class SpeakerFragment : Fragment() {
+class SpeakerFragment : Fragment(R.layout.fragment_speaker) {
     private val speakerArgs: SpeakerFragmentArgs by navArgs()
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_speaker, container, false)
-
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

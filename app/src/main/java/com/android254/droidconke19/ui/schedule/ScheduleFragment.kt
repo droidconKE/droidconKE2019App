@@ -29,8 +29,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.threeten.bp.format.DateTimeFormatter
 
-class ScheduleFragment : Fragment() {
-
+class ScheduleFragment : Fragment(R.layout.fragment_schedule) {
     private val auth: FirebaseAuth by inject()
     private val sessionDetailsViewModel: SessionDetailsViewModel by viewModel()
     private val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
@@ -54,15 +53,13 @@ class ScheduleFragment : Fragment() {
         SessionsViewPagerAdapter(childFragmentManager)
     }
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_schedule, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         lifecycleScope.launchWhenStarted {
             if (auth.isSignedIn()) {
                 sessionDetailsViewModel.fetchFavourites(sharedPreferences, auth.currentUser!!.uid)
             }
         }
-        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

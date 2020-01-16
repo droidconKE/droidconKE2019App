@@ -15,12 +15,8 @@ import kotlinx.android.synthetic.main.fragment_about.*
 import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 
-class AboutFragment : Fragment() {
+class AboutFragment : Fragment(R.layout.fragment_about) {
     private val aboutViewModel: AboutViewModel by inject()
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_about, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

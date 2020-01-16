@@ -14,12 +14,9 @@ import com.android254.droidconke19.ui.widget.CollapsibleCard
 import kotlinx.android.synthetic.main.fragment_travel.*
 import org.koin.android.ext.android.inject
 
-class TravelFragment : Fragment() {
+class TravelFragment : Fragment(R.layout.fragment_travel) {
     private val firebaseRemoteConfig: FirebaseRemoteConfig by inject()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_travel, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

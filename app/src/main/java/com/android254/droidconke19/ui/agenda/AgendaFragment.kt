@@ -16,13 +16,9 @@ import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 import java.util.*
 
-class AgendaFragment : Fragment() {
+class AgendaFragment : Fragment(R.layout.fragment_agenda) {
     private var agendaModelList: List<AgendaModel> = ArrayList()
     private val agendaViewModel: AgendaViewModel by inject()
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_agenda, container, false)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

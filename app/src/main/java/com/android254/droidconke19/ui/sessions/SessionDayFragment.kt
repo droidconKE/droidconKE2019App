@@ -23,7 +23,7 @@ import org.jetbrains.anko.toast
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
-class SessionDayFragment : Fragment() {
+class SessionDayFragment : Fragment(R.layout.fragment_day_session) {
     private val day: EventDay by lazy {
         checkNotNull(arguments?.getSerializable(KEY_EVENT_DAY) as EventDay)
     }
@@ -34,10 +34,6 @@ class SessionDayFragment : Fragment() {
     }
     private val sessionsAdapter: SessionsAdapter by lazy {
         SessionsAdapter(favoritesStore) { redirectToSessionDetails(it) }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_day_session, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -36,28 +36,26 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.map_bottom_sheet.*
 import kotlinx.android.synthetic.main.map_bottom_sheet.view.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
 
-class MapFragment : Fragment(), OnMapReadyCallback {
+class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     private val senteuPlaza = LatLng(-1.289256, 36.783180)
     private var mMap: GoogleMap? = null
     private var senteuMarker: Marker? = null
     private var bottomSheetBehavior: BottomSheetBehavior<*>? = null
-    private val mLastKnownLocation: Location? = null
-    internal var mCameraPosition: CameraPosition? = null
     lateinit var mLocationRequest: LocationRequest
     internal var currentLatLng: LatLng? = null
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null
     private var permissionsRequired = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
     private var sentToSettings = false
-    val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
+    private val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
 
     private var mLocationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             locationResult.locations.forEach { location ->
-                Log.i("MapsActivity", "Location: " + location.latitude + " " + location.longitude)
                 currentLatLng = LatLng(location.latitude, location.longitude)
             }
         }
@@ -72,8 +70,8 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 //check if all permissions are granted
                 var allgranted = false
                 loop@ for (i in grantResults.indices) {
-                    when {
-                        grantResults[i] == PackageManager.PERMISSION_GRANTED -> allgranted = true
+                    when (PackageManager.PERMISSION_GRANTED) {
+                        grantResults[i] -> allgranted = true
                         else -> {
                             allgranted = false
                             break@loop
@@ -82,13 +80,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
                 when {
                     allgranted -> mFusedLocationProviderClient!!.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
-                    ActivityCompat.shouldShowRequestPermissionRationale(activity!!, permissionsRequired[0]) -> {
-                        val builder = AlertDialog.Builder(activity!!)
+                    ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), permissionsRequired[0]) -> {
+                        val builder = AlertDialog.Builder(requireActivity())
                         builder.setTitle(getString(R.string.need_multiple_permissions))
                         builder.setMessage(getString(R.string.need_location_storage))
                         builder.setPositiveButton(getString(R.string.cancel)) { dialog, _ ->
                             dialog.cancel()
-                            ActivityCompat.requestPermissions(activity!!, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
+                            ActivityCompat.requestPermissions(requireActivity(), permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
                         }
                         builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
                         builder.show()
@@ -102,12 +100,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_map, container, false)
-
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity!!)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         //show toolbar if its hidden
         (activity as AppCompatActivity).supportActionBar?.show()
@@ -116,18 +113,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetView)
 
         //collapse bottom sheet
-        view.collapseBottomSheetImg.setOnClickListener {
+        collapseBottomSheetImg.setOnClickListener {
             when (bottomSheetBehavior?.state) {
                 BottomSheetBehavior.STATE_EXPANDED -> bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
 
         //open google maps intent to get directions
-        view.googleDirectionsBtn.setOnClickListener {
+        googleDirectionsBtn.setOnClickListener {
             when {
                 currentLatLng != null -> {
                     val uri = "http://maps.google.com/maps?f=d&hl=en&saddr=" + currentLatLng!!.latitude + "," + currentLatLng!!.longitude + "&daddr=" + senteuPlaza.latitude + "," + senteuPlaza.longitude
-                    val intent = Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri))
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
                     startActivity(Intent.createChooser(intent, "Open with"))
                 }
                 else -> Toast.makeText(activity, getString(R.string.problem_getting_location), Toast.LENGTH_SHORT).show()
@@ -141,7 +138,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        return view
+
     }
 
     @SuppressLint("MissingPermission")
@@ -154,7 +151,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         val builder = LocationSettingsRequest.Builder()
                 .addLocationRequest(mLocationRequest)
-        val client = LocationServices.getSettingsClient(activity!!)
+        val client = LocationServices.getSettingsClient(requireActivity())
         val task = client.checkLocationSettings(builder.build())
         task.addOnCompleteListener { task1 ->
             try {
@@ -209,16 +206,16 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
     private fun checkLocationPermission() {
         when {
-            ActivityCompat.checkSelfPermission(activity!!, permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED -> {
+            ActivityCompat.checkSelfPermission(requireActivity(), permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED -> {
                 when {
-                    ActivityCompat.shouldShowRequestPermissionRationale(activity!!, permissionsRequired[0]) -> {
+                    ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), permissionsRequired[0]) -> {
                         //Show Information about why you need the permission
-                        val builder = AlertDialog.Builder(activity!!)
+                        val builder = AlertDialog.Builder(requireActivity())
                         builder.setTitle(getString(R.string.need_multiple_permissions))
                         builder.setMessage(getString(R.string.need_location_storage))
                         builder.setPositiveButton(getString(R.string.grant)) { dialog, _ ->
                             dialog.cancel()
-                            ActivityCompat.requestPermissions(activity!!, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
+                            ActivityCompat.requestPermissions(requireActivity(), permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
                         }
                         builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
                         builder.show()
@@ -226,14 +223,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                     sharedPreferences.getBoolean(permissionsRequired[0], false) -> {
                         //Previously Permission Request was cancelled with 'Dont Ask Again',
                         // Redirect to Settings after showing Information about why you need the permission
-                        val builder = AlertDialog.Builder(activity!!)
+                        val builder = AlertDialog.Builder(requireActivity())
                         builder.setTitle(getString(R.string.need_multiple_permissions))
                         builder.setMessage(getString(R.string.need_location_storage))
                         builder.setPositiveButton(getString(R.string.grant)) { dialog, _ ->
                             dialog.cancel()
                             sentToSettings = true
                             val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                            val uri = Uri.fromParts("package", activity!!.packageName, null)
+                            val uri = Uri.fromParts("package", requireActivity().packageName, null)
                             intent.data = uri
                             startActivityForResult(intent, REQUEST_PERMISSION_SETTING)
                             Toast.makeText(activity, getString(R.string.grant_storage_location), Toast.LENGTH_LONG).show()
@@ -241,7 +238,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                         builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
                     }
                     else -> //just request the permission
-                        ActivityCompat.requestPermissions(activity!!, permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
+                        ActivityCompat.requestPermissions(requireActivity(), permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
                 }
                 sharedPreferences.edit().putBoolean(permissionsRequired[0], true).apply()
             }

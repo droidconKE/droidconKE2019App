@@ -17,7 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_event.*
 import org.koin.android.ext.android.inject
 
-class EventFragment : Fragment() {
+class EventFragment : Fragment(R.layout.fragment_event) {
     private val eventTypeViewModel: EventTypeViewModel by inject()
 
     private val fetchErrorSnackbar: Snackbar by lazy {
@@ -26,10 +26,6 @@ class EventFragment : Fragment() {
                 R.string.fetching_data_error_message,
                 Snackbar.LENGTH_INDEFINITE
         ).setAction("Retry") { eventTypeViewModel.retry() }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_event, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
