@@ -48,12 +48,12 @@ class AnnouncementFragment : Fragment(R.layout.fragment_announcements) {
     }
 
     private fun observeLiveData() {
-        announcementViewModel.getAnnouncementsResponse().observe(viewLifecycleOwner, Observer {
+        announcementViewModel.getAnnouncementsResponse().observe(viewLifecycleOwner, Observer { announcementsList ->
             hideProgressBar()
-            announcementAdapter.setAnnouncements(it)
+            announcementAdapter.setAnnouncements(announcementsList)
         })
-        announcementViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer {
-            handleError(it)
+        announcementViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer { firebaseError ->
+            handleError(firebaseError)
         })
 
     }
@@ -69,13 +69,13 @@ class AnnouncementFragment : Fragment(R.layout.fragment_announcements) {
         menu.findItem(R.id.eventFeedbackFragment)?.isVisible = false
     }
 
-    private fun showProgressBar(){
+    private fun showProgressBar() {
         progressBar.visibility = View.VISIBLE
         announcementsRv.visibility = View.GONE
 
     }
 
-    private fun hideProgressBar(){
+    private fun hideProgressBar() {
         progressBar.visibility = View.GONE
         announcementsRv.visibility = View.VISIBLE
     }

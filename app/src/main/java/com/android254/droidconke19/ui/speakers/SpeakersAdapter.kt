@@ -14,15 +14,15 @@ import com.android254.droidconke19.utils.loadImage
 import kotlinx.android.synthetic.main.item_speaker.view.*
 
 
-class SpeakersAdapter(private val speakersList: List<SpeakersModel>,private val itemClickListener: (SpeakersModel) -> Unit) : RecyclerView.Adapter<SpeakersAdapter.SpeakersViewHolder>() {
+class SpeakersAdapter(private val speakersList: List<SpeakersModel>, private val itemClickListener: (SpeakersModel) -> Unit) : RecyclerView.Adapter<SpeakersAdapter.SpeakersViewHolder>() {
 
-    inner class SpeakersViewHolder(itemView: View,private val itemClickListener: (SpeakersModel) -> Unit) : RecyclerView.ViewHolder(itemView) {
+    inner class SpeakersViewHolder(itemView: View, private val itemClickListener: (SpeakersModel) -> Unit) : RecyclerView.ViewHolder(itemView) {
         private val speakerNameText = itemView.speaker_text
         private val speakerImg = itemView.speaker_image
 
         fun bindSpeakerDetails(speakersModel: SpeakersModel) {
             with(speakersModel) {
-                speakerImg.loadImage(photoUrl,R.drawable.placeholder_image)
+                speakerImg.loadImage(photoUrl, R.drawable.placeholder_image)
                 speakerNameText.text = name
 
                 itemView.setOnClickListener {
@@ -36,7 +36,7 @@ class SpeakersAdapter(private val speakersList: List<SpeakersModel>,private val 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpeakersViewHolder {
         val itemView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_speaker, parent, false)
-        return SpeakersViewHolder(itemView,itemClickListener)
+        return SpeakersViewHolder(itemView, itemClickListener)
     }
 
     override fun onBindViewHolder(holder: SpeakersViewHolder, position: Int) {

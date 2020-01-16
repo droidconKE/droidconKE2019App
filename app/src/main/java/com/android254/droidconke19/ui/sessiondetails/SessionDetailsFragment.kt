@@ -131,14 +131,14 @@ class SessionDetailsFragment : Fragment(R.layout.fragment_session_details) {
     }
 
     private fun observeLiveData() {
-        sessionDetailsViewModel.getReserveSeatResponse().observe(viewLifecycleOwner, Observer {
-            handleReserveSeatResponse(it)
+        sessionDetailsViewModel.getReserveSeatResponse().observe(viewLifecycleOwner, Observer { reserveSeatResponse ->
+            handleReserveSeatResponse(reserveSeatResponse)
         })
     }
 
-    private fun handleReserveSeatResponse(it: String) {
+    private fun handleReserveSeatResponse(reserveSeatResponse: String) {
         progress_bar.visibility = View.GONE
-        activity?.toast(it)
+        activity?.toast(reserveSeatResponse)
     }
 
     private fun setupViews(sessionModel: SessionsModel) {

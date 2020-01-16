@@ -42,8 +42,8 @@ class SignInDialogFragment : DialogFragment() {
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         signInBtn.setOnClickListener {
-            makeSignIntent()?.let {
-                startActivityForResult(it, RC_SIGN_IN)
+            makeSignIntent()?.let { signInIntent ->
+                startActivityForResult(signInIntent, RC_SIGN_IN)
             }
         }
         cancelText.setOnClickListener {

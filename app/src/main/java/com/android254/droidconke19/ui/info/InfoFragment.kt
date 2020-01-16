@@ -16,12 +16,7 @@ import com.android254.droidconke19.ui.traveldetails.TravelFragment
 import kotlinx.android.synthetic.main.fragment_info.*
 import java.util.*
 
-class InfoFragment : Fragment() {
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_info, container, false)
-
-    }
+class InfoFragment : Fragment(R.layout.fragment_info) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

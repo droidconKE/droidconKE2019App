@@ -50,23 +50,23 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
         aboutViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer { firebaseError ->
             handleDatabaseError(firebaseError)
         })
-        aboutViewModel.getOrganizersResponse().observe(viewLifecycleOwner, Observer {
-            handleGetOrganizersResponse(it)
+        aboutViewModel.getOrganizersResponse().observe(viewLifecycleOwner, Observer { aboutDetailsModelList ->
+            handleGetOrganizersResponse(aboutDetailsModelList)
         })
-        aboutViewModel.getSponsorsResponse().observe(viewLifecycleOwner, Observer {
-            handleSponsorsResponse(it)
+        aboutViewModel.getSponsorsResponse().observe(viewLifecycleOwner, Observer { aboutDetailsModelList ->
+            handleSponsorsResponse(aboutDetailsModelList)
         })
     }
 
-    private fun handleSponsorsResponse(it: List<AboutDetailsModel>) {
+    private fun handleSponsorsResponse(aboutDetailsModelList: List<AboutDetailsModel>) {
         hideProgressBar()
-        sponsorsRv.adapter = AboutDetailsAdapter(it) {}
+        sponsorsRv.adapter = AboutDetailsAdapter(aboutDetailsModelList) {}
 
     }
 
-    private fun handleGetOrganizersResponse(it: List<AboutDetailsModel>) {
+    private fun handleGetOrganizersResponse(aboutDetailsModelList: List<AboutDetailsModel>) {
         hideProgressBar()
-        initView(it)
+        initView(aboutDetailsModelList)
     }
 
     private fun handleDatabaseError(databaseError: String) {
@@ -76,9 +76,9 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
 
     private fun handleFetchAboutDetails(aboutDetailsList: List<AboutDetailsModel>) {
         hideProgressBar()
-        aboutDetailsList.forEach {
-            droidconDescText.text = it.bio
-            eventImg.loadImage(it.logoUrl, R.drawable.splash)
+        aboutDetailsList.forEach { aboutDetailsModel ->
+            droidconDescText.text = aboutDetailsModel.bio
+            eventImg.loadImage(aboutDetailsModel.logoUrl, R.drawable.splash)
         }
     }
 
@@ -89,7 +89,7 @@ class AboutFragment : Fragment(R.layout.fragment_about) {
     }
 
     private fun fetchAboutDetails(aboutType: String?) {
-        aboutType?.let { aboutType -> aboutViewModel.fetchAboutDetails(aboutType) }
+        aboutType?.let { aboutTypeString -> aboutViewModel.fetchAboutDetails(aboutTypeString) }
     }
 
     private fun showProgressBar() {

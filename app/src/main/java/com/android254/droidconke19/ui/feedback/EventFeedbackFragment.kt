@@ -73,17 +73,17 @@ class EventFeedbackFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        feedBackViewModel.getEventFeedBackResponse().observe(viewLifecycleOwner, Observer {
-            handleFeedbackResponse(it)
+        feedBackViewModel.getEventFeedBackResponse().observe(viewLifecycleOwner, Observer { eventFeedbackResponse ->
+            handleFeedbackResponse(eventFeedbackResponse)
         })
-        feedBackViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer {
-            handleDataError(it)
+        feedBackViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer { firebaseError ->
+            handleDataError(firebaseError)
         })
     }
 
-    private fun handleDataError(it: String) {
+    private fun handleDataError(firebaseError: String) {
         hideProgressBar()
-        activity?.toast(it)
+        activity?.toast(firebaseError)
     }
 
     private fun handleFeedbackResponse(feedback: String) {

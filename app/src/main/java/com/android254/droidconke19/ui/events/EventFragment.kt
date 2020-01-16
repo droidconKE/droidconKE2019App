@@ -40,14 +40,14 @@ class EventFragment : Fragment(R.layout.fragment_event) {
     }
 
     private fun observeLiveData() {
-        eventTypeViewModel.getWifiDetailsResponse().observe(viewLifecycleOwner, Observer {
-            handleFetchEventsResponse(it, eventTypesRv)
+        eventTypeViewModel.getWifiDetailsResponse().observe(viewLifecycleOwner, Observer { eventTypeModelList ->
+            handleFetchEventsResponse(eventTypeModelList, eventTypesRv)
         })
-        eventTypeViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer {
-            handleDatabaseError(it)
+        eventTypeViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer { firebaseError ->
+            handleDatabaseError(firebaseError)
         })
-        eventTypeViewModel.wifiDetails.observe(viewLifecycleOwner, Observer {
-            handleWifiDetails(it)
+        eventTypeViewModel.wifiDetails.observe(viewLifecycleOwner, Observer { wifiDetailsResult ->
+            handleWifiDetails(wifiDetailsResult)
         })
     }
 
@@ -72,7 +72,7 @@ class EventFragment : Fragment(R.layout.fragment_event) {
     private fun handleWifiDetails(wifiDetails: FirebaseResult<WifiDetailsModel>) {
         if (wifiDetails is FirebaseResult.Success) {
             updateWifiDetailsOnUI(wifiDetails.data)
-        } else if (wifiDetails is FirebaseResult.Error){
+        } else if (wifiDetails is FirebaseResult.Error) {
             handleWifiDetailsError(wifiDetails.exception)
         }
     }

@@ -20,9 +20,15 @@ data class Filter(
             results += context.getString(R.string.my_favorites)
         }
 
-        results += stages.map { it.value }
-        results += types.map { it.value }
-        results += levels.map { it.name }
+        results += stages.map { stage ->
+            stage.value
+        }
+        results += types.map { type ->
+            type.value
+        }
+        results += levels.map {level ->
+            level.name
+        }
 
         return results
     }

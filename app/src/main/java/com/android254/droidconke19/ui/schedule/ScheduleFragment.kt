@@ -98,9 +98,9 @@ class ScheduleFragment : Fragment(R.layout.fragment_schedule) {
             val chips = items
                     .map { FilterChip(requireContext()).apply { text = it } }
 
-            chips.forEach {
-                it.disable()
-                activeFiltersChipGroup.addView(it)
+            chips.forEach { filterChip ->
+                filterChip.disable()
+                activeFiltersChipGroup.addView(filterChip)
             }
         }
 

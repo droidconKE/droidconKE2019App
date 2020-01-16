@@ -33,7 +33,7 @@ class SessionsAdapter(private val favoritesStore: FavoritesStore, private val it
     }
 
     override fun onBindViewHolder(holder: SessionsViewHolder, position: Int) {
-        sessionsList[position].bindSession(holder, itemClickListener,favoritesStore)
+        sessionsList[position].bindSession(holder, itemClickListener, favoritesStore)
     }
 
     override fun getItemCount(): Int {
@@ -44,10 +44,12 @@ class SessionsAdapter(private val favoritesStore: FavoritesStore, private val it
         rawSessionsList.clear()
         rawSessionsList += events
 
-        val sessionsById = events.groupBy { it.id }
+        val sessionsById = events.groupBy { sessionsModelId ->
+            sessionsModelId.id
+        }
         val newSessions = mutableListOf<AdapterItem>()
 
-        for (id in sessionsById.keys) {
+        sessionsById.keys.forEach { id ->
             val sessionList = sessionsById[id].orEmpty()
             newSessions += sessionList.mapIndexed { index, sessionsModel ->
                 AdapterItem(sessionsModel)
@@ -61,11 +63,15 @@ class SessionsAdapter(private val favoritesStore: FavoritesStore, private val it
     }
 
     private fun filterItems(sessionList: List<SessionsModel>, currentFilter: Filter) {
-        val filteredSessions = sessionList.filter { it.isInFilter(currentFilter, favoritesStore) }
-        val filteredSessionsById = filteredSessions.groupBy { it.id }
+        val filteredSessions = sessionList.filter { sessionsModelFiltered ->
+            sessionsModelFiltered.isInFilter(currentFilter, favoritesStore)
+        }
+        val filteredSessionsById = filteredSessions.groupBy { sessionsModel ->
+            sessionsModel.id
+        }
         val newFilteredSessions = mutableListOf<AdapterItem>()
 
-        for (sessionAtId in filteredSessionsById.values) {
+        filteredSessionsById.values.forEach { sessionAtId ->
             newFilteredSessions += sessionAtId.mapIndexed { index, sessionsModel ->
                 AdapterItem(sessionsModel)
             }

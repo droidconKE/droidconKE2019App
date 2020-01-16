@@ -7,15 +7,14 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 
 object FirebaseRemoteConfigFactory {
 
-    fun create(): FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance().also {
+    fun create(): FirebaseRemoteConfig = FirebaseRemoteConfig.getInstance().also { firebaseRemoteConfig ->
         val fetchInterval = if (BuildConfig.DEBUG) 0L else 3600L
-
         val configSettings = FirebaseRemoteConfigSettings.Builder()
                 .setMinimumFetchIntervalInSeconds(fetchInterval)
                 .build()
 
-        it.setConfigSettingsAsync(configSettings)
-        it.setDefaultsAsync(R.xml.remote_config_defaults)
+        firebaseRemoteConfig.setConfigSettingsAsync(configSettings)
+        firebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
 
     }
 }

@@ -59,8 +59,8 @@ class SessionDayFragment : Fragment(R.layout.fragment_day_session) {
         }
     }
 
-    private fun redirectToSessionDetails(it: SessionsModel) {
-        findNavController().navigate(ScheduleFragmentDirections.actionScheduleFragmentToSessionDetailsFragment(it, it.title))
+    private fun redirectToSessionDetails(sessionsModel: SessionsModel) {
+        findNavController().navigate(ScheduleFragmentDirections.actionScheduleFragmentToSessionDetailsFragment(sessionsModel, sessionsModel.title))
     }
 
     private fun observeLiveData() {

@@ -88,8 +88,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun unsubscribeNotifications() = lifecycleScope.launch {
-        firebaseAuth.currentUser?.let {
-            sessionDetailsViewModel.removeAllFavourites(sharedPreferences, it.uid)
+        firebaseAuth.currentUser?.let { firebaseUser ->
+            sessionDetailsViewModel.removeAllFavourites(sharedPreferences, firebaseUser.uid)
         }
     }
 

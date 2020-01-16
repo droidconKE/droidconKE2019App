@@ -61,10 +61,10 @@ class SessionDataRepoImpl(private val firestore: FirebaseFirestore) : SessionDat
                 } else {
                     println("Found ${snapshot.size()} starred session(s)")
                 }
-                snapshot.forEach {
-                    val slug = it["slug"] as String?
-                    slug?.let {
-                        slugs.add(it)
+                snapshot.forEach { queryDocumentSnaphsot ->
+                    val slug = queryDocumentSnaphsot["slug"] as String?
+                    slug?.let { slugString ->
+                        slugs.add(slugString)
                     } ?: run {
                         println("No slug found")
                     }
@@ -74,7 +74,7 @@ class SessionDataRepoImpl(private val firestore: FirebaseFirestore) : SessionDat
             }
 
     override suspend fun starrSession(dayNumber: String, sessionId: Int, userId: String, slug: String): FirebaseResult<String> {
-        return if(!isSessionStarred(dayNumber, sessionId, userId)) {
+        return if (!isSessionStarred(dayNumber, sessionId, userId)) {
             runCatching {
                 val data = hashMapOf(
                         "day" to dayNumber,
@@ -113,8 +113,8 @@ class SessionDataRepoImpl(private val firestore: FirebaseFirestore) : SessionDat
                 .get()
                 .await()
         val batch = firestore.batch()
-        snapshot.forEach {
-            batch.delete(it.reference)
+        snapshot.forEach { queryDocumentSnapshot ->
+            batch.delete(queryDocumentSnapshot.reference)
         }
         batch.commit().await()
     }

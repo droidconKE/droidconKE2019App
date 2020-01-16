@@ -35,11 +35,11 @@ class AgendaFragment : Fragment(R.layout.fragment_agenda) {
     }
 
     private fun observeLiveData() {
-        agendaViewModel.getAgendasResponse().observe(viewLifecycleOwner, Observer {
-            handleAgendaResponse(it, agendaRv)
+        agendaViewModel.getAgendasResponse().observe(viewLifecycleOwner, Observer { agendaModelList ->
+            handleAgendaResponse(agendaModelList, agendaRv)
         })
-        agendaViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer {
-            handleDatabaseError(it)
+        agendaViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer { firebaseError ->
+            handleDatabaseError(firebaseError)
         })
     }
 
