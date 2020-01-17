@@ -33,7 +33,8 @@ val appModule = module {
     viewModel { EventTypeViewModel(get(), get()) }
     viewModel { FeedBackViewModel(get()) }
     viewModel { AnnouncementViewModel(get()) }
-    viewModel { SessionDetailsViewModel(get(), get(),get()) }
+    viewModel { SessionDetailsViewModel(get(), get(), get()) }
+    viewModel { TravelViewModel(get()) }
 
     factory { (context: Context) -> context.getSharedPreferences(SharedPref.PREF_NAME, Context.MODE_PRIVATE) }
 }
@@ -53,5 +54,6 @@ val dataModule = module {
     single<AnnouncementRepo> { AnnouncementRepoImpl(get()) }
     single<ReserveSeatRepo> { ReserveSeatRepoImpl(get()) }
     single<WifiDetailsRepo> { WifiDetailsRepoImpl(get()) }
+    single<TravelDetailsRepo> { TravelDetailsRepoImpl(get()) }
 
 }

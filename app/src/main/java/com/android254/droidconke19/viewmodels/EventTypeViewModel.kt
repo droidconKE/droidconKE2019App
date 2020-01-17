@@ -15,16 +15,14 @@ class EventTypeViewModel(
 ) : ViewModel() {
     private val eventTypeModelMediatorLiveData = MediatorLiveData<List<EventTypeModel>>()
     private val firebaseError = MediatorLiveData<String>()
+    private val wifiDetailsMediatorLiveData = MediatorLiveData<WifiDetailsModel>()
 
-    val wifiDetails: MutableLiveData<FirebaseResult<WifiDetailsModel>> by lazy {
-        MutableLiveData<FirebaseResult<WifiDetailsModel>>().also {
-            fetchWifiDetails()
-        }
-    }
 
-    fun getWifiDetailsResponse(): LiveData<List<EventTypeModel>> = eventTypeModelMediatorLiveData
+    fun getEventTypeResponse(): LiveData<List<EventTypeModel>> = eventTypeModelMediatorLiveData
 
     fun getFirebaseError(): LiveData<String> = firebaseError
+
+    fun getWifiDetailsReponse(): LiveData<WifiDetailsModel> = wifiDetailsMediatorLiveData
 
 
     fun fetchSessions() {
@@ -36,17 +34,13 @@ class EventTypeViewModel(
         }
     }
 
-    private fun fetchWifiDetails() {
+    fun fetchWifiDetails() {
         viewModelScope.launch(Dispatchers.IO) {
-            wifiDetails.postValue(wifiDetailsRepo.fetchWifiDetails())
+            when(val value = wifiDetailsRepo.fetchWifiDetails()){
+                is FirebaseResult.Success -> wifiDetailsMediatorLiveData.postValue(value.data)
+                is FirebaseResult.Error -> firebaseError.postValue(value.exception)
+            }
         }
     }
 
-    fun retry() {
-        if (firebaseError.value != null)
-            fetchSessions()
-
-        if (wifiDetails.value is FirebaseResult.Error)
-            fetchWifiDetails()
-    }
 }

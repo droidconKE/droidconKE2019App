@@ -2,9 +2,7 @@ package com.android254.droidconke19.ui.events
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +10,7 @@ import com.android254.droidconke19.R
 import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.models.EventTypeModel
 import com.android254.droidconke19.models.WifiDetailsModel
+import com.android254.droidconke19.utils.toast
 import com.android254.droidconke19.viewmodels.EventTypeViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_event.*
@@ -20,14 +19,6 @@ import org.koin.android.ext.android.inject
 class EventFragment : Fragment(R.layout.fragment_event) {
     private val eventTypeViewModel: EventTypeViewModel by inject()
 
-    private val fetchErrorSnackbar: Snackbar by lazy {
-        Snackbar.make(
-                events_relativeLayout,
-                R.string.fetching_data_error_message,
-                Snackbar.LENGTH_INDEFINITE
-        ).setAction("Retry") { eventTypeViewModel.retry() }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -35,19 +26,20 @@ class EventFragment : Fragment(R.layout.fragment_event) {
         observeLiveData()
         //fetch data from firebase
         eventTypeViewModel.fetchSessions()
+        eventTypeViewModel.fetchWifiDetails()
         showProgressBar()
 
     }
 
     private fun observeLiveData() {
-        eventTypeViewModel.getWifiDetailsResponse().observe(viewLifecycleOwner, Observer { eventTypeModelList ->
+        eventTypeViewModel.getEventTypeResponse().observe(viewLifecycleOwner, Observer { eventTypeModelList ->
             handleFetchEventsResponse(eventTypeModelList, eventTypesRv)
         })
         eventTypeViewModel.getFirebaseError().observe(viewLifecycleOwner, Observer { firebaseError ->
             handleDatabaseError(firebaseError)
         })
-        eventTypeViewModel.wifiDetails.observe(viewLifecycleOwner, Observer { wifiDetailsResult ->
-            handleWifiDetails(wifiDetailsResult)
+        eventTypeViewModel.getWifiDetailsReponse().observe(viewLifecycleOwner, Observer { wifiDetailsResult ->
+            updateWifiDetailsOnUI(wifiDetailsResult)
         })
     }
 
@@ -58,9 +50,9 @@ class EventFragment : Fragment(R.layout.fragment_event) {
         }
     }
 
-    private fun handleDatabaseError(databaseError: String?) {
+    private fun handleDatabaseError(databaseError: String) {
         hideProgressBar()
-        fetchErrorSnackbar.show()
+        activity?.toast(databaseError)
     }
 
     private fun initView(eventTypeModelList: List<EventTypeModel>, eventTypesRv: RecyclerView) {
@@ -69,21 +61,9 @@ class EventFragment : Fragment(R.layout.fragment_event) {
 
     }
 
-    private fun handleWifiDetails(wifiDetails: FirebaseResult<WifiDetailsModel>) {
-        if (wifiDetails is FirebaseResult.Success) {
-            updateWifiDetailsOnUI(wifiDetails.data)
-        } else if (wifiDetails is FirebaseResult.Error) {
-            handleWifiDetailsError(wifiDetails.exception)
-        }
-    }
-
     private fun updateWifiDetailsOnUI(wifiDetailsModel: WifiDetailsModel) {
         wifiSsidText.text = wifiDetailsModel.wifiSsid
         wifiPasswordText.text = wifiDetailsModel.wifiPassword
-    }
-
-    private fun handleWifiDetailsError(error: String?) {
-        fetchErrorSnackbar.show()
     }
 
     private fun showProgressBar() {

@@ -72,7 +72,7 @@ class EventFragmentTest : KoinTest {
     @Test
     fun `test progressBar displayed before event-types list received`() {
         // Simulate situation before UI receives event-types list
-        every { eventTypeViewModel.getWifiDetailsResponse() } answers {
+        every { eventTypeViewModel.getEventTypeResponse() } answers {
             // LiveData without a value for event-types list
             MutableLiveData<List<EventTypeModel>>()
         }
@@ -85,7 +85,7 @@ class EventFragmentTest : KoinTest {
     @Test
     fun `test progressBar hidden when event-types list received`() {
         // Simulate situation after UI receives event-types list
-        every { eventTypeViewModel.getWifiDetailsResponse() } answers {
+        every { eventTypeViewModel.getEventTypeResponse() } answers {
             MutableLiveData<List<EventTypeModel>>().also {
                 it.value = eventTypeList_FakeData
             }
@@ -98,7 +98,7 @@ class EventFragmentTest : KoinTest {
 
     @Test
     fun `test recyclerview populated when event-types list received`() {
-        every { eventTypeViewModel.getWifiDetailsResponse() } answers {
+        every { eventTypeViewModel.getEventTypeResponse() } answers {
             MutableLiveData<List<EventTypeModel>>().also {
                 it.value = eventTypeList_FakeData
             }
@@ -112,7 +112,7 @@ class EventFragmentTest : KoinTest {
 
     @Test
     fun `test recyclerView item has description and drawable`() {
-        every { eventTypeViewModel.getWifiDetailsResponse() } answers {
+        every { eventTypeViewModel.getEventTypeResponse() } answers {
             MutableLiveData<List<EventTypeModel>>().also {
                 it.value = eventTypeList_FakeData
             }
