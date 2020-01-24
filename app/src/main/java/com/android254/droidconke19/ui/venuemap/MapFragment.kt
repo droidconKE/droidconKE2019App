@@ -2,27 +2,20 @@ package com.android254.droidconke19.ui.venuemap
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.location.Location
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.android254.droidconke19.BuildConfig
 import com.android254.droidconke19.R
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.ResolvableApiException
@@ -31,29 +24,28 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.map_bottom_sheet.*
 import kotlinx.android.synthetic.main.map_bottom_sheet.view.*
-import org.koin.android.ext.android.inject
-import org.koin.core.parameter.parametersOf
+import kotlinx.coroutines.tasks.await
+import org.jetbrains.anko.toast
 
 class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     private val senteuPlaza = LatLng(-1.289256, 36.783180)
-    private var mMap: GoogleMap? = null
-    private var senteuMarker: Marker? = null
     private var bottomSheetBehavior: BottomSheetBehavior<*>? = null
-    lateinit var mLocationRequest: LocationRequest
+    lateinit var locationRequest: LocationRequest
     internal var currentLatLng: LatLng? = null
-    private var mFusedLocationProviderClient: FusedLocationProviderClient? = null
-    private var permissionsRequired = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
-    private var sentToSettings = false
-    private val sharedPreferences: SharedPreferences by inject { parametersOf(context) }
+    private lateinit var locationSettingsRequest: LocationSettingsRequest
+    private val fusedLocationProviderClient: FusedLocationProviderClient by lazy {
+        LocationServices.getFusedLocationProviderClient(requireActivity())
+    }
+    private val settingsClient: SettingsClient by lazy {
+        LocationServices.getSettingsClient(requireActivity())
+    }
 
-    private var mLocationCallback: LocationCallback = object : LocationCallback() {
+    private var locationCallback: LocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
             locationResult.locations.forEach { location ->
                 currentLatLng = LatLng(location.latitude, location.longitude)
@@ -65,33 +57,51 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            PERMISSION_CALLBACK_CONSTANT -> {
-                //check if all permissions are granted
-                var allgranted = false
-                loop@ for (i in grantResults.indices) {
-                    when (PackageManager.PERMISSION_GRANTED) {
-                        grantResults[i] -> allgranted = true
-                        else -> {
-                            allgranted = false
-                            break@loop
-                        }
-                    }
+        if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
+            when (PackageManager.PERMISSION_GRANTED) {
+                grantResults[0] -> {
+                    startLocationUpdates()
+
                 }
-                when {
-                    allgranted -> mFusedLocationProviderClient!!.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
-                    ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), permissionsRequired[0]) -> {
-                        val builder = AlertDialog.Builder(requireActivity())
-                        builder.setTitle(getString(R.string.need_multiple_permissions))
-                        builder.setMessage(getString(R.string.need_location_storage))
-                        builder.setPositiveButton(getString(R.string.cancel)) { dialog, _ ->
-                            dialog.cancel()
-                            ActivityCompat.requestPermissions(requireActivity(), permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
+                else -> {
+                    // Permission denied.
+                    val intent = Intent()
+                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                    val uri = Uri.fromParts("package",
+                            BuildConfig.APPLICATION_ID, null)
+                    intent.data = uri
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                }
+            }
+
+        }
+    }
+
+    private fun startLocationUpdates() {
+        lifecycleScope.launchWhenStarted {
+            try {
+                settingsClient.checkLocationSettings(locationSettingsRequest).await()
+                fusedLocationProviderClient.requestLocationUpdates(locationRequest,
+                        locationCallback, Looper.myLooper())
+
+            } catch (exception: Exception) {
+                when ((exception as ApiException).statusCode) {
+                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
+                        try {
+                            // Show the dialog by calling startResolutionForResult(), and check the
+                            // result in onActivityResult().
+                            val rae = exception as ResolvableApiException
+                            rae.startResolutionForResult(requireActivity(), REQUEST_CHECK_SETTINGS)
+                        } catch (sie: IntentSender.SendIntentException) {
                         }
-                        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
-                        builder.show()
+
                     }
-                    else -> Toast.makeText(activity, getString(R.string.unable_go_get_permission), Toast.LENGTH_LONG).show()
+                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
+                        val errorMessage = "Location settings are inadequate, and cannot be " + "fixed here. Fix in Settings."
+                        activity?.toast(errorMessage)
+
+                    }
                 }
             }
         }
@@ -100,7 +110,6 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -112,26 +121,9 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
         val bottomSheetView = view.bottomSheetView
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetView)
 
-        //collapse bottom sheet
-        collapseBottomSheetImg.setOnClickListener {
-            when (bottomSheetBehavior?.state) {
-                BottomSheetBehavior.STATE_EXPANDED -> bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
-            }
-        }
-
-        //open google maps intent to get directions
-        googleDirectionsBtn.setOnClickListener {
-            when {
-                currentLatLng != null -> {
-                    val uri = "http://maps.google.com/maps?f=d&hl=en&saddr=" + currentLatLng!!.latitude + "," + currentLatLng!!.longitude + "&daddr=" + senteuPlaza.latitude + "," + senteuPlaza.longitude
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-                    startActivity(Intent.createChooser(intent, "Open with"))
-                }
-                else -> Toast.makeText(activity, getString(R.string.problem_getting_location), Toast.LENGTH_SHORT).show()
-            }
-
-
-        }
+        clickListeners()
+        createLocationRequests()
+        createLocationSettingsRequest()
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = childFragmentManager
@@ -141,128 +133,101 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
     }
 
+    private fun clickListeners() {
+        //collapse bottom sheet
+        collapseBottomSheetImg.setOnClickListener {
+            when (bottomSheetBehavior?.state) {
+                BottomSheetBehavior.STATE_EXPANDED -> bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
+            }
+        }
+        //open google maps intent to get directions
+        googleDirectionsBtn.setOnClickListener {
+            when {
+                currentLatLng != null -> {
+                    val uri = "http://maps.google.com/maps?f=d&hl=en&saddr=" + currentLatLng!!.latitude + "," + currentLatLng!!.longitude + "&daddr=" + senteuPlaza.latitude + "," + senteuPlaza.longitude
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+                    startActivity(Intent.createChooser(intent, "Open with"))
+                }
+                else -> requireActivity().toast(getString(R.string.problem_getting_location))
+
+
+            }
+        }
+    }
+
+    private fun createLocationSettingsRequest() {
+        val builder = LocationSettingsRequest.Builder()
+        builder.addLocationRequest(locationRequest)
+        locationSettingsRequest = builder.build()
+    }
+
+    private fun createLocationRequests() {
+        locationRequest = LocationRequest.create()
+        locationRequest.interval = 1800000 // 30 minute interval
+        locationRequest.fastestInterval = 1200000
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+    }
+
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-
-        mLocationRequest = LocationRequest.create()
-        mLocationRequest.interval = 1800000 // 30 minute interval
-        mLocationRequest.fastestInterval = 1200000
-        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        val builder = LocationSettingsRequest.Builder()
-                .addLocationRequest(mLocationRequest)
-        val client = LocationServices.getSettingsClient(requireActivity())
-        val task = client.checkLocationSettings(builder.build())
-        task.addOnCompleteListener { task1 ->
-            try {
-                task1.getResult(ApiException::class.java)
-                // All location settings are satisfied. The client can initialize location
-                // requests here.
-
-            } catch (exception: ApiException) {
-                when (exception.statusCode) {
-                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
-                        // Location settings are not satisfied. But could be fixed by showing the
-                        // user a dialog.
-                        mFusedLocationProviderClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
-                        try {
-                            // Cast to a resolvable exception.
-                            val resolvable = exception as ResolvableApiException
-                            // Show the dialog by calling startResolutionForResult(),
-                            // and check the result in onActivityResult().
-                            resolvable.startResolutionForResult(
-                                    activity,
-                                    REQUEST_CHECK_SETTINGS)
-                        } catch (e: IntentSender.SendIntentException) {
-                            // Ignore the error.
-                        } catch (e: ClassCastException) {
-                            // Ignore, should be an impossible error.
-                        }
-
-                    }
-                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
-                    }
-                }// Location settings are not satisfied. However, we have no way to fix the
-                // settings so we won't show the dialog.
-            }
-        }
-        builder.setAlwaysShow(true)
-
-        //add marker
-        senteuMarker = mMap!!.addMarker(MarkerOptions().position(senteuPlaza))
-        mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(senteuPlaza, DEFAULT_ZOOM.toFloat()))
-        mMap!!.setOnMarkerClickListener {
-            when {
-                bottomSheetBehavior?.state != BottomSheetBehavior.STATE_EXPANDED -> bottomSheetBehavior?.setState(BottomSheetBehavior.STATE_EXPANDED)
-                else -> bottomSheetBehavior?.setState(BottomSheetBehavior.STATE_COLLAPSED)
-            }
-            true
-        }
-        when {
-            Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP -> checkLocationPermission()
-            else -> mFusedLocationProviderClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
-        }
-    }
-
-    private fun checkLocationPermission() {
-        when {
-            ActivityCompat.checkSelfPermission(requireActivity(), permissionsRequired[0]) != PackageManager.PERMISSION_GRANTED -> {
+        googleMap?.apply {
+            addMarker(MarkerOptions().position(senteuPlaza))
+            animateCamera(CameraUpdateFactory.newLatLngZoom(senteuPlaza, DEFAULT_ZOOM.toFloat()))
+            setOnMarkerClickListener {
                 when {
-                    ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), permissionsRequired[0]) -> {
-                        //Show Information about why you need the permission
-                        val builder = AlertDialog.Builder(requireActivity())
-                        builder.setTitle(getString(R.string.need_multiple_permissions))
-                        builder.setMessage(getString(R.string.need_location_storage))
-                        builder.setPositiveButton(getString(R.string.grant)) { dialog, _ ->
-                            dialog.cancel()
-                            ActivityCompat.requestPermissions(requireActivity(), permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
-                        }
-                        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
-                        builder.show()
-                    }
-                    sharedPreferences.getBoolean(permissionsRequired[0], false) -> {
-                        //Previously Permission Request was cancelled with 'Dont Ask Again',
-                        // Redirect to Settings after showing Information about why you need the permission
-                        val builder = AlertDialog.Builder(requireActivity())
-                        builder.setTitle(getString(R.string.need_multiple_permissions))
-                        builder.setMessage(getString(R.string.need_location_storage))
-                        builder.setPositiveButton(getString(R.string.grant)) { dialog, _ ->
-                            dialog.cancel()
-                            sentToSettings = true
-                            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                            val uri = Uri.fromParts("package", requireActivity().packageName, null)
-                            intent.data = uri
-                            startActivityForResult(intent, REQUEST_PERMISSION_SETTING)
-                            Toast.makeText(activity, getString(R.string.grant_storage_location), Toast.LENGTH_LONG).show()
-                        }
-                        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
-                    }
-                    else -> //just request the permission
-                        ActivityCompat.requestPermissions(requireActivity(), permissionsRequired, PERMISSION_CALLBACK_CONSTANT)
+                    bottomSheetBehavior?.state != BottomSheetBehavior.STATE_EXPANDED -> bottomSheetBehavior?.setState(BottomSheetBehavior.STATE_EXPANDED)
+                    else -> bottomSheetBehavior?.setState(BottomSheetBehavior.STATE_COLLAPSED)
                 }
-                sharedPreferences.edit().putBoolean(permissionsRequired[0], true).apply()
+                true
             }
-            else -> //You already have the permission, just go ahead.
-                mFusedLocationProviderClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
+        }
+        receiveLocationUpdates()
+    }
+
+
+    private fun receiveLocationUpdates() {
+        when {
+            checkPermissions() -> startLocationUpdates()
+            !checkPermissions() -> requestPermissions()
+        }
+
+    }
+
+    private fun checkPermissions(): Boolean {
+        val permissionState = ActivityCompat.checkSelfPermission(requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION)
+        return permissionState == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestPermissions() {
+        val shouldProvideRationale = ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION)
+        // Provide an additional rationale to the user. This would happen if the user denied the
+        // request previously, but didn't check the "Don't ask again" checkbox.
+        if (shouldProvideRationale) {
+            ActivityCompat.requestPermissions(requireActivity(),
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQUEST_PERMISSIONS_REQUEST_CODE)
+
         }
     }
+
 
     @SuppressLint("MissingPermission")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        LocationSettingsStates.fromIntent(data!!)
-        when (requestCode) {
-            REQUEST_CHECK_SETTINGS -> when (resultCode) {
-                Activity.RESULT_OK ->
-                    // All required changes were successfully made
-                    //start location updates
-                    mFusedLocationProviderClient?.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
-                Activity.RESULT_CANCELED -> {
-                }
-                else -> {
-                }
-            }// The user was asked to change settings, but chose not to
-        }
         super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CHECK_SETTINGS -> {
+                when (resultCode) {
+                    AppCompatActivity.RESULT_OK -> {
+                        receiveLocationUpdates()
+                    }
+                    AppCompatActivity.RESULT_CANCELED -> {
+                        requireActivity().toast(getString(R.string.permission_denied))
+                    }
+                }
+            }
+        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
@@ -273,10 +238,7 @@ class MapFragment : Fragment(R.layout.fragment_map), OnMapReadyCallback {
 
     companion object {
         private const val DEFAULT_ZOOM = 17
-        private const val KEY_CAMERA_POSITION = "camera_position"
-        private const val KEY_LOCATION = "location"
+        const val REQUEST_PERMISSIONS_REQUEST_CODE = 34
         private const val REQUEST_CHECK_SETTINGS = 0x1
-        private const val PERMISSION_CALLBACK_CONSTANT = 100
-        private const val REQUEST_PERMISSION_SETTING = 101
     }
 }

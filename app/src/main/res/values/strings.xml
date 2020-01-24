@@ -226,4 +226,5 @@
     <string name="event_feedback_label">Event Feedback</string>
     <string name="empty_field_error">This field is required</string>
     <string name="fetching_data_error_message">Error while fetching data</string>
+    <string name="permission_denied">Location permission denied</string>
 </resources>
