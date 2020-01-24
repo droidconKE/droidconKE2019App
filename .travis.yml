@@ -3,12 +3,11 @@ jdk:
   - openjdk8
 
 env:
-  - ANDROID_COMPILE_SDK="29" ANDROID_BUILD_TOOLS="29.0.2" ANDROID_SDK_TOOLS="4333796"
+  - ANDROID_COMPILE_SDK="29" ANDROID_BUILD_TOOLS="29.0.2" ANDROID_SDK_TOOLS="4333796" ANDROID_SDK_ROOT=""
 
 before_install:
   - sudo apt-get --quiet update --yes
   - sudo apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
-  - echo "org.gradle.daemon=false" >> gradle.properties
 
 before_script:
   - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_TOOLS}.zip
@@ -21,6 +20,7 @@ before_script:
   - export ANDROID_HOME=$PWD/android-sdk-linux
   - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
   - chmod +x ./gradlew
+  - echo "org.gradle.daemon=false" >> gradle.properties
   - yes | android-sdk-linux/tools/bin/sdkmanager --licenses
 
 script: "./gradlew -Pci --console=plain :app:testDebug"
