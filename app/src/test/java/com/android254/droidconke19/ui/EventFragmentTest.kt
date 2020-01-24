@@ -9,59 +9,51 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewAssertion
-import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.android254.droidconke19.R
-import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.models.EventTypeModel
 import com.android254.droidconke19.models.WifiDetailsModel
 import com.android254.droidconke19.ui.events.EventFragment
 import com.android254.droidconke19.viewmodels.EventTypeViewModel
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.loadKoinModules
-import org.koin.core.context.stopKoin
 import org.koin.dsl.module
-import org.koin.test.KoinTest
+import org.koin.test.AutoCloseKoinTest
+import org.koin.test.inject
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.LooperMode
+import org.robolectric.shadows.ShadowLog
 
 
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [Build.VERSION_CODES.P])
 @LooperMode(LooperMode.Mode.PAUSED)
-class EventFragmentTest : KoinTest {
+class EventFragmentTest : AutoCloseKoinTest() {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var eventTypeViewModel: EventTypeViewModel
+    private val eventTypeViewModel: EventTypeViewModel by inject()
 
     @Before
     fun init() {
-        eventTypeViewModel = mockk(relaxed = true)
+        ShadowLog.stream = System.out
 
         loadKoinModules(module {
-            viewModel(override = true) { eventTypeViewModel }
+            single(override = true) { mockk<EventTypeViewModel>(relaxUnitFun = true, relaxed = true) }
         })
-    }
-
-    @After
-    fun terminateKoin() {
-        stopKoin()
     }
 
     val eventTypeList_FakeData = listOf(
@@ -129,6 +121,7 @@ class EventFragmentTest : KoinTest {
 
     @Test
     fun `test error-SnackBar displayed when event-types list fetch unsuccessful`() {
+        val error = "Error while fetching"
         every { eventTypeViewModel.getFirebaseError() } answers {
             MutableLiveData<String>().also {
                 it.value = "Error while fetching"
@@ -138,7 +131,7 @@ class EventFragmentTest : KoinTest {
         launchFragmentInContainer<EventFragment>(themeResId = R.style.AppTheme_Launch)
 
         onView(withId(com.google.android.material.R.id.snackbar_text))
-                .check(matches(withText(R.string.fetching_data_error_message)))
+                .check(matches(withText(error)))
     }
 
     @Test
@@ -148,9 +141,9 @@ class EventFragmentTest : KoinTest {
 
         // Given EventTypeViewModel's wifiDetails livedata value is
         // set to the wifiDetailsModel above
-        every { eventTypeViewModel.wifiDetails } answers {
-            MutableLiveData<FirebaseResult<WifiDetailsModel>>().also {
-                it.setValue(FirebaseResult.Success(wifiDetailsModel))
+        every { eventTypeViewModel.getWifiDetailsReponse() } answers {
+            MutableLiveData<WifiDetailsModel>().also {
+                it.setValue(wifiDetailsModel)
             }
         }
 
@@ -165,9 +158,10 @@ class EventFragmentTest : KoinTest {
     @Test
     fun `test error-SnackBar displayed when wifiDetails fetch unsuccessful`() {
         // Given there is an error in fetching wifi details
-        every { eventTypeViewModel.wifiDetails } answers {
-            MutableLiveData<FirebaseResult<WifiDetailsModel>>().also {
-                it.postValue(FirebaseResult.Error("Exception in fetching"))
+        val error = "Exception in fetching"
+        every { eventTypeViewModel.getFirebaseError() } answers {
+            MutableLiveData<String>().also {
+                it.setValue(error)
             }
         }
 
@@ -176,26 +170,10 @@ class EventFragmentTest : KoinTest {
 
         // Then Snackbar with error message is displayed
         onView(withId(com.google.android.material.R.id.snackbar_text))
-                .check(matches(withText(R.string.fetching_data_error_message)))
+                .check(matches(withText(error)))
 
     }
 
-    @Test
-    fun `test on clicking retry, data is re-fetched`() {
-        // Given there is an error in fetching wifi details
-        every { eventTypeViewModel.wifiDetails } answers {
-            MutableLiveData<FirebaseResult<WifiDetailsModel>>().also {
-                it.postValue(FirebaseResult.Error("Exception in fetching"))
-            }
-        }
-
-        launchFragmentInContainer<EventFragment>(themeResId = R.style.AppTheme_Launch)
-
-        onView(withText("Retry"))
-                .perform(click())
-
-        verify { eventTypeViewModel.retry() }
-    }
 }
 
 private fun withItemCount(expectedCount: Int): ViewAssertion {

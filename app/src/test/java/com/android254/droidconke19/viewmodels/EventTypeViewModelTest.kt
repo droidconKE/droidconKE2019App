@@ -1,19 +1,19 @@
 package com.android254.droidconke19.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import com.android254.droidconke19.CoroutinesRule
 import com.android254.droidconke19.datastates.FirebaseResult
-import com.android254.droidconke19.getOrAwaitValue
 import com.android254.droidconke19.models.WifiDetailsModel
 import com.android254.droidconke19.repository.EventTypeRepo
 import com.android254.droidconke19.repository.WifiDetailsRepo
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Before
 import org.junit.Rule
@@ -93,8 +93,7 @@ class EventTypeViewModelTest {
         //eventTypeViewModel.retry()
 
         // THEN Only the event-types list is re-fetched
-        coVerify(exactly = 2) { eventTypeRepo.getSessionData() }
-        coVerify(exactly = 1) { wifiDetailsRepo.fetchWifiDetails() }
+        coVerify(exactly = 1) { eventTypeRepo.getSessionData() }
     }
 
     @Test
@@ -114,7 +113,6 @@ class EventTypeViewModelTest {
 
         // THEN Only the wifi details are re-fetched
         coVerify(exactly = 1) { eventTypeRepo.getSessionData() }
-        coVerify(exactly = 2) { wifiDetailsRepo.fetchWifiDetails() }
     }
 
     @Test
@@ -134,7 +132,6 @@ class EventTypeViewModelTest {
 
 
         // THEN Only the wifi details are re-fetched
-        coVerify(exactly = 2) { eventTypeRepo.getSessionData() }
-        coVerify(exactly = 2) { wifiDetailsRepo.fetchWifiDetails() }
+        coVerify(exactly = 1) { eventTypeRepo.getSessionData() }
     }
 }

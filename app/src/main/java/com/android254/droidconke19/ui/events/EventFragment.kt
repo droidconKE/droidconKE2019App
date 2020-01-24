@@ -7,12 +7,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.android254.droidconke19.R
-import com.android254.droidconke19.datastates.FirebaseResult
 import com.android254.droidconke19.models.EventTypeModel
 import com.android254.droidconke19.models.WifiDetailsModel
-import com.android254.droidconke19.utils.toast
+import com.android254.droidconke19.utils.snackbar
 import com.android254.droidconke19.viewmodels.EventTypeViewModel
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_event.*
 import org.koin.android.ext.android.inject
 
@@ -52,7 +50,7 @@ class EventFragment : Fragment(R.layout.fragment_event) {
 
     private fun handleDatabaseError(databaseError: String) {
         hideProgressBar()
-        activity?.toast(databaseError)
+        view?.snackbar(databaseError)
     }
 
     private fun initView(eventTypeModelList: List<EventTypeModel>, eventTypesRv: RecyclerView) {

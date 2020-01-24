@@ -59,7 +59,7 @@ class AboutViewModelTest {
 
         aboutViewModel.fetchAboutDetails("value")
 
-        val error = aboutViewModel.getAboutDetailsError()
+        val error = aboutViewModel.getFirebaseError()
 
         assertThat(error.value, `is`("Some error"))
 
@@ -83,7 +83,7 @@ class AboutViewModelTest {
 
         aboutViewModel.getOrganizers("value")
 
-        val error = aboutViewModel.getOrganizerError()
+        val error = aboutViewModel.getFirebaseError()
         assertThat(error.value, `is`("Some error"))
 
     }
@@ -107,7 +107,7 @@ class AboutViewModelTest {
 
         aboutViewModel.getSponsors("value")
 
-        val error = aboutViewModel.getSponsorsError()
+        val error = aboutViewModel.getFirebaseError()
 
         assertThat(error.value, `is`("Some error"))
 
