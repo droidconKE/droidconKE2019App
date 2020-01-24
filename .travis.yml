@@ -5,6 +5,8 @@ jdk:
 env:
   - ANDROID_COMPILE_SDK="29" ANDROID_BUILD_TOOLS="29.0.2" ANDROID_SDK_TOOLS="4333796" ANDROID_SDK_ROOT=""
 
+install: true
+
 before_install:
   - sudo apt-get --quiet update --yes
   - sudo apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
