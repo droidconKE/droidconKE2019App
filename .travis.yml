@@ -6,7 +6,7 @@ services:
 before_install:
   - docker pull alvrme/alpine-android:android-29
   - docker run -it -d --name test alvrme/alpine-android:android-29 bash
-  - docker cp . test:/
+  - docker cp . test:/home/android
   
 install: true
 
