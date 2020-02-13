@@ -7,6 +7,8 @@ before_install:
   - docker pull alvrme/alpine-android:android-29
   - docker run -it -d --name test alvrme/alpine-android:android-29 bash
   - docker cp . test:/
+  
+install: true
 
 before_script:
   - docker exec test echo "org.gradle.daemon=false" >> gradle.properties
