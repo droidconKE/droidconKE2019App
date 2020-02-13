@@ -14,6 +14,5 @@ before_script:
   - docker exec test echo "org.gradle.daemon=false" >> gradle.properties
   - docker exec test touch droidconKE.jks
   - docker exec test chmod +x ./gradlew
-  - docker exec test ./gradlew -Pci --console=plain :app:testDebu
 
 script: docker exec test ./gradlew -Pci --console=plain :app:testDebug
